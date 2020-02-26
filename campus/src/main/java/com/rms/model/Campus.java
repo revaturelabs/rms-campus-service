@@ -2,7 +2,20 @@ package com.rms.model;
 
 import java.util.Objects;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table
 public class Campus{
+
+    @Id
+    @SequenceGenerator(name = "CampID_seq", sequenceName = "CampID_seq", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CampID_seq")
     private int id;
     private String name;
     private String abbrName;

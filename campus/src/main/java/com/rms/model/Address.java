@@ -2,6 +2,11 @@ package com.rms.model;
 
 import java.util.Objects;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table
 public class Address{
     private String unitStreet;
     private String city;
