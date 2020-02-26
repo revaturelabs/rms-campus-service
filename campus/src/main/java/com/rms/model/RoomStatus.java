@@ -2,7 +2,20 @@ package com.rms.model;
 
 import java.util.Objects;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table
 public class RoomStatus {
+
+    @Id
+    @SequenceGenerator(name = "RoomSsID_seq", sequenceName = "RoomSsID_seq", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "RoomSsID_seq")
     private int id;
     private boolean whiteboardCleaned;
     private boolean chairOrdered;

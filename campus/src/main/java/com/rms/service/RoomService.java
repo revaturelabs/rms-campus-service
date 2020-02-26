@@ -1,4 +1,4 @@
-package com.rms.services;
+package com.rms.service;
 
 public class RoomService {
     
