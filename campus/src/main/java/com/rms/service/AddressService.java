@@ -1,7 +1,5 @@
 package com.rms.service;
 
-import java.util.List;
-
 import com.rms.dao.AddressDao;
 import com.rms.model.Address;
 
@@ -18,15 +16,7 @@ public class AddressService {
         ad.save(add);
     }
 
-    public void update(Address add){
-        ad.save(add);
-    }
-
     public void delete(Address add){
         ad.delete(add);
-    }
-
-    public List<Address> findAll() {
-        return (List<Address>) ad.findAll();
     }
 }

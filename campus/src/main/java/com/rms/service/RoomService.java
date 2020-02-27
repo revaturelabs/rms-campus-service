@@ -1,8 +1,5 @@
 package com.rms.service;
 
-import java.util.List;
-import java.util.Optional;
-
 import com.rms.dao.RoomDao;
 import com.rms.model.Room;
 
@@ -21,17 +18,5 @@ public class RoomService {
 
     public void delete(Room rm) {
         rd.delete(rm);
-    }
-
-    public void update(Room rm) {
-        rd.save(rm);
-    }
-
-    public Optional<Room> findById(int id){
-        return rd.findById(id);
-    }
-
-    public List<Room> findAll() {
-        return(List<Room>) rd.findAll();
     }
 }
