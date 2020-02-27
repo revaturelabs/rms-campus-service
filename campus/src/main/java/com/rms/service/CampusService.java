@@ -1,5 +1,8 @@
 package com.rms.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import com.rms.dao.CampusDao;
 import com.rms.model.Campus;
 
@@ -21,15 +24,15 @@ public class CampusService {
     }
 
     public void update(Campus camp){
-        cs.save(camp);
+        cd.save(camp);
     }
 
     public Optional<Campus> findById(int id){
-        return cs.findById(id);
+        return cd.findById(id);
     }
 
     public List<Campus> findAll() {
-        return (List<Campus>) cs.findAll();
+        return (List<Campus>) cd.findAll();
     }
 }
 
