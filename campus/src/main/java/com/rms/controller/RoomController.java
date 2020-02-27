@@ -2,7 +2,6 @@ package com.rms.controller;
 
 import com.rms.dao.RoomDao;
 import com.rms.model.Room;
-import com.rms.service.RoomService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
