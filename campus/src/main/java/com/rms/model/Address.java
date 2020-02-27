@@ -3,11 +3,21 @@ package com.rms.model;
 import java.util.Objects;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table
 public class Address{
+
+    @Id
+    @SequenceGenerator(name = "AddressID_seq", sequenceName = "AddressID_seq", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AddressID_seq")
+    private int id;
+    
     private String unitStreet;
     private String city;
     private String state;
@@ -17,12 +27,21 @@ public class Address{
     public Address() {
     }
 
-    public Address(String unitStreet, String city, String state, String zip, String country) {
+    public Address(int id, String unitStreet, String city, String state, String zip, String country) {
+        this.id = id;
         this.unitStreet = unitStreet;
         this.city = city;
         this.state = state;
         this.zip = zip;
         this.country = country;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUnitStreet() {
@@ -65,6 +84,11 @@ public class Address{
         this.country = country;
     }
 
+    public Address id(int id) {
+        this.id = id;
+        return this;
+    }
+
     public Address unitStreet(String unitStreet) {
         this.unitStreet = unitStreet;
         return this;
@@ -98,22 +122,25 @@ public class Address{
             return false;
         }
         Address address = (Address) o;
-        return Objects.equals(unitStreet, address.unitStreet) && Objects.equals(city, address.city) && Objects.equals(state, address.state) && Objects.equals(zip, address.zip) && Objects.equals(country, address.country);
+        return id == address.id && Objects.equals(unitStreet, address.unitStreet) && Objects.equals(city, address.city) && Objects.equals(state, address.state) && Objects.equals(zip, address.zip) && Objects.equals(country, address.country);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(unitStreet, city, state, zip, country);
+        return Objects.hash(id, unitStreet, city, state, zip, country);
     }
 
     @Override
     public String toString() {
         return "{" +
-            " unitStreet='" + getUnitStreet() + "'" +
+            " id='" + getId() + "'" +
+            ", unitStreet='" + getUnitStreet() + "'" +
             ", city='" + getCity() + "'" +
             ", state='" + getState() + "'" +
             ", zip='" + getZip() + "'" +
             ", country='" + getCountry() + "'" +
             "}";
     }
+
+
 }
