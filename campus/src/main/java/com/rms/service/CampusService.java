@@ -1,8 +1,6 @@
 package com.rms.service;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.rms.dao.CampusDao;
 import com.rms.model.Campus;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +10,14 @@ import org.springframework.stereotype.Service;
 public class CampusService {
 
     @Autowired
-    CampusService cs;
+   CampusDao cd;
 
     public void save(Campus camp) {
-        cs.save(camp);
+        cd.save(camp);
     }
 
     public void delete(Campus camp){
-        cs.delete(camp);
+        cd.delete(camp);
     }
 
     public void update(Campus camp){
