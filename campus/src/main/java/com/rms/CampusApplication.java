@@ -1,15 +1,20 @@
-package com.rms.campus;
+package com.rms;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.context.annotation.Bean;
 
-@SpringBootApplication
 @EnableEurekaClient
+@SpringBootApplication
 public class CampusApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CampusApplication.class, args);
+
 	}
 
+	
 }

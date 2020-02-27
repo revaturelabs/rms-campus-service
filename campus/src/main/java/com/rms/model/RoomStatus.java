@@ -14,8 +14,8 @@ import javax.persistence.Table;
 public class RoomStatus {
 
     @Id
-    @SequenceGenerator(name = "RoomSsID_seq", sequenceName = "RoomSsID_seq", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "RoomSsID_seq")
+    @SequenceGenerator(name = "RoomSID_seq", sequenceName = "RoomSID_seq", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "RoomSID_seq")
     private int id;
     private boolean whiteboardCleaned;
     private boolean chairOrdered;

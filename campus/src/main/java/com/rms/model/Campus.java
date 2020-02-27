@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -19,12 +21,14 @@ public class Campus{
     private int id;
     private String name;
     private String abbrName;
+    @OneToOne
     private Address shippingAddress;
     private int trainingManagerId;
     private int stagingManagerId;
     private int hrLead;
     private Building[] buildings;
     private int[] corporateEmployees;
+    @OneToOne
     private ResourceMetadata resourceMetadata;
 
     public Campus() {

@@ -2,7 +2,21 @@ package com.rms.model;
 
 import java.util.Objects;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table
 public class ResourceMetadata{
+	
+	@Id
+    @SequenceGenerator(name = "ResourceID_seq", sequenceName = "ResourceID_seq", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ResourceID_seq")
+	private int id;
     private int resourceCreator;
     private String resourceCreatorDateTime;
     private int lastModifier;
