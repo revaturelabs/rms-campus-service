@@ -1,7 +1,7 @@
 package com.rms.controller;
 
+import com.rms.dao.RoomDao;
 import com.rms.model.Room;
-import com.rms.service.RoomService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,33 +18,33 @@ import org.springframework.web.bind.annotation.RestController;
 public class RoomController {
     
     @Autowired
-    RoomService rs;
+    RoomDao rd;
 
     @GetMapping("/{id}")
     public Room findById(@PathVariable("id") int id){
-        return rs.findById(id).get();
+        return rd.findById(id).get();
     }
     
     @PostMapping("/all")
     public Iterable<Room> getAllRooms() {
-        return rs.findAll();
+        return rd.findAll();
     }
 
     @PostMapping
     public String insert(@RequestBody Room r){
-        rs.save(r);
+        rd.save(r);
         return "Room has been added";
     }
 
     @PutMapping("/updated")
     public String update(@RequestBody Room r){
-        rs.save(r);
+        rd.save(r);
         return "Room has been updated";
     }
 
     @DeleteMapping("/deleted")
     public String delete(@RequestBody Room r) {
-        rs.delete(r);
+        rd.delete(r);
         return "Room has been deleted";
     }
 
