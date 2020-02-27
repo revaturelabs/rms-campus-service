@@ -17,32 +17,32 @@ import org.springframework.web.bind.annotation.RestController;
 public class AmenityController {
 
     @Autowired
-    AmenityDao amd;
+    AmenityDao ams;
 
     @GetMapping("/{id}")
     public Amenity findById(@PathVariable("id") int id) {
-        return amd.findById(id).get();
+        return ams.findById(id).get();
     }
     
     @PostMapping("/all")
     public Iterable<Amenity> getAllAmenities() {
-        return amd.findAll();
+        return ams.findAll();
     }
 
     @PostMapping
     public String insert(@RequestBody Amenity a){
-        amd.save(a);
+        ams.save(a);
         return "An amenity has been added";
     }
 
     @PutMapping("/updated")
     public Amenity update(@RequestBody Amenity a) {
-        return amd.save(a);
+        return ams.save(a);
     }
 
     @DeleteMapping("/deleted")
     public String delete(@RequestBody Amenity a) {
-        amd.delete(a);
+        ams.delete(a);
         return "An Amenity has been deleted";
     }
 }
