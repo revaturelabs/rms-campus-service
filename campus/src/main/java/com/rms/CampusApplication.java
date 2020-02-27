@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 
-@EnableEurekaClient
+// @EnableEurekaClient
 @SpringBootApplication
 public class CampusApplication {
 
