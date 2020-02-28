@@ -17,7 +17,6 @@ public class Address{
     @SequenceGenerator(name = "AddressID_seq", sequenceName = "AddressID_seq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AddressID_seq")
     private int id;
-    
     private String unitStreet;
     private String city;
     private String state;

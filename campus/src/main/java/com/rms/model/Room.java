@@ -26,13 +26,11 @@ public class Room {
     private RoomStatus currentStatus;
     private int batchId;
     private int[] workOrders;
-    @OneToOne
-    private ResourceMetadata resourceMetadata;
 
     public Room() {
     }
 
-    public Room(int id, String roomNumber, int maxOccupancy, boolean isActive, RoomStatus currentStatus, int batchId, int[] workOrders, ResourceMetadata resourceMetadata) {
+    public Room(int id, String roomNumber, int maxOccupancy, boolean isActive, RoomStatus currentStatus, int batchId, int[] workOrders) {
         this.id = id;
         this.roomNumber = roomNumber;
         this.maxOccupancy = maxOccupancy;
@@ -40,7 +38,6 @@ public class Room {
         this.currentStatus = currentStatus;
         this.batchId = batchId;
         this.workOrders = workOrders;
-        this.resourceMetadata = resourceMetadata;
     }
 
     public int getId() {
@@ -103,14 +100,6 @@ public class Room {
         this.workOrders = workOrders;
     }
 
-    public ResourceMetadata getResourceMetadata() {
-        return this.resourceMetadata;
-    }
-
-    public void setResourceMetadata(ResourceMetadata resourceMetadata) {
-        this.resourceMetadata = resourceMetadata;
-    }
-
     public Room id(int id) {
         this.id = id;
         return this;
@@ -146,10 +135,7 @@ public class Room {
         return this;
     }
 
-    public Room resourceMetadata(ResourceMetadata resourceMetadata) {
-        this.resourceMetadata = resourceMetadata;
-        return this;
-    }
+    
 
     @Override
     public boolean equals(Object o) {
@@ -159,12 +145,15 @@ public class Room {
             return false;
         }
         Room room = (Room) o;
-        return id == room.id && Objects.equals(roomNumber, room.roomNumber) && maxOccupancy == room.maxOccupancy && isActive == room.isActive && Objects.equals(currentStatus, room.currentStatus) && batchId == room.batchId && Objects.equals(workOrders, room.workOrders) && Objects.equals(resourceMetadata, room.resourceMetadata);
+        return id == room.id && Objects.equals(roomNumber, room.roomNumber)
+         && maxOccupancy == room.maxOccupancy && isActive == room.isActive &&
+          Objects.equals(currentStatus, room.currentStatus) && batchId == room.batchId
+           && Objects.equals(workOrders, room.workOrders);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, roomNumber, maxOccupancy, isActive, currentStatus, batchId, workOrders, resourceMetadata);
+        return Objects.hash(id, roomNumber, maxOccupancy, isActive, currentStatus, batchId, workOrders);
     }
 
     @Override
@@ -177,7 +166,6 @@ public class Room {
             ", currentStatus='" + getCurrentStatus() + "'" +
             ", batchId='" + getBatchId() + "'" +
             ", workOrders='" + getWorkOrders() + "'" +
-            ", resourceMetadata='" + getResourceMetadata() + "'" +
             "}";
     }
 }

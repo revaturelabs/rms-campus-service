@@ -1,7 +1,10 @@
 package com.rms.controller;
 
-import com.rms.dao.BuildingDao;
+import java.util.List;
+import java.util.Optional;
+
 import com.rms.model.Building;
+import com.rms.service.BuildingService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,27 +21,27 @@ import org.springframework.web.bind.annotation.RestController;
 public class BuildingController {
 
     @Autowired
-    BuildingDao bs;
+    BuildingService bs;
 
     @GetMapping("/{id}")
-    public Building findById(@PathVariable("id") int id) {
-        return bs.findById(id).get();
+    public Optional<Building> findById(@PathVariable("id") int id) {
+        return bs.read(id);
     }
     
     @PostMapping("/all")
-    public Iterable<Building> getAllBuildings() {
-        return bs.findAll();
+    public List<Building> getAllBuildings() {
+        return (List<Building>) bs.readAll();
     }
 
     @PostMapping
     public String insert(@RequestBody Building b){
-        bs.save(b);
+        bs.saveOrUpdate(b);
         return "Building has been added";
     }
 
     @PutMapping("/updated")
     public String update(@RequestBody Building b){
-        bs.save(b);
+        bs.saveOrUpdate(b);
         return "Building has been updated";
     }
 

@@ -3,6 +3,8 @@ package com.rms.model;
 import java.util.Objects;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,13 +16,15 @@ import javax.persistence.Table;
 public class Amenity {
 
     @Id
-    @SequenceGenerator(name = "AmenityID_seq", sequenceName = "AmenityID_seq", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AmenityID_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Enumerated(EnumType.STRING)
     private AmenityType type;
+    @Enumerated(EnumType.STRING)
     private AmenityStatus status;
 
     public Amenity() {
+        
     }
 
     public Amenity(int id, AmenityType type, AmenityStatus status) {

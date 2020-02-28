@@ -1,5 +1,8 @@
 package com.rms.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import com.rms.dao.CampusDao;
 import com.rms.model.Campus;
 
@@ -10,14 +13,22 @@ import org.springframework.stereotype.Service;
 public class CampusService {
 
     @Autowired
-   CampusDao cd;
+    CampusDao cd;
 
-    public void save(Campus camp) {
-        cd.save(camp);
+    public void saveOrUpdate(Campus cam) {
+        cd.save(cam);
     }
 
-    public void delete(Campus camp){
-        cd.delete(camp);
+    public void delete(Campus cam) {
+        cd.delete(cam);
+    }
+
+    public Optional<Campus> read(int id) {
+        return cd.findById(id);
+    }
+
+    public List<Campus> readAll() {
+        return (List<Campus>) cd.findAll();
     }
 }
 

@@ -25,13 +25,13 @@ public class Building {
     private int trainingLead;
     private Amenity[] amenities;
     private Room[] rooms;
-    @OneToOne
-    private ResourceMetadata resourceMetadata;
+    // @OneToOne
+    // private ResourceMetadata resourceMetadata;
 
     public Building() {
     }
 
-    public Building(int id, String name, String abbrName, Address physicalAddress, int trainingLead, Amenity[] amenities, Room[] rooms, ResourceMetadata resourceMetadata) {
+    public Building(int id, String name, String abbrName, Address physicalAddress, int trainingLead, Amenity[] amenities, Room[] rooms) {
         this.id = id;
         this.name = name;
         this.abbrName = abbrName;
@@ -39,7 +39,7 @@ public class Building {
         this.trainingLead = trainingLead;
         this.amenities = amenities;
         this.rooms = rooms;
-        this.resourceMetadata = resourceMetadata;
+        // this.resourceMetadata = resourceMetadata;
     }
 
     public int getId() {
@@ -98,14 +98,6 @@ public class Building {
         this.rooms = rooms;
     }
 
-    public ResourceMetadata getResourceMetadata() {
-        return this.resourceMetadata;
-    }
-
-    public void setResourceMetadata(ResourceMetadata resourceMetadata) {
-        this.resourceMetadata = resourceMetadata;
-    }
-
     public Building id(int id) {
         this.id = id;
         return this;
@@ -141,11 +133,6 @@ public class Building {
         return this;
     }
 
-    public Building resourceMetadata(ResourceMetadata resourceMetadata) {
-        this.resourceMetadata = resourceMetadata;
-        return this;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -154,12 +141,16 @@ public class Building {
             return false;
         }
         Building building = (Building) o;
-        return id == building.id && Objects.equals(name, building.name) && Objects.equals(abbrName, building.abbrName) && Objects.equals(physicalAddress, building.physicalAddress) && trainingLead == building.trainingLead && Objects.equals(amenities, building.amenities) && Objects.equals(rooms, building.rooms) && Objects.equals(resourceMetadata, building.resourceMetadata);
+        return id == building.id && Objects.equals(name, building.name) 
+        && Objects.equals(abbrName, building.abbrName) &&
+         Objects.equals(physicalAddress, building.physicalAddress) &&
+          trainingLead == building.trainingLead && Objects.equals(amenities, building.amenities)
+           && Objects.equals(rooms, building.rooms);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, abbrName, physicalAddress, trainingLead, amenities, rooms, resourceMetadata);
+        return Objects.hash(id, name, abbrName, physicalAddress, trainingLead, amenities, rooms);
     }
 
     @Override
@@ -172,7 +163,6 @@ public class Building {
             ", trainingLead='" + getTrainingLead() + "'" +
             ", amenities='" + getAmenities() + "'" +
             ", rooms='" + getRooms() + "'" +
-            ", resourceMetadata='" + getResourceMetadata() + "'" +
             "}";
     }
 
