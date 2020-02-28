@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AmenityController {
 
     @Autowired
-    AmenityDao ams;
+    AmenityService ams;
 
     @GetMapping("/{id}")
     public Amenity findById(@PathVariable("id") int id) {

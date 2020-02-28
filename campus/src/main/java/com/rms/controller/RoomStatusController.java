@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class RoomStatusController {
 
     @Autowired
-    RoomStatusDao rsd;
+    RoomStatusService rsd;
 
     @GetMapping("/{id}")
     public RoomStatus findById(@PathVariable("id") int id) {
