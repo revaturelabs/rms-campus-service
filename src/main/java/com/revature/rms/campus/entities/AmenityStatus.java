@@ -7,9 +7,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public enum AmenityStatus {
 
     OK,
