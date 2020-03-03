@@ -22,9 +22,9 @@ public class Building {
     private Integer trainingLead;
     private ArrayList<Amenity> amenities;
     private ArrayList<Room> rooms;
-    private ResourceMetaData resourceMetaData;
+    private ResourceMetadata resourceMetaData;
 
-    public Building(String name, String abbrName, Address physicalAddress, Integer trainingLead, ArrayList<Amenity> amenities, ArrayList<Room> rooms, ResourceMetaData resourceMetaData) {
+    public Building(String name, String abbrName, Address physicalAddress, Integer trainingLead, ArrayList<Amenity> amenities, ArrayList<Room> rooms, ResourceMetadata resourceMetaData) {
         this.name = name;
         this.abbrName = abbrName;
         this.physicalAddress = physicalAddress;
