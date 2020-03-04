@@ -55,8 +55,7 @@ public class BuildingService {
         return buildingMongoRepository.save(building);
     }
 
-    public void delete(String Id) {
-        Building building = buildingMongoRepository.findById(Id).get();
-        buildingMongoRepository.delete(building);
+    public void delete(String id) {
+       buildingMongoRepository.deleteById(id);
     }
 }
