@@ -16,7 +16,6 @@ public class CampusService {
     @Autowired
     private CampusMongoRepository campusMongoRepository;
 
-
     public Campus save(Campus campus) {
         return campusMongoRepository.save(campus);
     }

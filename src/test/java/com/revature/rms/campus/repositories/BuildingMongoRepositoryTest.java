@@ -2,10 +2,7 @@ package com.revature.rms.campus.repositories;
 
 import com.revature.rms.campus.entities.Address;
 import com.revature.rms.campus.entities.Building;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -16,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class BuildingMongoRepositoryTest {
     @Autowired
     private BuildingMongoRepository sut;
-    @BeforeAll
+    @BeforeEach
     public void setup() throws Exception {
         Building building1 = new Building("NEC", "NEC", new Address(), 1, null, null, null);
         Building building2 = new Building("BCN", "BCN", new Address(), 2, null, null, null);
@@ -48,6 +45,7 @@ public class BuildingMongoRepositoryTest {
     @Test
     public void testUpdate() {
         Building building1 = sut.findByName("NEC");
+        assertNotNull(building1);
         building1.setAbbrName("PogChamp");
         sut.save(building1);
         Building building2 = sut.findByName("NEC");
@@ -61,7 +59,7 @@ public class BuildingMongoRepositoryTest {
         Building building2 = sut.findByName("NEC");
         assertNull(building2);
     }
-    @AfterAll
+    @AfterEach
     public void tearDown() throws Exception {
         this.sut.deleteAll();
     }
