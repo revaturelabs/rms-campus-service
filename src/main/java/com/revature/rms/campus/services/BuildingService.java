@@ -29,7 +29,7 @@ public class BuildingService {
         return buildingMongoRepository.findAll();
     }
 
-    public Optional<Building> findById(Integer id) {
+    public Optional<Building> findById(String id) {
         return buildingMongoRepository.findById(id);
     }
 
@@ -55,8 +55,8 @@ public class BuildingService {
         return buildingMongoRepository.save(building);
     }
 
-    public void delete(String name) {
-        Building building = buildingMongoRepository.findByName(name);
+    public void delete(String Id) {
+        Building building = buildingMongoRepository.findById(Id).get();
         buildingMongoRepository.delete(building);
     }
 }
