@@ -5,8 +5,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;
 
-public interface BuildingMongoRepository extends MongoRepository<Building, Integer> {
-    public Optional<Building> findById(Integer id);
-
+public interface BuildingMongoRepository extends MongoRepository<Building, String> {
     public Building findByName(String name);
 }

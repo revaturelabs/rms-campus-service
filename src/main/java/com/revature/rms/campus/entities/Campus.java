@@ -16,7 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Campus {
 
     @Id
-    private int id;
+    private String id;
     private String name;
     private String abbrName;
     private Address shippingAddress;
