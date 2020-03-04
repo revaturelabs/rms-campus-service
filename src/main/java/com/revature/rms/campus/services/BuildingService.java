@@ -21,11 +21,11 @@ public class BuildingService {
 //                trainingLead, amenities, rooms, resourceMetaData));
 //    }
 
-    public Building create(Building building) {
+    public Building save(Building building) {
         return buildingMongoRepository.save(building);
     }
 
-    public List<Building> getAll() {
+    public List<Building> findAll() {
         return buildingMongoRepository.findAll();
     }
 
