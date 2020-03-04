@@ -16,18 +16,18 @@ public class CampusController {
     @Autowired
     private CampusService campusService;
 
-//    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-//    public List<Campus> getAllBuildings() { return campusService.fin(); }
-//
-//    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public Building saveBuilding(@RequestBody Building building) {return buildingService.save(building); }
-//
-//    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public Building getBuildingById(@PathVariable String id) { return buildingService.findById(id).get(); }
-//
-//    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public Building update(@RequestBody Building building) { return buildingService.update(building); }
-//
-//    @DeleteMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public void deleteBuildingById(@PathVariable String id) { buildingService.delete(id);}
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Campus> getAllBuildings() { return campusService.findAll(); }
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Campus saveBuilding(@RequestBody Campus campus) {return campusService.save(campus); }
+
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Campus getBuildingById(@PathVariable String id) { return campusService.findById(id).get(); }
+
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Campus update(@RequestBody Campus campus) { return campusService.update(campus); }
+
+    @DeleteMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void deleteBuildingById(@PathVariable String id) { campusService.delete(id);}
 }

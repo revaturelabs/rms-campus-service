@@ -27,9 +27,9 @@ public class RoomService {
         return roomMongoRepository.findById(id);
     }
 
-    public void create (Room room){roomMongoRepository.save(room);}
+    public Room save(Room room){return roomMongoRepository.save(room);}
 
-    public void update(Room room){roomMongoRepository.save(room);}
+    public Room update(Room room){return roomMongoRepository.save(room);}
 
     // Change to soft delete?
     public void delete(String id){
