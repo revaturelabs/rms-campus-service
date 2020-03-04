@@ -21,19 +21,18 @@ public class RoomService {
 
     public List<Room> findAll(){ return roomMongoRepository.findAll();
     }
+    public Optional<Room> findByRoomNumber(String roomNum){return roomMongoRepository.findByRoomNumber(roomNum);}
 
-    public Optional<Room> findById(int id){
+    public Optional<Room> findById(String id){
         return roomMongoRepository.findById(id);
     }
 
-    public void save (Room room){
-        roomMongoRepository.save(room);
-    }
+    public void create (Room room){roomMongoRepository.save(room);}
 
-
+    public void update(Room room){roomMongoRepository.save(room);}
 
     // Change to soft delete?
-    public void delete(int id){
+    public void delete(String id){
         roomMongoRepository.deleteById(id);
     }
 
@@ -41,7 +40,7 @@ public class RoomService {
         return roomStatusRepo.findAllBySubmitterId(id);
     }
 
-    public Optional<RoomStatus> findStatusById(int id){
+    public Optional<RoomStatus> findStatusById(String id){
         return roomStatusRepo.findById(id);
     }
 

@@ -1,6 +1,7 @@
 package com.revature.rms.campus.services;
 
 import com.revature.rms.campus.entities.*;
+import com.revature.rms.campus.repositories.BuildingMongoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
