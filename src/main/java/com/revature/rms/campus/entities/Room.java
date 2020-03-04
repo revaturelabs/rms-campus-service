@@ -14,7 +14,7 @@ import java.util.ArrayList;
 @AllArgsConstructor
 public class Room {
     @Id
-    private Integer id;
+    private String id;
     private String roomNumber;
     private Integer maxOccupancy;
     private Boolean isActive;

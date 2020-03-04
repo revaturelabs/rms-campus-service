@@ -19,8 +19,7 @@ public class RoomService {
     @Autowired
     private RoomStatusMongoRepository roomStatusRepo;
 
-    public List<Room> findAll(){
-        return roomMongoRepository.findAll();
+    public List<Room> findAll(){ return roomMongoRepository.findAll();
     }
 
     public Optional<Room> findById(int id){
@@ -30,6 +29,8 @@ public class RoomService {
     public void save (Room room){
         roomMongoRepository.save(room);
     }
+
+
 
     // Change to soft delete?
     public void delete(int id){

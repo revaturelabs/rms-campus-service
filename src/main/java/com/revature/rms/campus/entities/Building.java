@@ -15,7 +15,7 @@ import java.util.ArrayList;
 @AllArgsConstructor
 public class Building {
     @Id
-    private Integer id;
+    private String id;
     private String name;
     private String abbrName;
     private Address physicalAddress;
