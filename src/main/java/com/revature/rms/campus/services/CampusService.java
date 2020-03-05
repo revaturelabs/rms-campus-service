@@ -13,8 +13,12 @@ import java.util.Optional;
 @Service
 public class CampusService {
 
-    @Autowired
     private CampusMongoRepository campusMongoRepository;
+
+    @Autowired
+    public CampusService(CampusMongoRepository repo) {
+        this.campusMongoRepository = repo;
+    }
 
     public Campus save(Campus campus) {
         return campusMongoRepository.save(campus);
@@ -36,7 +40,7 @@ public class CampusService {
         return campusMongoRepository.save(campus);
     }
 
-    public void delete(String id) {
-        campusMongoRepository.deleteById(id);
+    public boolean delete(String id) {
+        campusMongoRepository.deleteById(id); return true;
     }
 }
