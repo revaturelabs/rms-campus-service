@@ -4,6 +4,8 @@ import com.revature.rms.campus.entities.Address;
 import com.revature.rms.campus.entities.Building;
 import com.revature.rms.campus.entities.Campus;
 import com.revature.rms.campus.entities.ResourceMetadata;
+import com.revature.rms.campus.exceptions.InvalidInputException;
+import com.revature.rms.campus.exceptions.ResourceNotFoundException;
 import com.revature.rms.campus.repositories.CampusMongoRepository;
 import org.junit.After;
 import org.junit.Before;
@@ -48,7 +50,7 @@ public class CampusServiceTests {
         assertEquals(actualResults, expectedResult);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = ResourceNotFoundException.class)
     public void testSaveWithNullCampus() {
 
         // Arrange
@@ -66,6 +68,7 @@ public class CampusServiceTests {
         // Assert
         assertEquals(actualResults, expectedResult);
     }
+
 
 //    @Test
 //    public void testFindAll() {

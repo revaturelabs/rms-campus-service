@@ -2,6 +2,8 @@ package com.revature.rms.campus.services;
 
 import com.revature.rms.campus.entities.Building;
 import com.revature.rms.campus.entities.Campus;
+import com.revature.rms.campus.exceptions.InvalidInputException;
+import com.revature.rms.campus.exceptions.ResourceNotFoundException;
 import com.revature.rms.campus.repositories.BuildingMongoRepository;
 import com.revature.rms.campus.repositories.CampusMongoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +23,14 @@ public class CampusService {
     }
 
     public Campus save(Campus campus) {
+        if (campus == null) {
+            throw new ResourceNotFoundException();
+//     } else if (campus.getBuildings().length <= 0 || campus.getCorporateEmployees().length <= 0) {
+//            throw new InvalidInputException();
+        }
         return campusMongoRepository.save(campus);
     }
+
 
     public List<Campus> findAll() {
         return campusMongoRepository.findAll();
