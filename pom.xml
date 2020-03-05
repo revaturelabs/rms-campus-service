@@ -92,8 +92,8 @@
 <!--					</systemPropertyVariables>-->
 					<excludes>
 						<exclude>com/revature/rms/campus/entities/*</exclude>
-						<exclude>com/revature/rms/campus/controllers/*</exclude>
-						<exclude>com/revature/rms/campus/CampusServiceApplication.class</exclude>
+<!--						<exclude>com/revature/rms/campus/controllers/*</exclude>-->
+<!--						<exclude>com/revature/rms/campus/CampusServiceApplication.class</exclude>-->
 
 					</excludes>
 				</configuration>
