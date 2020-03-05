@@ -18,11 +18,14 @@ public class RoomStatus {
     private boolean chairsOrdered;
     private String SubmittedDateTime;
     private int submitterId;
+    private String otherNotes;
 
-    public RoomStatus(boolean whiteBoardCleaned, boolean chairsOrdered, String submittedDateTime, int submitterId) {
+    public RoomStatus(boolean whiteBoardCleaned, boolean chairsOrdered, String submittedDateTime, int submitterId, String otherNotes) {
         this.whiteBoardCleaned = whiteBoardCleaned;
         this.chairsOrdered = chairsOrdered;
         SubmittedDateTime = submittedDateTime;
         this.submitterId = submitterId;
+        this.otherNotes = otherNotes;
     }
+
 }
