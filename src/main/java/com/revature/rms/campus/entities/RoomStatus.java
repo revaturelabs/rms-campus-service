@@ -19,6 +19,7 @@ public class RoomStatus {
     private String SubmittedDateTime;
     private int submitterId;
     private String otherNotes;
+    private boolean archived;
 
     public RoomStatus(boolean whiteBoardCleaned, boolean chairsOrdered, String submittedDateTime, int submitterId, String otherNotes) {
         this.whiteBoardCleaned = whiteBoardCleaned;
