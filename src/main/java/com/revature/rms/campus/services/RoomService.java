@@ -27,18 +27,30 @@ public class RoomService {
         return roomMongoRepository.findById(id);
     }
 
+    public List<Room> findAllActiveRooms(boolean active){
+        return roomMongoRepository.findAllActive(active);
+    }
+
+    public List<Room> findByMaxOccupants(int occupancy){
+        return roomMongoRepository.findByMaxOccupancy(occupancy);
+    }
+
     public Room save(Room room){return roomMongoRepository.save(room);}
 
     public Room update(Room room){return roomMongoRepository.save(room);}
 
-    // Change to soft delete?
+    //soft delete
     public void delete(String id){
-        roomMongoRepository.deleteById(id);
+        Room deleteRoom = roomMongoRepository.findByRoomNumber(id).get();
+        deleteRoom.setIsActive(false);
+        save(deleteRoom);
     }
 
-    public List<RoomStatus>findAllStatus(int id){
+    public List<RoomStatus> findAllStatusBySubmitter(int id){
         return roomStatusRepo.findAllBySubmitterId(id);
     }
+
+    public List<RoomStatus> findAllStatusByDate(String date){ return roomStatusRepo.findAllBySubmittedDate(date);}
 
     public Optional<RoomStatus> findStatusById(String id){
         return roomStatusRepo.findById(id);
@@ -48,7 +60,23 @@ public class RoomService {
         return roomStatusRepo.findAll();
     }
 
-    public void saveStatus(RoomStatus roomStatus){
-        roomStatusRepo.save(roomStatus);
+    public List<RoomStatus> findAllByArchive(boolean active){
+        return roomStatusRepo.findAllActive(active);
     }
+
+    public void saveStatus(RoomStatus roomStatus){
+       roomStatusRepo.save(roomStatus);
+    }
+
+    public RoomStatus updateStatus(RoomStatus roomStatus){
+        return roomStatusRepo.save(roomStatus);
+    }
+
+    //soft delete
+    public void deleteRoomStatus(String statusId){
+        RoomStatus deleteStatus = roomStatusRepo.findById(statusId).get();
+        deleteStatus.setArchived(true);
+        saveStatus(deleteStatus);
+    }
+
 }
