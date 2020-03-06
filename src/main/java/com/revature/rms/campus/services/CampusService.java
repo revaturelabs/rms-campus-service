@@ -37,7 +37,14 @@ public class CampusService {
     }
 
     public Optional<Campus> findById(String id) {
-        return campusMongoRepository.findById(id);
+        if (id.isEmpty() || (Integer.parseInt(id) <= 0)) {
+            throw new InvalidInputException();
+        }
+        Optional<Campus> _campus = campusMongoRepository.findById(id);
+        if (!_campus.isPresent()) {
+            throw new  ResourceNotFoundException();
+        }
+        return _campus;
     }
 
     public Campus findByName(String name) {
