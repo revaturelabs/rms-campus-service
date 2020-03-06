@@ -18,17 +18,17 @@ public class RoomController {
     private RoomService roomService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Room> getAllBuildings() { return roomService.findAll(); }
+    public List<Room> getAllRooms() { return roomService.findAll(); }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Room saveBuilding(@RequestBody Room room) {return roomService.save(room); }
+    public Room saveRoom(@RequestBody Room room) {return roomService.save(room); }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Room getBuildingById(@PathVariable String id) { return roomService.findById(id).get(); }
+    public Room getRoomById(@PathVariable String id) { return roomService.findById(id).get(); }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Room update(@RequestBody Room room) { return roomService.update(room); }
+    public Room updateRoom(@RequestBody Room room) { return roomService.update(room); }
 
     @DeleteMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void deleteBuildingById(@PathVariable String id) { roomService.delete(id);}
+    public void deleteRoomById(@PathVariable String id) { roomService.delete(id);}
 }
