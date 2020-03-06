@@ -83,15 +83,14 @@ public class CampusServiceTests {
         Optional<Campus> expectedResult = Optional.of(new Campus("32", "University of South Florida", "USF", new Address(),
                 2, 3, 4, new Building[1], new int[3], new ResourceMetadata()));
 
-        when(repo.findById("32")).thenReturn(expectedResult);
+        when(repo.findById(Mockito.any())).thenReturn(expectedResult);
         Optional<Campus> actualResult = sut.findById("32");
         assertEquals(actualResult, expectedResult);
-
     }
 
     @Test(expected = ResourceNotFoundException.class)
     public void findCampusWithValidIdNotFound() {
-        when(repo.findById("21")).thenReturn(Optional.empty());
+        when(repo.findById(Mockito.any())).thenReturn(Optional.empty());
         sut.findById("21");
     }
 
@@ -118,39 +117,41 @@ public class CampusServiceTests {
         Campus expectedResult = new Campus("32", "University of South Florida", "USF", new Address(),
                 2, 3, 4, new Building[1], new int[3], new ResourceMetadata());
         
-        when(repo.findByName(name)).thenReturn(expectedResult);
+        when(repo.findByName(Mockito.any())).thenReturn(expectedResult);
         Campus actualResult = sut.findByName(name);
         assertEquals(expectedResult, actualResult);
     }
 
     @Test
-    public void testUpdateWtihValidCampus() {
-        Campus testCampus = new Campus("mocked", "m", new Address(),
+    public void testUpdateWithValidCampus() {
+        Campus testCampus = new Campus("32", "mocked", "m", new Address(),
                 3, 4, 5, new Building[2], new int[4], new ResourceMetadata());
 
-        Campus existingCampus = new Campus("32","University of South Florida", "USF", new Address(),
-                2, 3, 4, new Building[1], new int[3], new ResourceMetadata());
-
-        Campus excpectedResult = new Campus("mocked", "m", new Address(),
+        Campus expectedResult = new Campus("32","mocked", "m", new Address(),
                 3, 4, 5, new Building[2], new int[4], new ResourceMetadata());
 
-        when(repo.findById(existingCampus.getId())).thenReturn(Optional.of(excpectedResult));
-
+        when(repo.save(Mockito.any())).thenReturn((expectedResult));
+        Campus actualResult = sut.save(testCampus);
+        assertEquals(expectedResult, actualResult);
     }
 
-//
-//    @Test
-//    public void testUpdateWithValidCampus() {
-//        when(repo.save(testCampus)).thenReturn(testCampus);
-//        Campus results = sut.save(testCampus);
-//        assertEquals(results, sut.save(testCampus));
-//    }
-//
-//    @Test
-//    public void testDeleteByIdWithValidId() {
-//        when(repo.findById(id)).thenReturn(Optional.of(testCampus));
-//        boolean results = sut.delete(id);
-//        assertEquals(results, sut.delete(id));
-//
-//    }
+    @Test
+    public void testDeleteWithValidId() {
+        Campus testCampus = new Campus("32","University of South Florida", "USF", new Address(),
+                2, 3, 4, new Building[1], new int[3], new ResourceMetadata());
+
+        when(repo.findById(Mockito.any())).thenReturn(Optional.of(testCampus));
+        sut.delete(testCampus.getId());
+        verify(repo, times(1)).deleteById(testCampus.getId());
+    }
+
+    @Test(expected = InvalidInputException.class)
+    public void testDeleteWithInvalidId() {
+        Campus testCampus = new Campus("32","University of South Florida", "USF", new Address(),
+                2, 3, 4, new Building[1], new int[3], new ResourceMetadata());
+
+        when(repo.findById(Mockito.any())).thenReturn(Optional.of(testCampus));
+        sut.delete("-1");
+        verify(repo, times(0)).deleteById("-1");
+    }
 }

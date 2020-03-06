@@ -55,7 +55,10 @@ public class CampusService {
         return campusMongoRepository.save(campus);
     }
 
-    public boolean delete(String id) {
-        campusMongoRepository.deleteById(id); return true;
+    public void delete(String id) {
+        if (id.isEmpty() || Integer.parseInt(id) <= 0) {
+            throw new InvalidInputException();
+        }
+        campusMongoRepository.deleteById(id);
     }
 }
