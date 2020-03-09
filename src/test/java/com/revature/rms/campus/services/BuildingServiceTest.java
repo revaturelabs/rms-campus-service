@@ -23,7 +23,7 @@ public class BuildingServiceTest {
     @Test
     public void testSaveWithValidBuilding() {
         when(repo.save(testBuilding)).thenReturn(testBuilding);
-        sut.save(testBuilding);
+        Building results = sut.save(testBuilding);
     }
 
     @Test
