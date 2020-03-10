@@ -16,9 +16,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -73,7 +71,16 @@ public class CampusServiceTests {
 
     @Test
     public void testFindAll() {
-        List<Campus> mockCampusList = new ArrayList<>();
+        Campus testCampus = new Campus("32", "University of South Florida", "USF", new Address(),
+                2, 3, 4, new Building[1], new int[3], new ResourceMetadata());
+        List<Campus> mockCampusList = Arrays.asList(testCampus);
+        when(repo.findAll()).thenReturn(mockCampusList);
+        assertEquals(mockCampusList, sut.findAll());
+    }
+
+    @Test
+    public void testFindAllCampusWithNoCampus() {
+        List<Campus> mockCampusList = Collections.emptyList();
         when(repo.findAll()).thenReturn(mockCampusList);
         assertEquals(mockCampusList, sut.findAll());
     }
