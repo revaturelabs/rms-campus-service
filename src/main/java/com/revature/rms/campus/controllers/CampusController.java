@@ -13,8 +13,12 @@ import java.util.List;
 @RequestMapping("/v2/campus")
 public class CampusController {
 
-    @Autowired
     private CampusService campusService;
+
+    @Autowired
+    public CampusController(CampusService campusService) {
+        this.campusService = campusService;
+    }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Campus> getAllCapmus() { return campusService.findAll(); }

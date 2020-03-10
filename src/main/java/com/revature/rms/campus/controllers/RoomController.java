@@ -14,8 +14,12 @@ import java.util.List;
 @RequestMapping("/v2/room")
 public class RoomController {
 
-    @Autowired
     private RoomService roomService;
+
+    @Autowired
+    public RoomController(RoomService roomService) {
+        this.roomService = roomService;
+    }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Room> getAllRooms() { return roomService.findAll(); }
