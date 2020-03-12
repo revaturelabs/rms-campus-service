@@ -36,10 +36,10 @@ public class CampusServiceTests {
 
         // Arrange
         Campus testCampus = new Campus("University of South Florida", "USF", new Address(),
-                2, 3, 4, new Building[1], new int[3], new ResourceMetadata());
+                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 
         Campus expectedResult = new Campus("32", "University of South Florida", "USF", new Address(),
-                2, 3, 4, new Building[1], new int[3], new ResourceMetadata());
+                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 
         when(repo.save(Mockito.any())).thenReturn(expectedResult);
 
@@ -55,10 +55,10 @@ public class CampusServiceTests {
 
         // Arrange
         Campus testCampus = new Campus("University of South Florida", "USF", new Address(),
-                2, 3, 4, new Building[1], new int[3], new ResourceMetadata());
+                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 
         Campus expectedResult = new Campus("32", "University of South Florida", "USF", new Address(),
-                2, 3, 4, new Building[1], new int[3], new ResourceMetadata());
+                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 
         when(repo.save(Mockito.any())).thenReturn(expectedResult);
 
@@ -72,7 +72,7 @@ public class CampusServiceTests {
     @Test
     public void testFindAll() {
         Campus testCampus = new Campus("32", "University of South Florida", "USF", new Address(),
-                2, 3, 4, new Building[1], new int[3], new ResourceMetadata());
+                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
         List<Campus> mockCampusList = Arrays.asList(testCampus);
         when(repo.findAll()).thenReturn(mockCampusList);
         assertEquals(mockCampusList, sut.findAll());
@@ -88,7 +88,7 @@ public class CampusServiceTests {
     @Test
     public void findCampusByIdWithValidId() {
         Optional<Campus> expectedResult = Optional.of(new Campus("32", "University of South Florida", "USF", new Address(),
-                2, 3, 4, new Building[1], new int[3], new ResourceMetadata()));
+                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata()));
 
         when(repo.findById(Mockito.any())).thenReturn(expectedResult);
         Optional<Campus> actualResult = sut.findById("32");
@@ -111,7 +111,7 @@ public class CampusServiceTests {
     public void findCampusWithValidName() {
         String name = "University of South Florida";
         Campus expectedResult = new Campus("32", "University of South Florida", "USF", new Address(),
-                2, 3, 4, new Building[1], new int[3], new ResourceMetadata());
+                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 
         when(repo.findByName(Mockito.any())).thenReturn(expectedResult);
         Campus actualResult = sut.findByName(name);
@@ -122,7 +122,7 @@ public class CampusServiceTests {
     public void findCampusWithValidNameUsingAbbreviatedName() {
         String name = "USF";
         Campus expectedResult = new Campus("32", "University of South Florida", "USF", new Address(),
-                2, 3, 4, new Building[1], new int[3], new ResourceMetadata());
+                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
         
         when(repo.findByName(Mockito.any())).thenReturn(expectedResult);
         Campus actualResult = sut.findByName(name);
@@ -132,10 +132,10 @@ public class CampusServiceTests {
     @Test
     public void testUpdateWithValidCampus() {
         Campus testCampus = new Campus("32", "mocked", "m", new Address(),
-                3, 4, 5, new Building[2], new int[4], new ResourceMetadata());
+                3, 4, 5, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 
         Campus expectedResult = new Campus("32","mocked", "m", new Address(),
-                3, 4, 5, new Building[2], new int[4], new ResourceMetadata());
+                3, 4, 5, new ArrayList<Building>(2), new ArrayList<Integer>(4), new ResourceMetadata());
 
         when(repo.save(Mockito.any())).thenReturn((expectedResult));
         Campus actualResult = sut.save(testCampus);
@@ -145,7 +145,7 @@ public class CampusServiceTests {
     @Test
     public void testDeleteWithValidId() {
         Campus testCampus = new Campus("32","University of South Florida", "USF", new Address(),
-                2, 3, 4, new Building[1], new int[3], new ResourceMetadata());
+                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 
         when(repo.findById(Mockito.any())).thenReturn(Optional.of(testCampus));
         sut.delete(testCampus.getId());
@@ -155,7 +155,7 @@ public class CampusServiceTests {
     @Test(expected = InvalidInputException.class)
     public void testDeleteWithInvalidId() {
         Campus testCampus = new Campus("32","University of South Florida", "USF", new Address(),
-                2, 3, 4, new Building[1], new int[3], new ResourceMetadata());
+                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 
         when(repo.findById(Mockito.any())).thenReturn(Optional.of(testCampus));
         sut.delete("-1");
