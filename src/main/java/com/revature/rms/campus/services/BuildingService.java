@@ -10,8 +10,12 @@ import java.util.Optional;
 
 @Service
 public class BuildingService {
-    @Autowired
     private BuildingMongoRepository buildingMongoRepository;
+
+    @Autowired
+    public BuildingService(BuildingMongoRepository buildingMongoRepository) {
+        this.buildingMongoRepository = buildingMongoRepository;
+    }
 
 
     public Building save(Building building) {

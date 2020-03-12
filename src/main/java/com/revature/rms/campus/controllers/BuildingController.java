@@ -13,8 +13,12 @@ import java.util.List;
 @RequestMapping("/v2/building")
 public class BuildingController {
 
-    @Autowired
     private BuildingService buildingService;
+
+    @Autowired
+    public BuildingController(BuildingService buildingService) {
+        this.buildingService = buildingService;
+    }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Building> getAllBuildings() { return buildingService.findAll(); }
