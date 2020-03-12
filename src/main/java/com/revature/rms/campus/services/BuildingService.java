@@ -18,6 +18,7 @@ public class BuildingService {
         return buildingMongoRepository.save(building);
     }
 
+
     public List<Building> findAll() {
         return buildingMongoRepository.findAll();
     }
