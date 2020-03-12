@@ -13,10 +13,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import sun.security.util.ArrayUtil;
+
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -33,7 +32,7 @@ public class CampusControllerTest {
     @Test
     public void testFindAllCampusWithValidCampus() {
         Campus testCampus = new Campus("32", "University of South Florida", "USF", new Address(),
-                2, 3, 4, new Building[1], new int[3], new ResourceMetadata());
+                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 
         List<Campus> testCampusList = Arrays.asList(testCampus);
 
@@ -55,9 +54,9 @@ public class CampusControllerTest {
     @Test
     public void testSaveCampusWithValidCampus() {
         Campus testCampus = new Campus("University of South Florida", "USF", new Address(),
-                2, 3, 4, new Building[1], new int[3], new ResourceMetadata());
+                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
         Campus persistedCampus = new Campus("32","University of South Florida", "USF", new Address(),
-                2, 3, 4, new Building[1], new int[3], new ResourceMetadata());
+                2, 3, 4, new ArrayList<Building>(1), new ArrayList<>(3), new ResourceMetadata());
 
         when(campusService.save(Mockito.any())).thenReturn(persistedCampus);
 
@@ -67,10 +66,10 @@ public class CampusControllerTest {
     @Test(expected = ResourceNotFoundException.class)
     public void testSaveCampusWithNullCampus() {
         Campus testCampus = new Campus("University of South Florida", "USF", new Address(),
-                2, 3, 4, new Building[1], new int[3], new ResourceMetadata());
+                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 
         Campus expectedResult = new Campus("32", "University of South Florida", "USF", new Address(),
-                2, 3, 4, new Building[1], new int[3], new ResourceMetadata());
+                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 
         when(campusService.save(Mockito.any())).thenReturn(expectedResult);
         assertEquals(campusController.saveCampus(null), expectedResult);
@@ -80,7 +79,7 @@ public class CampusControllerTest {
     public void testGetCampusByValidId() {
         String id = "32";
         Campus expectedResult = new Campus("32", "University of South Florida", "USF", new Address(),
-                2, 3, 4, new Building[1], new int[3], new ResourceMetadata());
+                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 
         when(campusService.findById(Mockito.any())).thenReturn(Optional.of(expectedResult));
         assertEquals(campusController.getCampusById(id),  expectedResult);
@@ -103,10 +102,10 @@ public class CampusControllerTest {
     @Test
     public void testUpdateCampusWithValidCampus() {
         Campus testCampus = new Campus("University of South Florida", "USF", new Address(),
-                2, 3, 4, new Building[1], new int[3], new ResourceMetadata());
+                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 
         Campus expectedResult = new Campus("32", "University of South Florida", "USF", new Address(),
-                2, 3, 4, new Building[1], new int[3], new ResourceMetadata());
+                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 
         when(campusService.update(Mockito.any())).thenReturn(expectedResult);
         assertEquals(campusController.updateCampus(testCampus), expectedResult);
@@ -115,7 +114,7 @@ public class CampusControllerTest {
     @Test
     public void testDeleteCampusWithValidId() {
         Campus testCampus = new Campus("32","University of South Florida", "USF", new Address(),
-                2, 3, 4, new Building[1], new int[3], new ResourceMetadata());
+                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 
         when(campusService.findById(Mockito.any())).thenReturn(Optional.of(testCampus));
         campusController.deleteCampusById(testCampus.getId());
@@ -125,7 +124,7 @@ public class CampusControllerTest {
     @Test(expected = InvalidInputException.class)
     public void testDeleteCampusWithInvalidId() {
         Campus testCampus = new Campus("32","University of South Florida", "USF", new Address(),
-                2, 3, 4, new Building[1], new int[3], new ResourceMetadata());
+                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 
         String testId = "-1";
         when(campusService.findById(Mockito.any())).thenReturn(Optional.of(testCampus));
