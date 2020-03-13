@@ -47,11 +47,11 @@ public class RoomMongoRepositoryTest {
     public void testUpdate() {
         Optional<Room> room1 = sut.findByRoomNumber("2301D");
         assertTrue(room1.isPresent());
-        room1.get().setIsActive(false);
+        room1.get().setActive(false);
         sut.save(room1.get());
         Optional<Room> room2 = sut.findByRoomNumber("2301D");
         assertTrue(room1.isPresent());
-        assertTrue(!room2.get().getIsActive());
+        assertTrue(!room2.get().getActive());
     }
     @Test
     public void testDelete() {
