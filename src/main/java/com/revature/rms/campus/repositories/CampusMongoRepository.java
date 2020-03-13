@@ -3,8 +3,6 @@ package com.revature.rms.campus.repositories;
 import com.revature.rms.campus.entities.Campus;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import java.util.Optional;
-
 public interface CampusMongoRepository extends MongoRepository<Campus, String> {
     public Campus findByName(String name);
 }
