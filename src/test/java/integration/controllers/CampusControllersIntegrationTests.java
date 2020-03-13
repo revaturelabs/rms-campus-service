@@ -51,7 +51,6 @@ public class CampusControllersIntegrationTests {
                 2, 3, 4, new ArrayList<Building>(1),
                 new ArrayList<Integer>(3), new ResourceMetadata());
 
-
         this.mvc.perform(post("/v2/campus").content(asJSON(testCampus)).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
     }
@@ -82,15 +81,9 @@ public class CampusControllersIntegrationTests {
 
     @Test
     public void testDeleteCampusByIdWithValidIdExpecting200() throws Exception {
-        Campus testCampus = new Campus("32", "University of South Florida", "USF", new Address(),
-                2, 3, 4, new ArrayList<Building>(1),
-                new ArrayList<Integer>(3), new ResourceMetadata());
 
-        this.mvc.perform(post("/v2/campus").content(asJSON(testCampus)).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is2xxSuccessful());
-        this.mvc.perform(delete("/v2/campus/{id}", "32").accept(MediaType.APPLICATION_JSON))
-                .andDo(print()).andExpect(status().isOk()).andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andReturn();
+        this.mvc.perform(delete("/v2/campus/{id}", "32").contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(status().isOk());
     }
 
 //    @LocalServerPort
