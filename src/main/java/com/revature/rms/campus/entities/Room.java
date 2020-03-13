@@ -17,16 +17,16 @@ public class Room {
     private String id;
     private String roomNumber;
     private Integer maxOccupancy;
-    private Boolean isActive;
+    private Boolean active;
     private ArrayList <RoomStatus> roomStatus;
     private Integer batchId;
     private ArrayList<Integer> workOrders;
     private ResourceMetadata resourceMetadata;
 
-    public Room(String roomNumber, Integer maxOccupancy, Boolean isActive, ArrayList<RoomStatus> roomStatus, Integer batchId, ArrayList<Integer> workOrders, ResourceMetadata resourceMetadata) {
+    public Room(String roomNumber, Integer maxOccupancy, Boolean active, ArrayList<RoomStatus> roomStatus, Integer batchId, ArrayList<Integer> workOrders, ResourceMetadata resourceMetadata) {
         this.roomNumber = roomNumber;
         this.maxOccupancy = maxOccupancy;
-        this.isActive = isActive;
+        this.active = active;
         this.roomStatus = roomStatus;
         this.batchId = batchId;
         this.workOrders = workOrders;

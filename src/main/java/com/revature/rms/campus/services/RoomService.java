@@ -33,7 +33,7 @@ public class RoomService {
     }
 
     public List<Room> findAllActiveRooms(boolean active){
-        return roomMongoRepository.findAllActive(active);
+        return roomMongoRepository.findByActiveIsTrue(active);
     }
 
     public List<Room> findByMaxOccupants(int occupancy){
@@ -47,7 +47,7 @@ public class RoomService {
     //soft delete
     public void delete(String id){
         Room deleteRoom = roomMongoRepository.findByRoomNumber(id).get();
-        deleteRoom.setIsActive(false);
+        deleteRoom.setActive(false);
         save(deleteRoom);
     }
 
@@ -55,7 +55,7 @@ public class RoomService {
         return roomStatusMongoRepository.findAllBySubmitterId(id);
     }
 
-    public List<RoomStatus> findAllStatusByDate(String date){ return roomStatusMongoRepository.findAllBySubmittedDate(date);}
+    public List<RoomStatus> findAllStatusByDate(String date){ return roomStatusMongoRepository.findAllBySubmittedDateTime(date);}
 
     public Optional<RoomStatus> findStatusById(String id){
         return roomStatusMongoRepository.findById(id);
@@ -66,7 +66,7 @@ public class RoomService {
     }
 
     public List<RoomStatus> findAllByArchive(boolean active){
-        return roomStatusMongoRepository.findAllActive(active);
+        return roomStatusMongoRepository.findByArchivedIsTrue(active);
     }
 
     public void saveStatus(RoomStatus roomStatus){

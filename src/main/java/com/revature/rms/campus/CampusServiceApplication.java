@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.info.Info;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -21,9 +22,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 )
 public class CampusServiceApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(CampusServiceApplication.class, args);
-	}
+	public static void main(String[] args) { SpringApplication.run(CampusServiceApplication.class, args); }
 
 	@Bean
 	public Docket swaggerPersonApi10() {
