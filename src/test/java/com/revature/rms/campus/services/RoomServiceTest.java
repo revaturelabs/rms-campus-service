@@ -68,7 +68,7 @@ public class RoomServiceTest {
 
     @Test
     public void testFindAll(){
-        Room testRoom = new Room("BSN 2301", 25, true, new ArrayList<RoomStatus>(5),
+        Room testRoom = new Room("1","BSN 2301", 25, true, new ArrayList<RoomStatus>(5),
                 1612, new ArrayList<Integer>(3), new ResourceMetadata());
 
         List<Room> mockRoomList = new ArrayList<>();
@@ -96,7 +96,7 @@ public class RoomServiceTest {
     @Test(expected = ResourceNotFoundException.class)
     public void testFindByRoomNumberWithValidNotFound(){
         when(repo.findByRoomNumber(Mockito.any())).thenReturn(Optional.empty());
-        sut.findByRoomNumber("65");
+        sut.findByRoomNumber("5");
     }
 
     @Test
@@ -111,7 +111,7 @@ public class RoomServiceTest {
 
     @Test(expected = ResourceNotFoundException.class)
     public void testFindByIdWithValidIdNotFound(){
-     when(repo.findById(Mockito.any())).thenReturn(Optional.empty());
+     when(repo.findById(Mockito.anyString())).thenReturn(Optional.empty());
      sut.findById("36");
     }
 
@@ -123,7 +123,7 @@ public class RoomServiceTest {
 
     @Test
     public void testFindAllActiveRooms(){
-        Room testRoom = new Room("BSN 2301", 25, true, new ArrayList<RoomStatus>(5),
+        Room testRoom = new Room("23","BSN 2301", 25, true, new ArrayList<RoomStatus>(5),
                 1612, new ArrayList<Integer>(3), new ResourceMetadata());
 
         List<Room> activeRoomList = new ArrayList<>();
@@ -147,7 +147,7 @@ public class RoomServiceTest {
                 2401, new ArrayList<Integer>(3), new ResourceMetadata());
 
         List<Room> occupancyRoomList = new ArrayList<>();
-        when(repo.findByActiveRooms(Mockito.any())).thenReturn(occupancyRoomList);
+        when(repo.findByMaxOccupancy(Mockito.anyInt())).thenReturn(occupancyRoomList);
         assertEquals(occupancyRoomList, sut.findByMaxOccupancy(35));
     }
 
@@ -166,7 +166,7 @@ public class RoomServiceTest {
 
     @Test
     public void testDeleteWithValidId(){
-        Room testRoom = new Room("BSN 2301", 25, true, new ArrayList<RoomStatus>(5),
+        Room testRoom = new Room("23","BSN 2301", 25, true, new ArrayList<RoomStatus>(5),
                 1612, new ArrayList<Integer>(3), new ResourceMetadata());
 
         when(repo.save(Mockito.any())).thenReturn(Optional.of(testRoom));
@@ -176,7 +176,7 @@ public class RoomServiceTest {
 
     @Test(expected = InvalidInputException.class)
     public void testDeleteWithInValidId(){
-        Room testRoom = new Room("BSN 2301", 25, true, new ArrayList<RoomStatus>(5),
+        Room testRoom = new Room("23","BSN 2301", 25, true, new ArrayList<RoomStatus>(5),
                 1612, new ArrayList<Integer>(3), new ResourceMetadata());
 
         when(repo.save(Mockito.any())).thenReturn(Optional.of(testRoom));

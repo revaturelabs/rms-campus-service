@@ -42,7 +42,8 @@ public class RoomService {
 
     //soft delete
     public void delete(String id){
-        Room deleteRoom = roomMongoRepository.findByRoomNumber(id).get();
+        roomMongoRepository.findById(id).isPresent();
+        Room deleteRoom = roomMongoRepository.findById(id).get();
         deleteRoom.setActive(false);
         save(deleteRoom);
     }
