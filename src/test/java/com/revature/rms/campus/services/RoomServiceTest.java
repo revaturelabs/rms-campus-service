@@ -151,4 +151,37 @@ public class RoomServiceTest {
         assertEquals(occupancyRoomList, sut.findByMaxOccupancy(35));
     }
 
+    @Test
+    public void testUpdateWithValidRoom(){
+        Room testRoom = new Room("32", "mocked", 40, true, new ArrayList<RoomStatus>(5),
+                3232, new ArrayList<Integer>(3), new ResourceMetadata());
+
+        Room expectedResult = new Room("32", "mocked", 40, true, new ArrayList<RoomStatus>(5),
+                3232, new ArrayList<Integer>(3), new ResourceMetadata());
+
+        when(repo.save(Mockito.any())).thenReturn(expectedResult);
+        Room actualResults = sut.update(testRoom);
+        assertEquals(actualResults, expectedResult);
+    }
+
+    @Test
+    public void testDeleteWithValidId(){
+        Room testRoom = new Room("BSN 2301", 25, true, new ArrayList<RoomStatus>(5),
+                1612, new ArrayList<Integer>(3), new ResourceMetadata());
+
+        when(repo.save(Mockito.any())).thenReturn(Optional.of(testRoom));
+        sut.delete(testRoom.getId());
+        verify(repo, times(1)).deleteById(testRoom.getId());
+    }
+
+    @Test(expected = InvalidInputException.class)
+    public void testDeleteWithInValidId(){
+        Room testRoom = new Room("BSN 2301", 25, true, new ArrayList<RoomStatus>(5),
+                1612, new ArrayList<Integer>(3), new ResourceMetadata());
+
+        when(repo.save(Mockito.any())).thenReturn(Optional.of(testRoom));
+        sut.delete("-1");
+        verify(repo, times(1)).deleteById("-1");
+    }
+
 }
