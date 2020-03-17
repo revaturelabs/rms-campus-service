@@ -17,12 +17,8 @@ public class RoomService {
     private RoomMongoRepository roomMongoRepository;
 
     @Autowired
-    private RoomStatusMongoRepository roomStatusMongoRepository;
+    private RoomStatusMongoRepository roomStatusRepo;
 
-    public RoomService(RoomMongoRepository roomMongoRepository, RoomStatusMongoRepository roomStatusMongoRepository) {
-        this.roomMongoRepository = roomMongoRepository;
-        this.roomStatusMongoRepository = roomStatusMongoRepository;
-    }
 
     public List<Room> findAll(){ return roomMongoRepository.findAll();
     }
@@ -33,10 +29,10 @@ public class RoomService {
     }
 
     public List<Room> findAllActiveRooms(boolean active){
-        return roomMongoRepository.findByActiveIsTrue(active);
+        return roomMongoRepository.findByActiveRooms(active);
     }
 
-    public List<Room> findByMaxOccupants(int occupancy){
+    public List<Room> findByMaxOccupancy(int occupancy){
         return roomMongoRepository.findByMaxOccupancy(occupancy);
     }
 
@@ -52,34 +48,34 @@ public class RoomService {
     }
 
     public List<RoomStatus> findAllStatusBySubmitter(int id){
-        return roomStatusMongoRepository.findAllBySubmitterId(id);
+        return roomStatusRepo.findAllBySubmitterId(id);
     }
 
-    public List<RoomStatus> findAllStatusByDate(String date){ return roomStatusMongoRepository.findAllBySubmittedDateTime(date);}
+    public List<RoomStatus> findAllStatusByDate(String date){ return roomStatusRepo.findAllBySubmittedDateTime(date);}
 
     public Optional<RoomStatus> findStatusById(String id){
-        return roomStatusMongoRepository.findById(id);
+        return roomStatusRepo.findById(id);
     }
 
     public List<RoomStatus> findAllStatus(){
-        return roomStatusMongoRepository.findAll();
+        return roomStatusRepo.findAll();
     }
 
     public List<RoomStatus> findAllByArchive(boolean active){
-        return roomStatusMongoRepository.findByArchivedIsTrue(active);
+        return roomStatusRepo.findByArchivedIsTrue(active);
     }
 
     public void saveStatus(RoomStatus roomStatus){
-       roomStatusMongoRepository.save(roomStatus);
+        roomStatusRepo.save(roomStatus);
     }
 
     public RoomStatus updateStatus(RoomStatus roomStatus){
-        return roomStatusMongoRepository.save(roomStatus);
+        return roomStatusRepo.save(roomStatus);
     }
 
     //soft delete
     public void deleteRoomStatus(String statusId){
-        RoomStatus deleteStatus = roomStatusMongoRepository.findById(statusId).get();
+        RoomStatus deleteStatus = roomStatusRepo.findById(statusId).get();
         deleteStatus.setArchived(true);
         saveStatus(deleteStatus);
     }
