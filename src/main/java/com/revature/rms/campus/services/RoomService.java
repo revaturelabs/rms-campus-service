@@ -2,6 +2,8 @@ package com.revature.rms.campus.services;
 
 import com.revature.rms.campus.entities.Room;
 import com.revature.rms.campus.entities.RoomStatus;
+import com.revature.rms.campus.exceptions.InvalidInputException;
+import com.revature.rms.campus.exceptions.ResourceNotFoundException;
 import com.revature.rms.campus.repositories.RoomMongoRepository;
 import com.revature.rms.campus.repositories.RoomStatusMongoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +24,26 @@ public class RoomService {
 
     public List<Room> findAll(){ return roomMongoRepository.findAll();
     }
-    public Optional<Room> findByRoomNumber(String roomNum){return roomMongoRepository.findByRoomNumber(roomNum);}
+    public Optional<Room> findByRoomNumber(String roomNum){
+        if (roomNum.isEmpty() || (Integer.parseInt(roomNum) <= 0)) {
+            throw new InvalidInputException();
+        }
+        Optional<Room> _room = roomMongoRepository.findByRoomNumber(roomNum);
 
+        if(!_room.isPresent()) {
+            throw new ResourceNotFoundException();
+        }
+        return _room;
+    }
     public Optional<Room> findById(String id){
-        return roomMongoRepository.findById(id);
+        if (id.isEmpty() || (Integer.parseInt(id) <= 0)) {
+            throw new InvalidInputException();
+        }
+        Optional<Room> _room = roomMongoRepository.findById(id);
+        if(!_room.isPresent()){
+            throw new ResourceNotFoundException();
+        }
+        return _room;
     }
 
     public List<Room> findAllActiveRooms(boolean active){
@@ -36,16 +54,22 @@ public class RoomService {
         return roomMongoRepository.findByMaxOccupancy(occupancy);
     }
 
-    public Room save(Room room){return roomMongoRepository.save(room);}
+    public Room save(Room room){
+        if(room == null){
+            throw new ResourceNotFoundException();
+        }
+        return roomMongoRepository.save(room);}
 
     public Room update(Room room){return roomMongoRepository.save(room);}
 
     //soft delete
-    public void delete(String id){
-        roomMongoRepository.findById(id).isPresent();
+    public Room delete(String id){
+        if (id.isEmpty() || Integer.parseInt(id) <= 0) {
+            throw new InvalidInputException();
+        }
         Room deleteRoom = roomMongoRepository.findById(id).get();
         deleteRoom.setActive(false);
-        save(deleteRoom);
+        return update(deleteRoom);
     }
 
     public List<RoomStatus> findAllStatusBySubmitter(int id){
