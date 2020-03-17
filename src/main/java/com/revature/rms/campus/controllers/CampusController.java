@@ -1,7 +1,6 @@
 package com.revature.rms.campus.controllers;
 
-import com.revature.rms.campus.entities.Building;
-import com.revature.rms.campus.entities.Campus;
+import com.revature.rms.campus.entities.*;
 import com.revature.rms.campus.exceptions.InvalidInputException;
 import com.revature.rms.campus.exceptions.ResourceNotFoundException;
 import com.revature.rms.campus.services.CampusService;
@@ -12,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,5 +57,13 @@ public class CampusController {
         if(id.isEmpty() || Integer.parseInt(id) <= 0) {
             throw new InvalidInputException();
         }
-        campusService.delete(id);}
+        campusService.delete(id);
+    }
+
+    @GetMapping(value="/populate")
+    public void populate() {
+        //Room room1 = new Room("A1", 10, true, new ArrayList<RoomStatus>(), 1, new ArrayList<Integer>(), new ResourceMetadata());
+        Campus campus1 = new Campus("University of South Florida", "USF", new Address(), 1, 2, 3, new ArrayList<Building>(), new ArrayList<Integer>(), new ResourceMetadata());
+        campusService.save(campus1);
+    }
 }

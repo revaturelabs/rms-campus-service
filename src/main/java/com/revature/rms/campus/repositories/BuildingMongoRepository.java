@@ -11,5 +11,7 @@ public interface BuildingMongoRepository extends MongoRepository<Building, Strin
     public Building findByName(String name);
 
     public Building findByTrainingLead(Integer id);
+
+
 }
 

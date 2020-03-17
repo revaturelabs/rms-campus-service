@@ -1,7 +1,15 @@
 package com.revature.rms.campus;
 
+import com.revature.rms.campus.entities.Address;
+import com.revature.rms.campus.entities.Building;
+import com.revature.rms.campus.entities.Campus;
+import com.revature.rms.campus.entities.ResourceMetadata;
+import com.revature.rms.campus.repositories.CampusMongoRepository;
+import com.revature.rms.campus.services.CampusService;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
@@ -14,15 +22,22 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import java.util.ArrayList;
+
 @EnableEurekaClient
 @EnableSwagger2
 @SpringBootApplication
 @OpenAPIDefinition(info =
 	@Info(title = "Campus API", version = "1.0", description = "Documentation Campus API v1.0")
 )
-public class CampusServiceApplication {
+public class CampusServiceApplication implements CommandLineRunner {
 
-	public static void main(String[] args) { SpringApplication.run(CampusServiceApplication.class, args); }
+	@Autowired
+	private CampusService campusService;
+
+	public static void main(String[] args) {
+		SpringApplication.run(CampusServiceApplication.class, args);
+	}
 
 	@Bean
 	public Docket swaggerPersonApi10() {
@@ -34,4 +49,9 @@ public class CampusServiceApplication {
 				.apiInfo(new ApiInfoBuilder().version("1.0").title("Campus API").description("Documentation Campus API v1.0").build());
 	}
 
+	@Override
+	public void run(String... args) throws Exception {
+		Campus campus1 = new Campus("University of South Florida", "USF", new Address(), 1, 2, 3, new ArrayList<Building>(), new ArrayList<Integer>(), new ResourceMetadata());
+		campusService.save(campus1);
+	}
 }
