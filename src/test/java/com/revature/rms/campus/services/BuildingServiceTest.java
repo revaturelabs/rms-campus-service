@@ -2,6 +2,7 @@ package com.revature.rms.campus.services;
 import com.revature.rms.campus.entities.*;
 import com.revature.rms.campus.exceptions.InvalidInputException;
 import com.revature.rms.campus.exceptions.ResourceNotFoundException;
+import com.revature.rms.campus.exceptions.ResourcePersistenceException;
 import com.revature.rms.campus.repositories.BuildingMongoRepository;
 import com.revature.rms.campus.repositories.CampusMongoRepository;
 import org.junit.After;
@@ -38,16 +39,17 @@ public class BuildingServiceTest {
 //Assert
         assertEquals(actualResults, expectedResult);
     }
-    @Test
+    @Test(expected = ResourcePersistenceException.class)
     public void testSaveWithNullBuilding(){
 //Arrange
         Building expectedResult = new Building("1", "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3), new ResourceMetadata());
-        when(repo.save(Mockito.any())).thenReturn(expectedResult);
+        when(sut.save(Mockito.any())).thenReturn(repo.save(Mockito.any()));
+        when(repo.save(Mockito.any())).thenThrow(ResourcePersistenceException.class);
 //Act
         Building actualResults = sut.save(null);
 //Assert
-        assertEquals(actualResults, expectedResult);
+        //assertEquals(actualResults, expectedResult);
     }
 
     @Test
