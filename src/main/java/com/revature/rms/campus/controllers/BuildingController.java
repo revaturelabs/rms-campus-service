@@ -23,6 +23,9 @@ public class BuildingController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Building> getAllBuildings() { return buildingService.findAll(); }
 
+    @GetMapping(value = "/trainer/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Building getBuildingByTrainingLeadId(@PathVariable String id) { return buildingService.findByTrainingLeadId(Integer.parseInt(id)); }
+
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Building saveBuilding(@RequestBody Building building) {return buildingService.save(building); }
 
