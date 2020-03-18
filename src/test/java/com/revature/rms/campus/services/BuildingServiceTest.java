@@ -23,13 +23,15 @@ public class BuildingServiceTest {
     BuildingMongoRepository repo;
     @InjectMocks
     BuildingService sut;
-    @Test()
+    @Test
     public void testSaveWithValidBuilding() {
 
         Building testBuilding = new Building("1", "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3), new ResourceMetadata());
         Building expectedResult = new Building("1", "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3), new ResourceMetadata());
+
+        when(repo.save(Mockito.any())).thenReturn(expectedResult);
 
         Building actualResults = sut.save(testBuilding);
 
