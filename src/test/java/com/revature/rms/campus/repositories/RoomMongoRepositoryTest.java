@@ -16,8 +16,8 @@ public class RoomMongoRepositoryTest {
     private RoomMongoRepository sut;
     @BeforeEach
     public void setup() throws Exception {
-        Room room1 = new Room("2301D", 45, true, null, 1, null, null);
-        Room room2 = new Room("84230", 100, true, null, 2, null, null);
+        Room room1 = new Room("2301D", 45, true, null, "1", null, null);
+        Room room2 = new Room("84230", 100, true, null, "2", null, null);
         //save product, verify has ID value after save
         assertNull(room1.getId());
         assertNull(room2.getId());

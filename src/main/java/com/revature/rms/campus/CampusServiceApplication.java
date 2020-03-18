@@ -57,23 +57,23 @@ public class CampusServiceApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		Room room1 = new Room("107", 24, true, new ArrayList<RoomStatus>(), 1, new ArrayList<Integer>(), new ResourceMetadata());
-		Room room2 = new Room("300", 30, true, new ArrayList<RoomStatus>(), 2, new ArrayList<Integer>(), new ResourceMetadata());
-		Room room3 = new Room("320", 28, true, new ArrayList<RoomStatus>(), 3, new ArrayList<Integer>(), new ResourceMetadata());
-		Room room4 = new Room("328", 45, true, new ArrayList<RoomStatus>(), 4, new ArrayList<Integer>(), new ResourceMetadata());
-		Room room5 = new Room("200A", 26, true, new ArrayList<RoomStatus>(), 5, new ArrayList<Integer>(), new ResourceMetadata());
-		Room room6 = new Room("200B", 26, true, new ArrayList<RoomStatus>(), 6, new ArrayList<Integer>(), new ResourceMetadata());
-		Room room7 = new Room("1300", 30, true, new ArrayList<RoomStatus>(), 7, new ArrayList<Integer>(), new ResourceMetadata());
-		Room room8 = new Room("1304", 26, true, new ArrayList<RoomStatus>(), 8, new ArrayList<Integer>(), new ResourceMetadata());
-		Room room9 = new Room("1400", 26, true, new ArrayList<RoomStatus>(), 9, new ArrayList<Integer>(), new ResourceMetadata());
-		Room room10 = new Room("1402", 30, true, new ArrayList<RoomStatus>(), 10, new ArrayList<Integer>(), new ResourceMetadata());
-		Room room11 = new Room("2301A", 15, true, new ArrayList<RoomStatus>(), 11, new ArrayList<Integer>(), new ResourceMetadata());
-		Room room12 = new Room("2301B", 15, true, new ArrayList<RoomStatus>(), 12, new ArrayList<Integer>(), new ResourceMetadata());
-		Room room13 = new Room("2301C", 15, true, new ArrayList<RoomStatus>(), 13, new ArrayList<Integer>(), new ResourceMetadata());
-		Room room14 = new Room("2301D", 15, true, new ArrayList<RoomStatus>(), 14, new ArrayList<Integer>(), new ResourceMetadata());
-		Room room15 = new Room("2300", 30, true, new ArrayList<RoomStatus>(), 15, new ArrayList<Integer>(), new ResourceMetadata());
-		Room room16 = new Room("2303", 30, true, new ArrayList<RoomStatus>(), 16, new ArrayList<Integer>(), new ResourceMetadata());
-		Room room17 = new Room("2304", 30, true, new ArrayList<RoomStatus>(), 17, new ArrayList<Integer>(), new ResourceMetadata());
+		Room room1 = new Room("107", 24, true, new ArrayList<RoomStatus>(), "1", new ArrayList<String>(), new ResourceMetadata());
+		Room room2 = new Room("300", 30, true, new ArrayList<RoomStatus>(), "2", new ArrayList<String>(), new ResourceMetadata());
+		Room room3 = new Room("320", 28, true, new ArrayList<RoomStatus>(), "3", new ArrayList<String>(), new ResourceMetadata());
+		Room room4 = new Room("328", 45, true, new ArrayList<RoomStatus>(), "4", new ArrayList<String>(), new ResourceMetadata());
+		Room room5 = new Room("200A", 26, true, new ArrayList<RoomStatus>(), "5", new ArrayList<String>(), new ResourceMetadata());
+		Room room6 = new Room("200B", 26, true, new ArrayList<RoomStatus>(), "6", new ArrayList<String>(), new ResourceMetadata());
+		Room room7 = new Room("1300", 30, true, new ArrayList<RoomStatus>(), "7", new ArrayList<String>(), new ResourceMetadata());
+		Room room8 = new Room("1304", 26, true, new ArrayList<RoomStatus>(), "8", new ArrayList<String>(), new ResourceMetadata());
+		Room room9 = new Room("1400", 26, true, new ArrayList<RoomStatus>(), "9", new ArrayList<String>(), new ResourceMetadata());
+		Room room10 = new Room("1402", 30, true, new ArrayList<RoomStatus>(), "10", new ArrayList<String>(), new ResourceMetadata());
+		Room room11 = new Room("2301A", 15, true, new ArrayList<RoomStatus>(), "11", new ArrayList<String>(), new ResourceMetadata());
+		Room room12 = new Room("2301B", 15, true, new ArrayList<RoomStatus>(), "12", new ArrayList<String>(), new ResourceMetadata());
+		Room room13 = new Room("2301C", 15, true, new ArrayList<RoomStatus>(), "13", new ArrayList<String>(), new ResourceMetadata());
+		Room room14 = new Room("2301D", 15, true, new ArrayList<RoomStatus>(), "14", new ArrayList<String>(), new ResourceMetadata());
+		Room room15 = new Room("2300", 30, true, new ArrayList<RoomStatus>(), "15", new ArrayList<String>(), new ResourceMetadata());
+		Room room16 = new Room("2303", 30, true, new ArrayList<RoomStatus>(), "16", new ArrayList<String>(), new ResourceMetadata());
+		Room room17 = new Room("2304", 30, true, new ArrayList<RoomStatus>(), "17", new ArrayList<String>(), new ResourceMetadata());
 
 		roomService.save(room1);
 		roomService.save(room2);
