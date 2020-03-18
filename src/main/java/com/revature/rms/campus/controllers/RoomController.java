@@ -1,10 +1,8 @@
 package com.revature.rms.campus.controllers;
 
-import com.revature.rms.campus.entities.Building;
 import com.revature.rms.campus.entities.Room;
 import com.revature.rms.campus.exceptions.InvalidInputException;
 import com.revature.rms.campus.exceptions.ResourceNotFoundException;
-import com.revature.rms.campus.services.BuildingService;
 import com.revature.rms.campus.services.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
