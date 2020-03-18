@@ -1,12 +1,14 @@
 package com.revature.rms.campus.controllers;
 
 import com.revature.rms.campus.entities.Building;
+import com.revature.rms.campus.entities.ErrorResponse;
 import com.revature.rms.campus.entities.Room;
 import com.revature.rms.campus.exceptions.InvalidInputException;
 import com.revature.rms.campus.exceptions.ResourceNotFoundException;
 import com.revature.rms.campus.services.BuildingService;
 import com.revature.rms.campus.services.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,4 +57,24 @@ public class RoomController {
             throw new InvalidInputException();
         }
         roomService.delete(id);}
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleInvalidRequestException(InvalidInputException e) {
+        ErrorResponse err = new ErrorResponse();
+        err.setMessage(e.getMessage());
+        err.setTimestamp(System.currentTimeMillis());
+        err.setStatus(400);
+        return err;
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleResourceNotFoundException(ResourceNotFoundException e) {
+        ErrorResponse err = new ErrorResponse();
+        err.setMessage(e.getMessage());
+        err.setTimestamp(System.currentTimeMillis());
+        err.setStatus(401);
+        return err;
+    }
 }

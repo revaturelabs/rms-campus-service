@@ -4,9 +4,6 @@ import com.revature.rms.campus.exceptions.InvalidInputException;
 import com.revature.rms.campus.exceptions.ResourceNotFoundException;
 import com.revature.rms.campus.exceptions.ResourcePersistenceException;
 import com.revature.rms.campus.repositories.BuildingMongoRepository;
-import com.revature.rms.campus.repositories.CampusMongoRepository;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -101,6 +98,28 @@ public class BuildingServiceTest {
         Building actualResult = sut.findByName(name);
 
         assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    public void findBuildingByTrainingLead() {
+        Building expectedResult = new Building("1", "Muma School of Business", "MSB", new Address(),
+                2, new ArrayList<Amenity>(1), new ArrayList<Room>(3), new ResourceMetadata());
+
+        when(repo.findByTrainingLead(Mockito.any())).thenReturn(expectedResult);
+        Building actualResult = sut.findByTrainingLeadId(2);
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test(expected = InvalidInputException.class)
+    public void findBuildingByTrainingLeadInvalidId() {
+        Building actualResult = sut.findByTrainingLeadId(0);
+    }
+
+    @Test(expected = ResourceNotFoundException.class)
+    public void findBuildingByTrainingLeadIdNotPresent() {
+        when(repo.findByTrainingLead(Mockito.any())).thenReturn(null);
+        Building actualResult = sut.findByTrainingLeadId(100);
     }
 
     @Test

@@ -60,8 +60,6 @@ public class CampusServiceTests {
         Campus expectedResult = new Campus("32", "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 
-        //when(repo.save(Mockito.any())).thenReturn(expectedResult);
-
         // Act
         Campus actualResults = sut.save(null);
 
@@ -194,8 +192,6 @@ public class CampusServiceTests {
     public void testDeleteWithValidId() {
         Campus testCampus = new Campus("32","University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
-
-        //when(repo.findById(Mockito.any())).thenReturn(Optional.of(testCampus));
         sut.delete(testCampus.getId());
         verify(repo, times(1)).deleteById(testCampus.getId());
     }
@@ -204,8 +200,6 @@ public class CampusServiceTests {
     public void testDeleteWithInvalidId() {
         Campus testCampus = new Campus("32","University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
-
-        //when(repo.findById(Mockito.any())).thenReturn(Optional.of(testCampus));
         sut.delete("-1");
         verify(repo, times(0)).deleteById("-1");
     }

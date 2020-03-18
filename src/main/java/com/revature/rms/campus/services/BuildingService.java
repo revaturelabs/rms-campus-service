@@ -61,4 +61,11 @@ public class BuildingService {
         }
        buildingMongoRepository.deleteById(id);
     }
+
+    public Building findByTrainingLeadId(Integer id) {
+        if (id < 1) throw new InvalidInputException();
+        Building temp = buildingMongoRepository.findByTrainingLead(id);
+        if( temp == null) throw new ResourceNotFoundException();
+        else return temp;
+    }
 }
