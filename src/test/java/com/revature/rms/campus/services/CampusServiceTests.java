@@ -59,7 +59,7 @@ public class CampusServiceTests {
 
         Campus expectedResult = new Campus("32", "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
-        
+
         // Act
         Campus actualResults = sut.save(null);
 
