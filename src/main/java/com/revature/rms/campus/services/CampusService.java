@@ -39,7 +39,7 @@ public class CampusService {
         }
         Optional<Campus> _campus = campusMongoRepository.findById(id);
         if (!_campus.isPresent()) {
-            throw new  ResourceNotFoundException();
+            throw new ResourceNotFoundException();
         }
         return _campus;
     }
