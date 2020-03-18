@@ -14,6 +14,20 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Rest controller for the CampusService. All of the methods below either produce or produce and consume JSON values
+ * The methods provide validations through the result of TDD in CampusServiceTests and CampusControllerTests.
+ * Methods include:
+ * - getAllCampus, this method performs a get with the url in the RequestMapping annotation and returns the result
+ * of campusService.findAll() as a list of JSON campus objects.
+ * - saveCampus, this method performs a post with provided url in the RequestMapping annotation. Expected the provided
+ * information to be a JSON and returns the JSON of campusService.save()
+ * - getCampusById, this method performs a get with the url in the RequestMapping annotation and including the provided
+ * param. Returns the result of campusService.findById() as a JSON.
+ * - updateCampus this method performs a put with the provided url and returns the result of campusService.update().
+ * - deleteCampusById, this method performs a get with the url in the RequestMapping annotation and including the provided
+ *  * param. Returns the result of campusService.delete() as a JSON.
+ */
 @RestController
 @RequestMapping("/v2/campus")
 public class CampusController {

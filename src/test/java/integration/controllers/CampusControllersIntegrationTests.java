@@ -101,6 +101,11 @@ public class CampusControllersIntegrationTests {
                 .andExpect(jsonPath("$.id").value(32));
     }
 
+    /**
+     * Test ensures CampusController.updateCampus() functions by performing a put method with a string representation of
+     * the campus object converted to JSON. Expects a 200 status and the MediaTypes are JSON.
+     * @throws Exception as a result of mvc.perform()
+     */
     @Test
     public void testUpdateCampusWithValidCampusExpecting200() throws Exception {
 
@@ -112,6 +117,11 @@ public class CampusControllersIntegrationTests {
                 .andExpect(status().isOk()).andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
     }
 
+    /**
+     * Test ensures CampusController.deleteById() functions by performing a delete method with the provided URL
+     * containing the id of the object to be deleted. Expects a 200 status and the MediaTypes are JSON.
+     * @throws Exception as a result of mvc.perform()
+     */
     @Test
     public void testDeleteCampusByIdWithValidIdExpecting200() throws Exception {
 
