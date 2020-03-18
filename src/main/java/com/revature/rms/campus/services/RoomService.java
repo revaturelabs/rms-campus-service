@@ -62,7 +62,10 @@ public class RoomService {
 
     public Room update(Room room){return roomMongoRepository.save(room);}
 
-    //soft delete
+    //Soft Delete Method: Updates the room object
+    //Sets active to false to indicate room no longer available
+    //Soft delete is implemented in the event of auditing.
+    //May need some modifications to pass testing.
     public Room delete(String id){
         if (id.isEmpty() || Integer.parseInt(id) <= 0) {
             throw new InvalidInputException();
