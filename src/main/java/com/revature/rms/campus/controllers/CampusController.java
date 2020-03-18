@@ -4,12 +4,10 @@ import com.revature.rms.campus.entities.*;
 import com.revature.rms.campus.exceptions.InvalidInputException;
 import com.revature.rms.campus.exceptions.ResourceNotFoundException;
 import com.revature.rms.campus.services.CampusService;
-import io.swagger.models.auth.In;
-import jdk.nashorn.internal.runtime.options.Option;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +47,30 @@ public class CampusController {
         return campusService.findById(id).get();
     }
 
+    @GetMapping(value = "/training/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Campus getCampusByTrainingManagerId(@PathVariable String id) {
+        if (id.isEmpty() || Integer.parseInt(id) <= 0) {
+            throw new InvalidInputException();
+        }
+        Campus campus = campusService.findByTrainingManagerId(Integer.parseInt(id));
+        if (campus == null) {
+            throw new ResourceNotFoundException();
+        }
+        return campus;
+    }
+
+    @GetMapping(value = "/staging/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Campus getCampusByStagingManagerId(@PathVariable String id) {
+        if (id.isEmpty() || Integer.parseInt(id) <= 0) {
+            throw new InvalidInputException();
+        }
+        Campus campus = campusService.findByStagingManagerId(Integer.parseInt(id));
+        if (campus == null) {
+            throw new ResourceNotFoundException();
+        }
+        return campus;
+    }
+
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Campus updateCampus(@RequestBody Campus campus) { return campusService.update(campus); }
 
@@ -60,10 +82,23 @@ public class CampusController {
         campusService.delete(id);
     }
 
-    @GetMapping(value="/populate")
-    public void populate() {
-        //Room room1 = new Room("A1", 10, true, new ArrayList<RoomStatus>(), 1, new ArrayList<Integer>(), new ResourceMetadata());
-        Campus campus1 = new Campus("University of South Florida", "USF", new Address(), 1, 2, 3, new ArrayList<Building>(), new ArrayList<Integer>(), new ResourceMetadata());
-        campusService.save(campus1);
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleInvalidRequestException(InvalidInputException e) {
+        ErrorResponse err = new ErrorResponse();
+        err.setMessage(e.getMessage());
+        err.setTimestamp(System.currentTimeMillis());
+        err.setStatus(400);
+        return err;
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleResourceNotFoundException(ResourceNotFoundException e) {
+        ErrorResponse err = new ErrorResponse();
+        err.setMessage(e.getMessage());
+        err.setTimestamp(System.currentTimeMillis());
+        err.setStatus(401);
+        return err;
     }
 }

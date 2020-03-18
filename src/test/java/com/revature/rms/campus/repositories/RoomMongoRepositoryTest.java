@@ -33,7 +33,7 @@ public class RoomMongoRepositoryTest {
         for(Room p : rooms) {
             count++;
         }
-        assertEquals(count, 2);
+        assertEquals(19, count);
     }
     @Test
     public void testFindById() {

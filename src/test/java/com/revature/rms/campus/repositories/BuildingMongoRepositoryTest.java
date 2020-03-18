@@ -32,7 +32,7 @@ public class BuildingMongoRepositoryTest {
         for(Building p : buildings) {
             count++;
         }
-        assertEquals(count, 2);
+        assertEquals(4, count);
     }
     @Test
     public void testFindByNameAndFindById() {
