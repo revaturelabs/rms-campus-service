@@ -19,11 +19,11 @@ public class Room {
     private Integer maxOccupancy;
     private Boolean active;
     private ArrayList <RoomStatus> roomStatus;
-    private Integer batchId;
-    private ArrayList<Integer> workOrders;
+    private String batchId;
+    private ArrayList<String> workOrders;
     private ResourceMetadata resourceMetadata;
 
-    public Room(String roomNumber, Integer maxOccupancy, Boolean active, ArrayList<RoomStatus> roomStatus, Integer batchId, ArrayList<Integer> workOrders, ResourceMetadata resourceMetadata) {
+    public Room(String roomNumber, Integer maxOccupancy, Boolean active, ArrayList<RoomStatus> roomStatus, String batchId, ArrayList<String> workOrders, ResourceMetadata resourceMetadata) {
         this.roomNumber = roomNumber;
         this.maxOccupancy = maxOccupancy;
         this.active = active;
@@ -31,5 +31,9 @@ public class Room {
         this.batchId = batchId;
         this.workOrders = workOrders;
         this.resourceMetadata = resourceMetadata;
+    }
+
+    public void addRoomStatus(RoomStatus status) {
+        roomStatus.add(status);
     }
 }

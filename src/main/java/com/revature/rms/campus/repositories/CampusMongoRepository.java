@@ -5,4 +5,8 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface CampusMongoRepository extends MongoRepository<Campus, String> {
     public Campus findByName(String name);
+
+    public Campus findByTrainingManagerId(Integer id);
+
+    public Campus findByStagingManagerId(Integer id);
 }

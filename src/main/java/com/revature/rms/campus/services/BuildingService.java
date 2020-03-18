@@ -3,6 +3,7 @@ package com.revature.rms.campus.services;
 import com.revature.rms.campus.entities.*;
 import com.revature.rms.campus.exceptions.InvalidInputException;
 import com.revature.rms.campus.exceptions.ResourceNotFoundException;
+import com.revature.rms.campus.exceptions.ResourcePersistenceException;
 import com.revature.rms.campus.repositories.BuildingMongoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class BuildingService {
     public Building save(Building building) {
 
         if (building == null) {
-            throw new ResourceNotFoundException();
+            throw new ResourcePersistenceException();
         }
         return buildingMongoRepository.save(building);
     }
@@ -59,5 +60,12 @@ public class BuildingService {
             throw new InvalidInputException();
         }
        buildingMongoRepository.deleteById(id);
+    }
+
+    public Building findByTrainingLeadId(Integer id) {
+        if (id < 1) throw new InvalidInputException();
+        Building temp = buildingMongoRepository.findByTrainingLead(id);
+        if( temp == null) throw new ResourceNotFoundException();
+        else return temp;
     }
 }

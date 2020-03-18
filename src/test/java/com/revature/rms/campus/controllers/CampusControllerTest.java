@@ -135,4 +135,50 @@ public class CampusControllerTest {
         campusController.deleteCampusById(testId);
         verify(campusService, times(0)).delete(testId);
     }
+
+    @Test
+    public void testGetCampusByTrainingManagerId() {
+        Campus expectedResult = new Campus("32", "University of South Florida", "USF", new Address(),
+                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
+
+        when(campusService.findByTrainingManagerId(Mockito.any())).thenReturn(expectedResult);
+        assertEquals(campusController.getCampusByTrainingManagerId("2"),  expectedResult);
+    }
+
+    @Test(expected = ResourceNotFoundException.class)
+    public void testGetCampusByTrainingManagerIdWithNull() {
+        Campus expectedResult = new Campus("32", "University of South Florida", "USF", new Address(),
+                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
+        campusController.getCampusByTrainingManagerId("5");
+    }
+
+    @Test(expected = InvalidInputException.class)
+    public void testGetCampusByTrainingManagerIdInvalid() {
+        Campus expectedResult = new Campus("32", "University of South Florida", "USF", new Address(),
+                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
+        campusController.getCampusByTrainingManagerId("0");
+    }
+
+    @Test
+    public void testGetCampusByStagingManagerId() {
+        Campus expectedResult = new Campus("32", "University of South Florida", "USF", new Address(),
+                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
+
+        when(campusService.findByStagingManagerId(Mockito.any())).thenReturn(expectedResult);
+        assertEquals(campusController.getCampusByStagingManagerId("3"),  expectedResult);
+    }
+
+    @Test(expected =  ResourceNotFoundException.class)
+    public void testGetCampusByStagingManagerIdWithNull() {
+        Campus expectedResult = new Campus("32", "University of South Florida", "USF", new Address(),
+                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
+        campusController.getCampusByStagingManagerId("5");
+    }
+
+    @Test(expected = InvalidInputException.class)
+    public void testGetCampusByStagingManagerIdInvalid() {
+        Campus expectedResult = new Campus("32", "University of South Florida", "USF", new Address(),
+                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
+        campusController.getCampusByStagingManagerId("0");
+    }
 }
