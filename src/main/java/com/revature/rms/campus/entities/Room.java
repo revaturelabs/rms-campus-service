@@ -32,4 +32,8 @@ public class Room {
         this.workOrders = workOrders;
         this.resourceMetadata = resourceMetadata;
     }
+
+    public void addRoomStatus(RoomStatus status) {
+        roomStatus.add(status);
+    }
 }

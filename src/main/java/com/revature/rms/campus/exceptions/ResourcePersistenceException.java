@@ -1,7 +1,7 @@
 package com.revature.rms.campus.exceptions;
 
 public class ResourcePersistenceException extends RuntimeException {
-    ResourcePersistenceException () {
-        super("This resource is already in use.");
+    public ResourcePersistenceException () {
+        super("This resource was not persisted correctly.");
     }
 }

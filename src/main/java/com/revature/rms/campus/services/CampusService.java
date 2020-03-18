@@ -44,6 +44,24 @@ public class CampusService {
         return _campus;
     }
 
+    public Campus findByTrainingManagerId(Integer id) {
+        if (id < 1) {
+            throw new InvalidInputException();
+        }
+        Campus campus = campusMongoRepository.findByTrainingManagerId(id);
+        if (campus == null) throw new ResourceNotFoundException();
+        else return campus;
+    }
+
+    public Campus findByStagingManagerId(Integer id) {
+        if (id < 1) {
+            throw new InvalidInputException();
+        }
+        Campus campus = campusMongoRepository.findByStagingManagerId(id);
+        if (campus == null) throw new ResourceNotFoundException();
+        else return campus;
+    }
+
     public Campus findByName(String name) {
         return campusMongoRepository.findByName(name);
     }

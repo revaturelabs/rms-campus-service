@@ -46,9 +46,9 @@ public class RoomService {
         return _room;
     }
 
-    public List<Room> findAllActiveRooms(boolean active){
-        return roomMongoRepository.findByActiveRooms(active);
-    }
+//    public List<Room> findAllActiveRooms(boolean active){
+//        return roomMongoRepository.findByActiveRooms(active);
+//    }
 
     public List<Room> findByMaxOccupancy(int occupancy){
         return roomMongoRepository.findByMaxOccupancy(occupancy);
