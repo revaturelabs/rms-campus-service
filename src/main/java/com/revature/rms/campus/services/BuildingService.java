@@ -22,12 +22,13 @@ public class BuildingService {
 
     /**
      * Save Method: Takes in a building object as the input. The input room
-     * object is tested to ensure that it is not null. If the room object
+     * object is tested to ensure that it is not null. If the building object
      * is null then it will throw a ResourceNotFoundException.
-     * Once the room object passes the test it is then saved or persisted
+     * Once the building object passes the test it is then saved or persisted
      * to the database.
+     *
      * @param building
-     * @return The new saved room object
+     * @return The new saved building object
      */
 
     public Building save(Building building) {
@@ -40,6 +41,7 @@ public class BuildingService {
 
     /**
      * findAll method: returns a list of all the building objects in the database.
+     *
      * @return a list of all the buildings
      */
     public List<Building> findAll() {
@@ -47,7 +49,7 @@ public class BuildingService {
     }
 
     /**
-     * findByBuilding Method: This takes in the id as the input
+     * findById Method: This takes in the id as the input
      * parameter. The input room number is validated to ensure that it is not
      * empty or negative or zero. If the id fails this validation an
      * InvalidInputException is thrown.
@@ -56,8 +58,9 @@ public class BuildingService {
      * object is not present then a ResourceNotFoundException is thrown.
      * If all these validations are passed, the building object that have the specified
      * building number is returned.
+     *
      * @param id
-     * @return the building object with the same room number as the input parameter.
+     * @return the building object with the same building id as the input parameter.
      */
 
     public Optional<Building> findById(String id) {
@@ -65,16 +68,17 @@ public class BuildingService {
             throw new InvalidInputException();
         }
         Optional<Building> theBuilding = buildingMongoRepository.findById(id);
-         if (!theBuilding.isPresent()) {
-            throw new  ResourceNotFoundException();
+        if (!theBuilding.isPresent()) {
+            throw new ResourceNotFoundException();
         }
 
         return buildingMongoRepository.findById(id);
     }
 
     /**
-     * findByNameMethod: This takes in the building name as the input
+     * findByName Method: This takes in the building name as the input
      * parameter.
+     *
      * @param name
      * @return the room object with the same room number as the input parameter.
      */
@@ -86,9 +90,11 @@ public class BuildingService {
     /**
      * Update Method: The building object is inputted and changes are saved.
      * The modified object is returned.
+     *
      * @param building
      * @return Updated/Modified room object
      */
+
     public Building update(Building building) {
         return buildingMongoRepository.save(building);
     }
@@ -100,6 +106,7 @@ public class BuildingService {
      * that it is not empty, negative or zero. if the input is empty,
      * negative or zero, an InvalidInputException is thrown.
      * If the building id exist, the object is then deleted
+     *
      * @param id
      * @return The deleted building object.
      */
@@ -108,7 +115,7 @@ public class BuildingService {
         if (id.isEmpty() || Integer.parseInt(id) <= 0) {
             throw new InvalidInputException();
         }
-       buildingMongoRepository.deleteById(id);
+        buildingMongoRepository.deleteById(id);
     }
 
     /**
@@ -117,14 +124,15 @@ public class BuildingService {
      * that it is not empty, negative or zero. if the input is empty,
      * negative or zero, an InvalidInputException is thrown.
      * If the training lead id exist, the building object is returned
+     *
      * @param id
-     * @return The building object object.
+     * @return The building object.
      */
 
     public Building findByTrainingLeadId(Integer id) {
         if (id < 1) throw new InvalidInputException();
         Building temp = buildingMongoRepository.findByTrainingLead(id);
-        if( temp == null) throw new ResourceNotFoundException();
+        if (temp == null) throw new ResourceNotFoundException();
         else return temp;
     }
 }
