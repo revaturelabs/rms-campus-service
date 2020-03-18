@@ -1,25 +1,35 @@
 package com.revature.rms.campus.entities;
 
-import io.swagger.models.auth.In;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @Document
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-
+/**
+ * POJO for the campus object. The annotations:
+ * @Data handles the getter and setter methods for each field
+ * @Document handles the mapping to the database
+ * @ToString handles the HashCode and ToString
+ * @AllArgsConstructor handles the all arguments constructor
+ * @NoArgsConstructor handles the no arguments constructor
+ * @Id marks the selected field as a primary key
+ * @NotNull ensures the field will cannot be null, all values except for abbrName are not null
+ * @NotEmpty ensures the field will not be empty, buildings and corporateEmployees are ArrayLists so we dont' want these
+ * fields to be empty either
+ *
+ * Lastly, we have a constructor containing every field except for the id.
+ */
 public class Campus {
 
     @Id

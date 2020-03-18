@@ -15,7 +15,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 
-
+/**
+ * Below are the integration tests for the CampusController class. The methods tested are:
+ * - getAllCampus
+ * - saveCampus
+ * - getCampusById
+ * - updateCampus
+ * - deleteCampusById
+ */
 @SpringBootTest(classes = CampusServiceApplication.class)
 @AutoConfigureMockMvc
 public class CampusControllersIntegrationTests {
@@ -23,6 +30,12 @@ public class CampusControllersIntegrationTests {
     @Autowired
     private MockMvc mvc;
 
+    /**
+     * The method below was created to transform the object passed into a string to satisfy the requirements of
+     * MockMvcRequestBuilders methods.
+     * @param obj
+     * @return String
+     */
     public static String asJSON(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
@@ -31,6 +44,12 @@ public class CampusControllersIntegrationTests {
         }
     }
 
+    /**
+     * This test ensures CampusController.getAllCampus() functions by performing a get method with the provided url. The
+     * method expects the information received and returned is of the ApplicationJSON MediaType. If done successfully,
+     * the method should have a status code of 200.
+     * @throws Exception caused as a result of the mvc.perform()
+     */
     @Test
     public void testGetAllCampusWithExistingCampusExpecting200() throws Exception {
 
@@ -42,6 +61,12 @@ public class CampusControllersIntegrationTests {
         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
     }
 
+    /**
+     * This test ensures CampusController.saveCampus() functions by performing a post method with the provided url and
+     * the string representation of the testCampus object passed in. The method expects the information received and
+     * returned is of the ApplicationJSON MediaType.
+     * @throws Exception caused as a result of the mvc.perform()
+     */
     @Test
     public void testSaveCampusWithValidCampusExpecting200() throws Exception {
         Campus testCampus = new Campus("University of South Florida", "USF", new Address(),
@@ -52,6 +77,14 @@ public class CampusControllersIntegrationTests {
                 .andExpect(status().isOk()).andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
     }
 
+    /**
+     * This test ensures CampusController.getCampusById() functions by performing a get method with the provided url
+     * containing the provided value for the id. The method expects the information received and returned is of the
+     * ApplicationJSON MediaType. The test also confirms the path contains the value of the Campus.id and this value is
+     * equivalent to the provided. Additionally, performed a post to ensure there was an accurate object to retrive and
+     * compare results to.
+     * @throws Exception caused as a result of the mvc.perform()
+     */
     @Test
     public void testGetCampusWithValidIdExpecting200() throws Exception {
         Campus testCampus = new Campus("32", "University of South Florida", "USF", new Address(),
@@ -65,6 +98,11 @@ public class CampusControllersIntegrationTests {
                 .andExpect(jsonPath("$.id").value(32));
     }
 
+    /**
+     * Test ensures CampusController.updateCampus() functions by performing a put method with a string representation of
+     * the campus object converted to JSON. Expects a 200 status and the MediaTypes are JSON.
+     * @throws Exception as a result of mvc.perform()
+     */
     @Test
     public void testUpdateCampusWithValidCampusExpecting200() throws Exception {
 
@@ -76,33 +114,15 @@ public class CampusControllersIntegrationTests {
                 .andExpect(status().isOk()).andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
     }
 
+    /**
+     * Test ensures CampusController.deleteById() functions by performing a delete method with the provided URL
+     * containing the id of the object to be deleted. Expects a 200 status and the MediaTypes are JSON.
+     * @throws Exception as a result of mvc.perform()
+     */
     @Test
     public void testDeleteCampusByIdWithValidIdExpecting200() throws Exception {
 
         this.mvc.perform(delete("/v2/campus/{id}", "32").contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(status().isOk());
     }
-
-
-//    @LocalServerPort
-//    private int port;
-//
-//    TestRestTemplate rt = new TestRestTemplate();
-//    HttpHeaders headers = new HttpHeaders();
-//
-//    private String creatingURL(String uri) {
-//        return "http://localhost:" + port + uri;
-//    }
-//
-//    @Test
-//    public void testGetAllCampus() {
-//        ResponseEntity<List<Campus>> response = rt.exchange(creatingURL("/v2/campus"), HttpMethod.GET,
-//                new HttpEntity<String>("Dummy", headers), new ParameterizedTypeReference<List<Campus>>() {});
-//
-//        Campus testCampus = new Campus("32", "University of South Florida", "USF", new Address(),
-//                2, 3, 4, new ArrayList<Building>(1),
-//                new ArrayList<Integer>(3), new ResourceMetadata());
-//
-//        assertTrue(response.getBody().contains(testCampus));
-//    }
 }

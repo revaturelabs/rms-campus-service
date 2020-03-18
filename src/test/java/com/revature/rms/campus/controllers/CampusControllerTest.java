@@ -20,6 +20,10 @@ import java.util.*;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
+/**
+ * These tests are for additional validation and to ensure the CampusService methods are working successfully when called
+ * by the CampusController methods. See CampusServiceTests for more details on testing for CampusService methods.
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 public class CampusControllerTest {
 
@@ -146,8 +150,6 @@ public class CampusControllerTest {
         Campus expectedResult = new Campus("32", "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
         campusController.getCampusByTrainingManagerId("5");
-//        when(campusService.findByTrainingManagerId(Mockito.any())).thenReturn(expectedResult);
-//        assertEquals(campusController.getCampusByTrainingManagerId("2"),  expectedResult);
     }
 
     @Test(expected = InvalidInputException.class)
@@ -155,8 +157,6 @@ public class CampusControllerTest {
         Campus expectedResult = new Campus("32", "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
         campusController.getCampusByTrainingManagerId("0");
-//        when(campusService.findByTrainingManagerId(Mockito.any())).thenReturn(expectedResult);
-//        assertEquals(campusController.getCampusByTrainingManagerId("5"),  expectedResult);
     }
 
     @Test
@@ -173,8 +173,6 @@ public class CampusControllerTest {
         Campus expectedResult = new Campus("32", "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
         campusController.getCampusByStagingManagerId("5");
-//        when(campusService.findByStagingManagerId(Mockito.any())).thenReturn(expectedResult);
-//        assertEquals(campusController.getCampusByStagingManagerId("3"),  expectedResult);
     }
 
     @Test(expected = InvalidInputException.class)
@@ -182,7 +180,5 @@ public class CampusControllerTest {
         Campus expectedResult = new Campus("32", "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
         campusController.getCampusByStagingManagerId("0");
-//        when(campusService.findByStagingManagerId(Mockito.any())).thenReturn(expectedResult);
-//        assertEquals(campusController.getCampusByStagingManagerId("3"),  expectedResult);
     }
 }
