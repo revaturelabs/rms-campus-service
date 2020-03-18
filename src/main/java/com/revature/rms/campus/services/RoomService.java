@@ -2,6 +2,8 @@ package com.revature.rms.campus.services;
 
 import com.revature.rms.campus.entities.Room;
 import com.revature.rms.campus.entities.RoomStatus;
+import com.revature.rms.campus.exceptions.InvalidInputException;
+import com.revature.rms.campus.exceptions.ResourceNotFoundException;
 import com.revature.rms.campus.repositories.RoomMongoRepository;
 import com.revature.rms.campus.repositories.RoomStatusMongoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,69 +19,88 @@ public class RoomService {
     private RoomMongoRepository roomMongoRepository;
 
     @Autowired
-    private RoomStatusMongoRepository roomStatusMongoRepository;
+    private RoomStatusMongoRepository roomStatusRepo;
 
-    public RoomService(RoomMongoRepository roomMongoRepository, RoomStatusMongoRepository roomStatusMongoRepository) {
-        this.roomMongoRepository = roomMongoRepository;
-        this.roomStatusMongoRepository = roomStatusMongoRepository;
-    }
 
     public List<Room> findAll(){ return roomMongoRepository.findAll();
     }
-    public Optional<Room> findByRoomNumber(String roomNum){return roomMongoRepository.findByRoomNumber(roomNum);}
+    public Optional<Room> findByRoomNumber(String roomNum){
+        if (roomNum.isEmpty() || (Integer.parseInt(roomNum) <= 0)) {
+            throw new InvalidInputException();
+        }
+        Optional<Room> _room = roomMongoRepository.findByRoomNumber(roomNum);
 
+        if(!_room.isPresent()) {
+            throw new ResourceNotFoundException();
+        }
+        return _room;
+    }
     public Optional<Room> findById(String id){
-        return roomMongoRepository.findById(id);
+        if (id.isEmpty() || (Integer.parseInt(id) <= 0)) {
+            throw new InvalidInputException();
+        }
+        Optional<Room> _room = roomMongoRepository.findById(id);
+        if(!_room.isPresent()){
+            throw new ResourceNotFoundException();
+        }
+        return _room;
     }
 
     public List<Room> findAllActiveRooms(boolean active){
-        return roomMongoRepository.findByActiveIsTrue(active);
+        return roomMongoRepository.findByActiveRooms(active);
     }
 
-    public List<Room> findByMaxOccupants(int occupancy){
+    public List<Room> findByMaxOccupancy(int occupancy){
         return roomMongoRepository.findByMaxOccupancy(occupancy);
     }
 
-    public Room save(Room room){return roomMongoRepository.save(room);}
+    public Room save(Room room){
+        if(room == null){
+            throw new ResourceNotFoundException();
+        }
+        return roomMongoRepository.save(room);}
 
     public Room update(Room room){return roomMongoRepository.save(room);}
 
     //soft delete
-    public void delete(String id){
-        Room deleteRoom = roomMongoRepository.findByRoomNumber(id).get();
+    public Room delete(String id){
+        if (id.isEmpty() || Integer.parseInt(id) <= 0) {
+            throw new InvalidInputException();
+        }
+        Room deleteRoom = roomMongoRepository.findById(id).get();
         deleteRoom.setActive(false);
-        save(deleteRoom);
+        return update(deleteRoom);
     }
 
     public List<RoomStatus> findAllStatusBySubmitter(int id){
-        return roomStatusMongoRepository.findAllBySubmitterId(id);
+        return roomStatusRepo.findAllBySubmitterId(id);
     }
 
-    public List<RoomStatus> findAllStatusByDate(String date){ return roomStatusMongoRepository.findAllBySubmittedDateTime(date);}
+    public List<RoomStatus> findAllStatusByDate(String date){ return roomStatusRepo.findAllBySubmittedDateTime(date);}
 
     public Optional<RoomStatus> findStatusById(String id){
-        return roomStatusMongoRepository.findById(id);
+        return roomStatusRepo.findById(id);
     }
 
     public List<RoomStatus> findAllStatus(){
-        return roomStatusMongoRepository.findAll();
+        return roomStatusRepo.findAll();
     }
 
     public List<RoomStatus> findAllByArchive(boolean active){
-        return roomStatusMongoRepository.findByArchivedIsTrue(active);
+        return roomStatusRepo.findByArchivedIsTrue(active);
     }
 
     public void saveStatus(RoomStatus roomStatus){
-       roomStatusMongoRepository.save(roomStatus);
+        roomStatusRepo.save(roomStatus);
     }
 
     public RoomStatus updateStatus(RoomStatus roomStatus){
-        return roomStatusMongoRepository.save(roomStatus);
+        return roomStatusRepo.save(roomStatus);
     }
 
     //soft delete
     public void deleteRoomStatus(String statusId){
-        RoomStatus deleteStatus = roomStatusMongoRepository.findById(statusId).get();
+        RoomStatus deleteStatus = roomStatusRepo.findById(statusId).get();
         deleteStatus.setArchived(true);
         saveStatus(deleteStatus);
     }
