@@ -41,6 +41,7 @@ public class CampusServiceApplication implements CommandLineRunner {
 	private BuildingService buildingService;
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(CampusServiceApplication.class, args);
 	}
 
@@ -57,8 +58,33 @@ public class CampusServiceApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		Room room1 = new Room("107", 24, true, new ArrayList<RoomStatus>(), "1", new ArrayList<String>(), new ResourceMetadata());
-		Room room2 = new Room("300", 30, true, new ArrayList<RoomStatus>(), "2", new ArrayList<String>(), new ResourceMetadata());
+		RoomStatus status1 = new RoomStatus(true, true, "12-13-20", 1, "");
+		RoomStatus status2 = new RoomStatus(true,  false, "01-31-20", 2, "Boards were cleaned, chairs were scattered");
+		RoomStatus status3 = new RoomStatus(false, true, "02-23-20", 1, "Boards were not cleans, chaired were ordered.");
+		RoomStatus status4 = new RoomStatus(false, false, "01-21-20", 3, "The room was in disarray. Boards were not cleaned and chairs unordered.");
+		RoomStatus status5 = new RoomStatus(true, false, "02-12-20", 2, "Boards were cleaned, chairs were not ordered");
+		RoomStatus status6 = new RoomStatus(true, true, "03-01-20", 4, "No Comment");
+
+		roomService.saveStatus(status1);
+		roomService.saveStatus(status2);
+		roomService.saveStatus(status3);
+		roomService.saveStatus(status4);
+		roomService.saveStatus(status5);
+		roomService.saveStatus(status6);
+
+		ArrayList<RoomStatus> room1Status = new ArrayList<>();
+		ArrayList<RoomStatus> room2Status = new ArrayList<>();
+
+		room1Status.add(status1);
+		room1Status.add(status2);
+		room1Status.add(status3);
+		room2Status.add(status4);
+		room2Status.add(status5);
+		room2Status.add(status6);
+
+		Room room1 = new Room("107", 24, true, room1Status, "1", new ArrayList<String>(), new ResourceMetadata());
+		Room room2 = new Room("300", 30, true, room2Status, "2", new ArrayList<String>(), new ResourceMetadata());
+
 		Room room3 = new Room("320", 28, true, new ArrayList<RoomStatus>(), "3", new ArrayList<String>(), new ResourceMetadata());
 		Room room4 = new Room("328", 45, true, new ArrayList<RoomStatus>(), "4", new ArrayList<String>(), new ResourceMetadata());
 		Room room5 = new Room("200A", 26, true, new ArrayList<RoomStatus>(), "5", new ArrayList<String>(), new ResourceMetadata());

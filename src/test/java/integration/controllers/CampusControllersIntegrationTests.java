@@ -2,10 +2,7 @@ package integration.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.rms.campus.CampusServiceApplication;
-import com.revature.rms.campus.entities.Address;
-import com.revature.rms.campus.entities.Building;
-import com.revature.rms.campus.entities.Campus;
-import com.revature.rms.campus.entities.ResourceMetadata;
+import com.revature.rms.campus.entities.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -85,6 +82,7 @@ public class CampusControllersIntegrationTests {
         this.mvc.perform(delete("/v2/campus/{id}", "32").contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(status().isOk());
     }
+
 
 //    @LocalServerPort
 //    private int port;
