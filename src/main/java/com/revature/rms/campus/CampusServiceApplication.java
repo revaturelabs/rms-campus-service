@@ -56,7 +56,7 @@ public class CampusServiceApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-//
+
 //		Room room1 = new Room("107", 24, true, new ArrayList<RoomStatus>(), "1", new ArrayList<String>(), new ResourceMetadata());
 //		Room room2 = new Room("300", 30, true, new ArrayList<RoomStatus>(), "2", new ArrayList<String>(), new ResourceMetadata());
 //		Room room3 = new Room("320", 28, true, new ArrayList<RoomStatus>(), "3", new ArrayList<String>(), new ResourceMetadata());
