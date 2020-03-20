@@ -13,6 +13,9 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Room {
+    /**
+     * May need to add @NotNull annotations to some fields to prevent null values.
+     */
     @Id
     private String id;
     private String roomNumber;
