@@ -16,6 +16,10 @@ import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
+/**
+ * These tests are for additional validation and to ensure the CampusService methods are working successfully when called
+ * by the CampusController methods. See CampusServiceTests for more details on testing for CampusService methods.
+ */
 
 @RunWith(SpringJUnit4ClassRunner.class)
 public class BuildingControllerTest {

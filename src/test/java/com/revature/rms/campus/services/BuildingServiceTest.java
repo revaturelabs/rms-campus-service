@@ -23,30 +23,30 @@ public class BuildingServiceTest {
     BuildingMongoRepository repo;
     @InjectMocks
     BuildingService sut;
-    @Test()
+    @Test
     public void testSaveWithValidBuilding() {
-        //Arrange
+
         Building testBuilding = new Building("1", "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3), new ResourceMetadata());
         Building expectedResult = new Building("1", "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3), new ResourceMetadata());
+
         when(repo.save(Mockito.any())).thenReturn(expectedResult);
-//Act
+
         Building actualResults = sut.save(testBuilding);
-//Assert
+
         assertEquals(actualResults, expectedResult);
     }
     @Test(expected = ResourcePersistenceException.class)
     public void testSaveWithNullBuilding(){
-//Arrange
+
         Building expectedResult = new Building("1", "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3), new ResourceMetadata());
         when(sut.save(Mockito.any())).thenReturn(repo.save(Mockito.any()));
         when(repo.save(Mockito.any())).thenThrow(ResourcePersistenceException.class);
-//Act
+
         Building actualResults = sut.save(null);
-//Assert
-        //assertEquals(actualResults, expectedResult);
+
     }
 
     @Test
