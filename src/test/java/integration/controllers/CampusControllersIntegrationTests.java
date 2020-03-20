@@ -68,6 +68,9 @@ public class CampusControllersIntegrationTests {
      * This test ensures CampusController.saveCampus() functions by performing a post method with the provided url and
      * the string representation of the testCampus object passed in. The method expects the information received and
      * returned is of the ApplicationJSON MediaType.
+     *
+     * Note this may need to be played with more - should technically be status 201, but changing the method signature
+     * and logic to reflect this still has it producing 200
      * @throws Exception caused as a result of the mvc.perform()
      */
     @Test
