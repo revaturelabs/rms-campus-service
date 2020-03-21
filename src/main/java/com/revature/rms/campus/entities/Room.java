@@ -1,4 +1,6 @@
 package com.revature.rms.campus.entities;
 
-public class Room {
+import com.revature.rms.core.models.Resource;
+
+public class Room extends Resource {
 }
