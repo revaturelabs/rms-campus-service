@@ -1,4 +1,7 @@
 package com.revature.rms.campus.repos;
 
-public interface RoomRepository {
+import com.revature.rms.campus.entities.Room;
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
+
+public interface RoomRepository extends ReactiveMongoRepository<Room, String> {
 }
