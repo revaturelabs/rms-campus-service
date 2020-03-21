@@ -1,4 +1,6 @@
 package com.revature.rms.campus.entities;
 
-public enum AmentityStatus {
+public enum AmenityStatus {
+
+
 }
