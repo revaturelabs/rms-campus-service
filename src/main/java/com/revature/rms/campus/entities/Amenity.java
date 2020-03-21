@@ -14,4 +14,22 @@ public class Amenity {
         this.status = status;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public Amenity setType(String type) {
+        this.type = type;
+        return this;
+    }
+
+    public AmenityStatus getStatus() {
+        return status;
+    }
+
+    public Amenity setStatus(AmenityStatus status) {
+        this.status = status;
+        return this;
+    }
+
 }
