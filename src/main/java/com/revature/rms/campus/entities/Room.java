@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,7 +26,7 @@ public class Room extends Resource {
     @NotNull @NotEmpty
     private String roomNumber;
 
-    @NotNull @NotEmpty
+    @Positive
     private int maxOccupancy;
 
     @NotNull
@@ -36,18 +37,22 @@ public class Room extends Resource {
         this.workOrders = new ArrayList<>();
     }
 
-    public Room(@NotNull @NotEmpty String roomNumber, @NotNull @NotEmpty int maxOccupancy, @NotNull List<String> workOrders) {
+    public Room(@NotNull @NotEmpty String roomNumber, @Positive int maxOccupancy, @NotNull List<String> workOrders) {
         this.roomNumber = roomNumber;
         this.maxOccupancy = maxOccupancy;
         this.workOrders = workOrders;
     }
 
-    public Room(String id, @NotNull @NotEmpty String roomNumber, @NotNull @NotEmpty int maxOccupancy,
+    public Room(@NotNull @NotEmpty String roomNumber, @Positive int maxOccupancy,
                 @NotNull List<String> workOrders, ResourceMetadata metadata) {
-        super(id, metadata);
-        this.roomNumber = roomNumber;
-        this.maxOccupancy = maxOccupancy;
-        this.workOrders = workOrders;
+        this(roomNumber, maxOccupancy, workOrders);
+        this.metadata = metadata;
+    }
+
+    public Room(String id, @NotNull @NotEmpty String roomNumber, @Positive int maxOccupancy,
+                @NotNull List<String> workOrders, ResourceMetadata metadata) {
+        this(roomNumber, maxOccupancy, workOrders, metadata);
+        this.id = id;
     }
 
     public String getRoomNumber() {
