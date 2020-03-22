@@ -3,6 +3,7 @@ package com.revature.rms.campus.entities;
 public class Address {
 
     private String unitStreet;
+    private String address2;
     private String city;
     private String state;
     private String zip;
@@ -14,10 +15,16 @@ public class Address {
 
     public Address(String unitStreet, String city, String state, String zip, Country country) {
         this.unitStreet = unitStreet;
+        this.address2 = "";
         this.city = city;
         this.state = state;
         this.zip = zip;
         this.country = country;
+    }
+
+    public Address(String unitStreet, String address2, String city, String state, String zip, Country country) {
+        this(unitStreet, city, state, zip, country);
+        this.address2 = address2;
     }
 
     public String getUnitStreet() {
@@ -26,6 +33,15 @@ public class Address {
 
     public Address setUnitStreet(String unitStreet) {
         this.unitStreet = unitStreet;
+        return this;
+    }
+
+    public String getAddress2() {
+        return address2;
+    }
+
+    public Address setAddress2(String address2) {
+        this.address2 = address2;
         return this;
     }
 
