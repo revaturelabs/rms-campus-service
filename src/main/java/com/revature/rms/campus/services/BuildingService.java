@@ -1,6 +1,6 @@
 package com.revature.rms.campus.services;
 
-import com.revature.rms.campus.entities.Building;
+import com.revature.rms.campus.documents.Building;
 import com.revature.rms.campus.repos.BuildingRepository;
 import com.revature.rms.core.services.ResourceService;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;

@@ -1,4 +1,4 @@
-package com.revature.rms.campus.entities;
+package com.revature.rms.campus.documents;
 
 public enum AmenityStatus {
 

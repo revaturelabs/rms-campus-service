@@ -1,6 +1,6 @@
 package com.revature.rms.campus.config;
 
-import com.revature.rms.campus.entities.*;
+import com.revature.rms.campus.documents.*;
 import com.revature.rms.campus.repos.BuildingRepository;
 import com.revature.rms.campus.repos.CampusRepository;
 import com.revature.rms.campus.repos.RoomRepository;

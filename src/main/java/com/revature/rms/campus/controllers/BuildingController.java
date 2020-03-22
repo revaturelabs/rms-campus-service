@@ -1,6 +1,6 @@
 package com.revature.rms.campus.controllers;
 
-import com.revature.rms.campus.entities.Building;
+import com.revature.rms.campus.documents.Building;
 import com.revature.rms.campus.services.BuildingService;
 import com.revature.rms.core.controllers.ResourceController;
 import org.springframework.web.bind.annotation.RequestMapping;
