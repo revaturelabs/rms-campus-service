@@ -3,6 +3,7 @@ package com.revature.rms.campus.documents;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.revature.rms.core.models.Resource;
 import com.revature.rms.core.models.ResourceMetadata;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotEmpty;
@@ -45,6 +46,7 @@ public class Campus extends Resource {
     @NotNull @NotEmpty
     private String hrLead;
 
+    @DBRef
     @NotNull @NotEmpty
     private List<Building> buildings;
 

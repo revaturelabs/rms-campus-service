@@ -3,6 +3,7 @@ package com.revature.rms.campus.documents;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.revature.rms.core.models.Resource;
 import com.revature.rms.core.models.ResourceMetadata;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotEmpty;
@@ -40,6 +41,7 @@ public class Building extends Resource {
     @NotNull
     private List<Amenity> amenities;
 
+    @DBRef
     @NotNull @NotEmpty
     private List<Room> rooms;
 
