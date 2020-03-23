@@ -33,15 +33,15 @@ public class BuildingService extends ResourceService<Building> {
     public Flux<Void> deleteAllById(Iterable<String> ids) {
 
         return this.repo.findAllById(ids)
-                .flatMap(bldg -> {
-                    Iterable<String> roomIds = bldg.getRooms().stream().map(Resource::getId).collect(Collectors.toList());
-                    return roomService.deleteAllById(roomIds).then(Mono.just(bldg));
-                })
-                .flatMap(bldg -> {
-                    Query query = new Query(Criteria.where("id").is(bldg.getId()));
-                    bldg.getMetadata().setActive(false);
-                    return mongoTemplate.findAndReplace(query, bldg).then();
-                });
+                        .flatMap(bldg -> {
+                            Iterable<String> roomIds = bldg.getRooms().stream().map(Resource::getId).collect(Collectors.toList());
+                            return roomService.deleteAllById(roomIds).then(Mono.just(bldg));
+                        })
+                        .flatMap(bldg -> {
+                            Query query = new Query(Criteria.where("id").is(bldg.getId()));
+                            bldg.getMetadata().setActive(false);
+                            return mongoTemplate.findAndReplace(query, bldg).then();
+                        });
     }
 
 }
