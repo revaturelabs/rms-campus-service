@@ -25,7 +25,7 @@ public class BuildingService extends ResourceService<Building> {
     }
 
     @Autowired
-    public void setRoomRepo(RoomService service) {
+    public void setRoomService(RoomService service) {
         this.roomService = service;
     }
 

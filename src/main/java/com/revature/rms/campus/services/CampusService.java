@@ -17,15 +17,15 @@ import java.util.stream.Collectors;
 @Service
 public class CampusService extends ResourceService<Campus> {
 
-    private BuildingService bldgService;
+    private BuildingService buildingService;
 
     public CampusService(CampusRepository repo, ReactiveMongoTemplate template) {
         super(repo, template);
     }
 
     @Autowired
-    public void setBldgService(BuildingService bldgService) {
-        this.bldgService = bldgService;
+    public void setBuildingService(BuildingService service) {
+        this.buildingService = service;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class CampusService extends ResourceService<Campus> {
         return this.repo.findAllById(ids)
                 .flatMap(campus -> {
                     Iterable<String> bldgIds = campus.getBuildings().stream().map(Resource::getId).collect(Collectors.toList());
-                    return bldgService.deleteAllById(bldgIds).then(Mono.just(campus));
+                    return buildingService.deleteAllById(bldgIds).then(Mono.just(campus));
                 })
                 .flatMap(campus -> {
                     Query query = new Query(Criteria.where("id").is(campus.getId()));
