@@ -27,6 +27,11 @@ public class Amenity {
     public Amenity() {
     }
 
+    public Amenity(AmenityType type, AmenityStatus status) {
+        this.type = type;
+        this.status = status;
+    }
+
     public Amenity(int id, AmenityType type, AmenityStatus status) {
         this.id = id;
         this.type = type;

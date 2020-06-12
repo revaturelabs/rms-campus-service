@@ -37,7 +37,7 @@ public class RoomStatus {
     @Column(nullable=false)
     private String otherNotes;
 
-    @Column(nullable=false)
+    @Column
     private boolean archived;
 
     public RoomStatus() {
@@ -53,12 +53,13 @@ public class RoomStatus {
         this.archived = archived;
     }
 
-    public RoomStatus(boolean whiteBoardCleaned, boolean chairsOrdered, String submittedDateTime, int submitterId, String otherNotes) {
+    public RoomStatus(boolean whiteBoardCleaned, boolean chairsOrdered, String submittedDateTime, int submitterId, String otherNotes, boolean archived) {
         this.whiteBoardCleaned = whiteBoardCleaned;
         this.chairsOrdered = chairsOrdered;
         SubmittedDateTime = submittedDateTime;
         this.submitterId = submitterId;
         this.otherNotes = otherNotes;
+        this.archived = archived;
     }
 
 }
