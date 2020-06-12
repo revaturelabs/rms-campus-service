@@ -46,6 +46,14 @@ public class ResourceMetadata {
         this.resourceOwner = resourceOwner;
     }
 
+    public ResourceMetadata(int resourceCreator, String resourceCreatorDateTime, int lastModifier, String lastModifiedDateTime, int resourceOwner) {
+        this.resourceCreator = resourceCreator;
+        this.resourceCreatorDateTime = resourceCreatorDateTime;
+        this.lastModifier = lastModifier;
+        this.lastModifiedDateTime = lastModifiedDateTime;
+        this.resourceOwner = resourceOwner;
+    }
+
     public ResourceMetadata(String resourceCreatorDateTime, int lastModifier, String lastModifiedDateTime, int resourceOwner) {
         this.resourceCreatorDateTime = resourceCreatorDateTime;
         this.lastModifier = lastModifier;

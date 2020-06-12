@@ -50,4 +50,11 @@ public class Address {
         this.zip = zip;
         this.country = country;
     }
+    public Address(String unitStreet, String city, String state, String zip, String country) {
+        this.unitStreet = unitStreet;
+        this.city = city;
+        this.state = state;
+        this.zip = zip;
+        this.country = country;
+    }
 }

@@ -2,12 +2,15 @@ package com.revature.rms.campus.services;
 
 
 import com.revature.rms.campus.entities.Campus;
+import com.revature.rms.campus.entities.RoomStatus;
 import com.revature.rms.campus.exceptions.InvalidInputException;
 import com.revature.rms.campus.exceptions.ResourceNotFoundException;
-import com.revature.rms.campus.repositories.CampusMongoRepository;
+//import com.revature.rms.campus.repositories.CampusMongoRepository;
+import com.revature.rms.campus.repositories.CampusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,30 +44,43 @@ import java.util.Optional;
 @Service
 public class CampusService {
 
-    private CampusMongoRepository campusMongoRepository;
+//    private CampusMongoRepository campusMongoRepository;
+    private CampusRepository campusRepository;
 
     @Autowired
-    public CampusService(CampusMongoRepository repo) {
-        this.campusMongoRepository = repo;
+//    public CampusService(CampusMongoRepository repo) {
+//        this.campusMongoRepository = repo;
+//    }
+    public CampusService(CampusRepository repo) {
+        this.campusRepository = repo;
     }
 
     public Campus save(Campus campus) {
         if (campus == null) {
             throw new ResourceNotFoundException();
         }
-        return campusMongoRepository.save(campus);
+//        return campusMongoRepository.save(campus);
+        return campusRepository.save(campus);
     }
 
 
+//    public List<Campus> findAll() {
+//        return campusMongoRepository.findAll();
+//    }
     public List<Campus> findAll() {
-        return campusMongoRepository.findAll();
+        Iterable<Campus> r = campusRepository.findAll();
+        List<Campus> list = getListFromIterator(r);
+        return list;
+//        return campusRepository.findAll();
     }
 
-    public Optional<Campus> findById(String id) {
-        if (id.isEmpty() || (Integer.parseInt(id) <= 0)) {
+    public Optional<Campus> findById(int id) {
+//        if (id.isEmpty() || (Integer.parseInt(id) <= 0)) {
+        if (id <= 0) {
             throw new InvalidInputException();
         }
-        Optional<Campus> _campus = campusMongoRepository.findById(id);
+//        Optional<Campus> _campus = campusMongoRepository.findById(id);
+        Optional<Campus> _campus = campusRepository.findById(id);
         if (!_campus.isPresent()) {
             throw new  ResourceNotFoundException();
         }
@@ -75,7 +91,8 @@ public class CampusService {
         if (id < 1) {
             throw new InvalidInputException();
         }
-        Campus campus = campusMongoRepository.findByTrainingManagerId(id);
+//        Campus campus = campusMongoRepository.findByTrainingManagerId(id);
+        Campus campus = campusRepository.findByTrainingManagerId(id);
         if (campus == null) throw new ResourceNotFoundException();
         else return campus;
     }
@@ -84,23 +101,41 @@ public class CampusService {
         if (id < 1) {
             throw new InvalidInputException();
         }
-        Campus campus = campusMongoRepository.findByStagingManagerId(id);
+//        Campus campus = campusMongoRepository.findByStagingManagerId(id);
+        Campus campus = campusRepository.findByStagingManagerId(id);
         if (campus == null) throw new ResourceNotFoundException();
         else return campus;
     }
 
+//    public Campus findByName(String name) {
+//        return campusMongoRepository.findByName(name);
+//    }
     public Campus findByName(String name) {
-        return campusMongoRepository.findByName(name);
+        return campusRepository.findByName(name);
     }
 
+//    public Campus update(Campus campus) {
+//        return campusMongoRepository.save(campus);
+//    }
     public Campus update(Campus campus) {
-        return campusMongoRepository.save(campus);
+        return campusRepository.save(campus);
     }
 
-    public void delete(String id) {
-        if (id.isEmpty() || Integer.parseInt(id) <= 0) {
+    public void delete(int id) {
+//        if (id.isEmpty() || Integer.parseInt(id) <= 0) { 
+        if (id <= 0) {
             throw new InvalidInputException();
         }
-        campusMongoRepository.deleteById(id);
+//        campusMongoRepository.deleteById(id);
+        campusRepository.deleteById(id);
+    }
+
+    //added to convert to h2
+    public static <T> List<T> getListFromIterator(Iterable<T> iterable)
+    {
+
+        List<T> list = new ArrayList<>();
+        iterable.forEach(list::add);
+        return list;
     }
 }

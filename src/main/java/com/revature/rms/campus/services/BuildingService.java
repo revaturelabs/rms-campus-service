@@ -4,20 +4,27 @@ import com.revature.rms.campus.entities.*;
 import com.revature.rms.campus.exceptions.InvalidInputException;
 import com.revature.rms.campus.exceptions.ResourceNotFoundException;
 import com.revature.rms.campus.exceptions.ResourcePersistenceException;
-import com.revature.rms.campus.repositories.BuildingMongoRepository;
+//import com.revature.rms.campus.repositories.BuildingMongoRepository;
+import com.revature.rms.campus.repositories.BuildingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class BuildingService {
-    private BuildingMongoRepository buildingMongoRepository;
+//    private BuildingMongoRepository buildingMongoRepository;
+    private BuildingRepository buildingRepository;
 
+//    @Autowired
+//    public BuildingService(BuildingMongoRepository buildingMongoRepository) {
+//        this.buildingMongoRepository = buildingMongoRepository;
+//    }
     @Autowired
-    public BuildingService(BuildingMongoRepository buildingMongoRepository) {
-        this.buildingMongoRepository = buildingMongoRepository;
+    public BuildingService(BuildingRepository buildingRepository) {
+        this.buildingRepository = buildingRepository;
     }
 
     /**
@@ -36,7 +43,8 @@ public class BuildingService {
         if (building == null) {
             throw new ResourcePersistenceException();
         }
-        return buildingMongoRepository.save(building);
+//        return buildingMongoRepository.save(building);
+        return buildingRepository.save(building);
     }
 
     /**
@@ -45,7 +53,11 @@ public class BuildingService {
      * @return a list of all the buildings
      */
     public List<Building> findAll() {
-        return buildingMongoRepository.findAll();
+//        return buildingMongoRepository.findAll();
+        Iterable<Building> b = buildingRepository.findAll();
+        List<Building> list = getListFromIterator(b);
+        return list;
+//        return buildingRepository.findAll();
     }
 
     /**
@@ -63,16 +75,19 @@ public class BuildingService {
      * @return the building object with the same building id as the input parameter.
      */
 
-    public Optional<Building> findById(String id) {
-        if (id.isEmpty() || (Integer.parseInt(id) <= 0)) {
+    public Optional<Building> findById(int id) {
+//        if (id.isEmpty() || (Integer.parseInt(id) <= 0)) {
+        if (id <= 0) {
             throw new InvalidInputException();
         }
-        Optional<Building> theBuilding = buildingMongoRepository.findById(id);
+//        Optional<Building> theBuilding = buildingMongoRepository.findById(id);
+        Optional<Building> theBuilding = buildingRepository.findById(id);
         if (!theBuilding.isPresent()) {
             throw new ResourceNotFoundException();
         }
 
-        return buildingMongoRepository.findById(id);
+//        return buildingMongoRepository.findById(id);
+        return buildingRepository.findById(id);
     }
 
     /**
@@ -82,8 +97,11 @@ public class BuildingService {
      * @param name
      * @return the room object with the same room number as the input parameter.
      */
+//    public Building findByName(String name) {
+//        return buildingMongoRepository.findByName(name);
+//    }
     public Building findByName(String name) {
-        return buildingMongoRepository.findByName(name);
+        return buildingRepository.findByName(name);
     }
 
 
@@ -95,10 +113,12 @@ public class BuildingService {
      * @return Updated/Modified room object
      */
 
+//    public Building update(Building building) {
+//        return buildingMongoRepository.save(building);
+//    }
     public Building update(Building building) {
-        return buildingMongoRepository.save(building);
+        return buildingRepository.save(building);
     }
-
 
     /**
      * Delete Method: Building object is found by id and deleted
@@ -111,11 +131,13 @@ public class BuildingService {
      * @return The deleted building object.
      */
 
-    public void delete(String id) {
-        if (id.isEmpty() || Integer.parseInt(id) <= 0) {
+    public void delete(int id) {
+//        if (id.isEmpty() || Integer.parseInt(id) <= 0) {
+        if (id <= 0) {
             throw new InvalidInputException();
         }
-        buildingMongoRepository.deleteById(id);
+//        buildingMongoRepository.deleteById(id);
+        buildingRepository.deleteById(id);
     }
 
     /**
@@ -129,10 +151,20 @@ public class BuildingService {
      * @return The building object.
      */
 
-    public Building findByTrainingLeadId(Integer id) {
+    public Building findByTrainingLeadId(int id) {
         if (id < 1) throw new InvalidInputException();
-        Building temp = buildingMongoRepository.findByTrainingLead(id);
+//        Building temp = buildingMongoRepository.findByTrainingLead(id);
+        Building temp = buildingRepository.findByTrainingLead(id);
         if (temp == null) throw new ResourceNotFoundException();
         else return temp;
+    }
+    
+    //added to convert to h2
+    public static <T> List<T> getListFromIterator(Iterable<T> iterable)
+    {
+
+        List<T> list = new ArrayList<>();
+        iterable.forEach(list::add);
+        return list;
     }
 }
