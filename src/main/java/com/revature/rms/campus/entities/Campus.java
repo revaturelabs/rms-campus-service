@@ -1,5 +1,6 @@
 package com.revature.rms.campus.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,15 +8,18 @@ import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 
+@Entity
 @Data
-@Document
+//@Document
 @ToString
-@AllArgsConstructor
-@NoArgsConstructor
+//commentted out bc mangodb
+//@AllArgsConstructor
+//@NoArgsConstructor
 /**
  * POJO for the campus object. The annotations:
  * @Data handles the getter and setter methods for each field
@@ -33,34 +37,63 @@ import java.util.ArrayList;
 public class Campus {
 
     @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private String id;
 
-    @NotNull
+//    @NotNull
+    @Column(nullable=false,unique=true) //covert h2
     private String name;
+
+    @Column(nullable=false) //covert h2
     private String abbrName;
 
-    @NotNull
+//    @NotNull
+    @Column(nullable=false)
     private Address shippingAddress;
 
-    @NotNull
+//    @NotNull
+    @Column(nullable=false)
     private int trainingManagerId;
 
-    @NotNull
+//    @NotNull
+    @Column(nullable=false)
     private int stagingManagerId;
 
-    @NotNull
+//    @NotNull
+    @Column(nullable=false)
     private int hrLead;
 
-    @NotNull
-    @NotEmpty
+//    @NotNull
+//    @NotEmpty
+    @Column(nullable=false) //covert h2
     private ArrayList<Building> buildings;
 
-    @NotNull
-    @NotEmpty
+//    @NotNull
+//    @NotEmpty
+    @Column(nullable=false) //covert h2
     private ArrayList<Integer> corporateEmployees;
 
-    @NotNull
+//    @NotNull
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // copy from building service?
     private ResourceMetadata resourceMetadata;
+
+    public Campus() {
+    }
+
+    public Campus(String id, String name, String abbrName, Address shippingAddress, int trainingManagerId, int stagingManagerId, int hrLead, ArrayList<Building> buildings, ArrayList<Integer> corporateEmployees, ResourceMetadata resourceMetadata) {
+        this.id = id;
+        this.name = name;
+        this.abbrName = abbrName;
+        this.shippingAddress = shippingAddress;
+        this.trainingManagerId = trainingManagerId;
+        this.stagingManagerId = stagingManagerId;
+        this.hrLead = hrLead;
+        this.buildings = buildings;
+        this.corporateEmployees = corporateEmployees;
+        this.resourceMetadata = resourceMetadata;
+    }
 
     public Campus(String name, String abbrName, Address shippingAddress, int trainingManagerId, int stagingManagerId, int hrLead, ArrayList<Building> buildings, ArrayList<Integer> corporateEmployees, ResourceMetadata resourceMetadata) {
         this.name = name;
