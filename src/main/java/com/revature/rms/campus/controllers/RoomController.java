@@ -35,8 +35,8 @@ public class RoomController {
         return roomService.save(room); }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Room getRoomById(@PathVariable String id) {
-        if(id.isEmpty() || Integer.parseInt(id) <= 0){
+    public Room getRoomById(@PathVariable int id) {
+        if(id <= 0){
             throw new InvalidInputException();
         }
         Optional<Room> _room = roomService.findById(id);
@@ -50,8 +50,8 @@ public class RoomController {
     public Room updateRoom(@RequestBody Room room) { return roomService.update(room); }
 
     @DeleteMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void deleteRoomById(@PathVariable String id) {
-        if(id.isEmpty() || Integer.parseInt(id) <= 0){
+    public void deleteRoomById(@PathVariable int id) {
+        if(id <= 0){
             throw new InvalidInputException();
         }
         roomService.delete(id);}

@@ -50,8 +50,8 @@ public class CampusController {
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Campus getCampusById(@PathVariable String id) {
-        if (id.isEmpty() || Integer.parseInt(id) <= 0) {
+    public Campus getCampusById(@PathVariable int id) {
+        if (id <= 0) {
             throw new InvalidInputException();
         }
         Optional<Campus> _campus = campusService.findById(id);
@@ -62,11 +62,11 @@ public class CampusController {
     }
 
     @GetMapping(value = "/training/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Campus getCampusByTrainingManagerId(@PathVariable String id) {
-        if (id.isEmpty() || Integer.parseInt(id) <= 0) {
+    public Campus getCampusByTrainingManagerId(@PathVariable int id) {
+        if (id <= 0) {
             throw new InvalidInputException();
         }
-        Campus campus = campusService.findByTrainingManagerId(Integer.parseInt(id));
+        Campus campus = campusService.findByTrainingManagerId(id);
         if (campus == null) {
             throw new ResourceNotFoundException();
         }
@@ -74,11 +74,11 @@ public class CampusController {
     }
 
     @GetMapping(value = "/staging/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Campus getCampusByStagingManagerId(@PathVariable String id) {
-        if (id.isEmpty() || Integer.parseInt(id) <= 0) {
+    public Campus getCampusByStagingManagerId(@PathVariable int id) {
+        if (id <= 0) {
             throw new InvalidInputException();
         }
-        Campus campus = campusService.findByStagingManagerId(Integer.parseInt(id));
+        Campus campus = campusService.findByStagingManagerId(id);
         if (campus == null) {
             throw new ResourceNotFoundException();
         }
@@ -89,8 +89,8 @@ public class CampusController {
     public Campus updateCampus(@RequestBody Campus campus) { return campusService.update(campus); }
 
     @DeleteMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void deleteCampusById(@PathVariable String id) {
-        if(id.isEmpty() || Integer.parseInt(id) <= 0) {
+    public void deleteCampusById(@PathVariable int id) {
+        if(id <= 0) {
             throw new InvalidInputException();
         }
         campusService.delete(id);
