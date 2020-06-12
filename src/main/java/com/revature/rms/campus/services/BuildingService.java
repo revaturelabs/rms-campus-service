@@ -8,7 +8,9 @@ import com.revature.rms.campus.exceptions.ResourcePersistenceException;
 import com.revature.rms.campus.repositories.BuildingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -38,6 +40,7 @@ public class BuildingService {
      * @return The new saved building object
      */
 
+    @Transactional
     public Building save(Building building) {
 
         if (building == null) {
@@ -52,6 +55,7 @@ public class BuildingService {
      *
      * @return a list of all the buildings
      */
+    @Transactional(readOnly = true)
     public List<Building> findAll() {
 //        return buildingMongoRepository.findAll();
         Iterable<Building> b = buildingRepository.findAll();
@@ -74,7 +78,7 @@ public class BuildingService {
      * @param id
      * @return the building object with the same building id as the input parameter.
      */
-
+    @Transactional(readOnly = true)
     public Optional<Building> findById(int id) {
 //        if (id.isEmpty() || (Integer.parseInt(id) <= 0)) {
         if (id <= 0) {
@@ -100,6 +104,7 @@ public class BuildingService {
 //    public Building findByName(String name) {
 //        return buildingMongoRepository.findByName(name);
 //    }
+    @Transactional(readOnly = true)
     public Building findByName(String name) {
         return buildingRepository.findByName(name);
     }
@@ -116,6 +121,7 @@ public class BuildingService {
 //    public Building update(Building building) {
 //        return buildingMongoRepository.save(building);
 //    }
+    @Transactional
     public Building update(Building building) {
         return buildingRepository.save(building);
     }
@@ -130,7 +136,7 @@ public class BuildingService {
      * @param id
      * @return The deleted building object.
      */
-
+    @Transactional
     public void delete(int id) {
 //        if (id.isEmpty() || Integer.parseInt(id) <= 0) {
         if (id <= 0) {
@@ -151,6 +157,7 @@ public class BuildingService {
      * @return The building object.
      */
 
+    @Transactional(readOnly = true)
     public Building findByTrainingLeadId(int id) {
         if (id < 1) throw new InvalidInputException();
 //        Building temp = buildingMongoRepository.findByTrainingLead(id);
