@@ -4,11 +4,14 @@ import com.revature.rms.campus.entities.Room;
 import com.revature.rms.campus.entities.RoomStatus;
 import com.revature.rms.campus.exceptions.InvalidInputException;
 import com.revature.rms.campus.exceptions.ResourceNotFoundException;
-import com.revature.rms.campus.repositories.RoomMongoRepository;
-import com.revature.rms.campus.repositories.RoomStatusMongoRepository;
+//import com.revature.rms.campus.repositories.RoomMongoRepository;
+import com.revature.rms.campus.repositories.RoomRepository;
+//import com.revature.rms.campus.repositories.RoomStatusMongoRepository;
+import com.revature.rms.campus.repositories.RoomStatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,16 +19,22 @@ import java.util.Optional;
 public class RoomService {
 
     @Autowired
-    private RoomMongoRepository roomMongoRepository;
+//    private RoomMongoRepository roomMongoRepository;
+    private RoomRepository roomRepository;
 
     @Autowired
-    private RoomStatusMongoRepository roomStatusRepo;
+//    private RoomStatusMongoRepository roomStatusRepo;
+    private RoomStatusRepository roomStatusRepo;
 
     /**
      * findAll method: returns a list of all the room objects in the database.
      * @return a list of all the rooms
      */
-    public List<Room> findAll(){ return roomMongoRepository.findAll();
+//    public List<Room> findAll(){ return roomMongoRepository.findAll();
+        public List<Room> findAll(){
+            Iterable<Room> r = roomRepository.findAll();
+            List<Room> list = getListFromIterator(r);
+            return list;
     }
 
     /**
@@ -45,7 +54,8 @@ public class RoomService {
         if (roomNum.isEmpty() || (Integer.parseInt(roomNum) <= 0)) {
             throw new InvalidInputException();
         }
-        Optional<Room> _room = roomMongoRepository.findByRoomNumber(roomNum);
+//        Optional<Room> _room = roomMongoRepository.findByRoomNumber(roomNum);
+        Optional<Room> _room = roomRepository.findByRoomNumber(roomNum);
 
         if(!_room.isPresent()) {
             throw new ResourceNotFoundException();
@@ -67,11 +77,13 @@ public class RoomService {
      * @param id
      * @return The specific room with the given id
      */
-    public Optional<Room> findById(String id){
-        if (id.isEmpty() || (Integer.parseInt(id) <= 0)) {
+    public Optional<Room> findById(int id){
+//        if (id.isEmpty() || (Integer.parseInt(id) <= 0)) {
+        if (id <= 0) {
             throw new InvalidInputException();
         }
-        Optional<Room> _room = roomMongoRepository.findById(id);
+//        Optional<Room> _room = roomMongoRepository.findById(id);
+        Optional<Room> _room = roomRepository.findById(id);
         if(!_room.isPresent()){
             throw new ResourceNotFoundException();
         }
@@ -99,7 +111,8 @@ public class RoomService {
      * @return a list of all the rooms with the specified occupancy.
      */
     public List<Room> findByMaxOccupancy(int occupancy){
-        return roomMongoRepository.findByMaxOccupancy(occupancy);
+//        return roomMongoRepository.findByMaxOccupancy(occupancy);
+        return roomRepository.findByMaxOccupancy(occupancy);
     }
 
     /**
@@ -115,7 +128,9 @@ public class RoomService {
         if(room == null){
             throw new ResourceNotFoundException();
         }
-        return roomMongoRepository.save(room);}
+//        return roomMongoRepository.save(room);
+        return roomRepository.save(room);
+    }
 
     /**
      * Update Method: The room object is inputted and changes are saved.
@@ -123,7 +138,8 @@ public class RoomService {
      * @param room
      * @return Updated/Modified room object
      */
-    public Room update(Room room){return roomMongoRepository.save(room);}
+//    public Room update(Room room){return roomMongoRepository.save(room);}
+    public Room update(Room room){return roomRepository.save(room);}
 
     /**
      * Soft Delete Method: Updates the room object by setting active to
@@ -141,11 +157,13 @@ public class RoomService {
      * @param id
      * @return The Updated room objected.
      */
-    public Room delete(String id){
-        if (id.isEmpty() || Integer.parseInt(id) <= 0) {
+    public Room delete(int id){
+//        if (id.isEmpty() || Integer.parseInt(id) <= 0) {
+        if (id <= 0) {
             throw new InvalidInputException();
         }
-        Room deleteRoom = roomMongoRepository.findById(id).get();
+//        Room deleteRoom = roomMongoRepository.findById(id).get();
+        Room deleteRoom = roomRepository.findById(id).get();
         deleteRoom.setActive(false);
         return update(deleteRoom);
     }
@@ -183,7 +201,7 @@ public class RoomService {
      * @param id
      * @return the room status with the given status id.
      */
-    public Optional<RoomStatus> findStatusById(String id){
+    public Optional<RoomStatus> findStatusById(int id){
         return roomStatusRepo.findById(id);
     }
 
@@ -193,7 +211,10 @@ public class RoomService {
      * @return a list of all the room status objects
      */
     public List<RoomStatus> findAllStatus(){
-        return roomStatusRepo.findAll();
+        Iterable<RoomStatus> r = roomStatusRepo.findAll();
+        List<RoomStatus> list = getListFromIterator(r);
+        return list;
+//        return roomStatusRepo.findAll();
     }
 
     /**
@@ -242,10 +263,18 @@ public class RoomService {
      * @param statusId
      * @return The Updated room status objected.
      */
-    public void deleteRoomStatus(String statusId){
+    public void deleteRoomStatus(int statusId){
         RoomStatus deleteStatus = roomStatusRepo.findById(statusId).get();
         deleteStatus.setArchived(true);
         saveStatus(deleteStatus);
     }
 
+    //added to convert to h2
+    public static <T> List<T> getListFromIterator(Iterable<T> iterable)
+    {
+
+        List<T> list = new ArrayList<>();
+        iterable.forEach(list::add);
+        return list;
+    }
 }
