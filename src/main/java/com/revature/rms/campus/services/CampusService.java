@@ -9,6 +9,7 @@ import com.revature.rms.campus.exceptions.ResourceNotFoundException;
 import com.revature.rms.campus.repositories.CampusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +56,7 @@ public class CampusService {
         this.campusRepository = repo;
     }
 
+    @Transactional
     public Campus save(Campus campus) {
         if (campus == null) {
             throw new ResourceNotFoundException();
@@ -67,6 +69,7 @@ public class CampusService {
 //    public List<Campus> findAll() {
 //        return campusMongoRepository.findAll();
 //    }
+    @Transactional(readOnly = true)
     public List<Campus> findAll() {
         Iterable<Campus> r = campusRepository.findAll();
         List<Campus> list = getListFromIterator(r);
@@ -74,6 +77,7 @@ public class CampusService {
 //        return campusRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public Optional<Campus> findById(int id) {
 //        if (id.isEmpty() || (Integer.parseInt(id) <= 0)) {
         if (id <= 0) {
@@ -87,6 +91,7 @@ public class CampusService {
         return _campus;
     }
 
+    @Transactional(readOnly = true)
     public Campus findByTrainingManagerId(Integer id) {
         if (id < 1) {
             throw new InvalidInputException();
@@ -97,6 +102,7 @@ public class CampusService {
         else return campus;
     }
 
+    @Transactional(readOnly = true)
     public Campus findByStagingManagerId(Integer id) {
         if (id < 1) {
             throw new InvalidInputException();
@@ -110,6 +116,7 @@ public class CampusService {
 //    public Campus findByName(String name) {
 //        return campusMongoRepository.findByName(name);
 //    }
+    @Transactional(readOnly = true)
     public Campus findByName(String name) {
         return campusRepository.findByName(name);
     }
@@ -117,10 +124,12 @@ public class CampusService {
 //    public Campus update(Campus campus) {
 //        return campusMongoRepository.save(campus);
 //    }
+    @Transactional
     public Campus update(Campus campus) {
         return campusRepository.save(campus);
     }
 
+    @Transactional
     public void delete(int id) {
 //        if (id.isEmpty() || Integer.parseInt(id) <= 0) { 
         if (id <= 0) {

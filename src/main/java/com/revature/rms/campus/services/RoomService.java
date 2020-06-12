@@ -10,6 +10,7 @@ import com.revature.rms.campus.repositories.RoomRepository;
 import com.revature.rms.campus.repositories.RoomStatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,8 @@ public class RoomService {
      * @return a list of all the rooms
      */
 //    public List<Room> findAll(){ return roomMongoRepository.findAll();
-        public List<Room> findAll(){
+    @Transactional(readOnly = true)
+    public List<Room> findAll(){
             Iterable<Room> r = roomRepository.findAll();
             List<Room> list = getListFromIterator(r);
             return list;
@@ -50,6 +52,7 @@ public class RoomService {
      * @param roomNum
      * @return the room object with the same room number as the input parameter.
      */
+    @Transactional(readOnly = true)
     public Optional<Room> findByRoomNumber(String roomNum){
         if (roomNum.isEmpty() || (Integer.parseInt(roomNum) <= 0)) {
             throw new InvalidInputException();
@@ -77,6 +80,7 @@ public class RoomService {
      * @param id
      * @return The specific room with the given id
      */
+    @Transactional(readOnly = true)
     public Optional<Room> findById(int id){
 //        if (id.isEmpty() || (Integer.parseInt(id) <= 0)) {
         if (id <= 0) {
@@ -110,6 +114,7 @@ public class RoomService {
      * @param occupancy
      * @return a list of all the rooms with the specified occupancy.
      */
+    @Transactional(readOnly = true)
     public List<Room> findByMaxOccupancy(int occupancy){
 //        return roomMongoRepository.findByMaxOccupancy(occupancy);
         return roomRepository.findByMaxOccupancy(occupancy);
@@ -124,6 +129,7 @@ public class RoomService {
      * @param room
      * @return The new saved room object
      */
+    @Transactional
     public Room save(Room room){
         if(room == null){
             throw new ResourceNotFoundException();
@@ -139,6 +145,7 @@ public class RoomService {
      * @return Updated/Modified room object
      */
 //    public Room update(Room room){return roomMongoRepository.save(room);}
+    @Transactional
     public Room update(Room room){return roomRepository.save(room);}
 
     /**
@@ -157,6 +164,7 @@ public class RoomService {
      * @param id
      * @return The Updated room objected.
      */
+    @Transactional
     public Room delete(int id){
 //        if (id.isEmpty() || Integer.parseInt(id) <= 0) {
         if (id <= 0) {
@@ -177,6 +185,7 @@ public class RoomService {
      * @param id
      * @return the list of room status objects submitted by the given user id.
      */
+    @Transactional(readOnly = true)
     public List<RoomStatus> findAllStatusBySubmitter(int id){
         return roomStatusRepo.findAllBySubmitterId(id);
     }
@@ -190,6 +199,7 @@ public class RoomService {
      * @param date
      * @return the list of room status objects with the specified submitted date
      */
+    @Transactional(readOnly = true)
     public List<RoomStatus> findAllStatusByDate(String date){ return roomStatusRepo.findAllBySubmittedDateTime(date);}
 
     /**
@@ -201,6 +211,7 @@ public class RoomService {
      * @param id
      * @return the room status with the given status id.
      */
+    @Transactional(readOnly = true)
     public Optional<RoomStatus> findStatusById(int id){
         return roomStatusRepo.findById(id);
     }
@@ -210,6 +221,7 @@ public class RoomService {
      * in the database.
      * @return a list of all the room status objects
      */
+    @Transactional(readOnly = true)
     public List<RoomStatus> findAllStatus(){
         Iterable<RoomStatus> r = roomStatusRepo.findAll();
         List<RoomStatus> list = getListFromIterator(r);
@@ -225,6 +237,7 @@ public class RoomService {
      * @param active
      * @return a list of all the room status objects that are active or inactive.
      */
+    @Transactional(readOnly = true)
     public List<RoomStatus> findAllByArchive(boolean active){
         return roomStatusRepo.findByArchivedIsTrue(active);
     }
@@ -234,6 +247,7 @@ public class RoomService {
      * saves it to the database.
      * @param roomStatus
      */
+    @Transactional
     public void saveStatus(RoomStatus roomStatus){
         roomStatusRepo.save(roomStatus);
     }
@@ -245,6 +259,7 @@ public class RoomService {
      * @param roomStatus
      * @return Updated/Modified room status object
      */
+    @Transactional
     public RoomStatus updateStatus(RoomStatus roomStatus){
         return roomStatusRepo.save(roomStatus);
     }
@@ -263,6 +278,7 @@ public class RoomService {
      * @param statusId
      * @return The Updated room status objected.
      */
+    @Transactional
     public void deleteRoomStatus(int statusId){
         RoomStatus deleteStatus = roomStatusRepo.findById(statusId).get();
         deleteStatus.setArchived(true);
