@@ -3,7 +3,6 @@ package com.revature.rms.campus.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
-import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
 

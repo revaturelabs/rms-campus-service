@@ -5,18 +5,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+//import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.List;
 
-@Entity
-@Data
+
 //@Document
-@ToString
+
 //commentted out bc mangodb
 //@AllArgsConstructor
 //@NoArgsConstructor
@@ -34,6 +33,9 @@ import java.util.ArrayList;
  *
  * Lastly, we have a constructor containing every field except for the id.
  */
+@Data
+@ToString
+@Entity
 public class Campus {
 
     @Id
@@ -48,7 +50,8 @@ public class Campus {
     private String abbrName;
 
 //    @NotNull
-    @Column(nullable=false)
+    @OneToOne
+    @JoinColumn(nullable=false)
     private Address shippingAddress;
 
 //    @NotNull
@@ -65,13 +68,15 @@ public class Campus {
 
 //    @NotNull
 //    @NotEmpty
-    @Column(nullable=false) //covert h2
-    private ArrayList<Building> buildings;
+    @OneToMany(mappedBy = "campus")
+    private List<Building> buildings;
 
 //    @NotNull
 //    @NotEmpty
-    @Column(nullable=false) //covert h2
-    private ArrayList<Integer> corporateEmployees;
+
+//    @Column(nullable=false) //covert h2
+    @ElementCollection
+    private List<Integer> corporateEmployees;
 
 //    @NotNull
     @OneToOne(fetch = FetchType.LAZY)

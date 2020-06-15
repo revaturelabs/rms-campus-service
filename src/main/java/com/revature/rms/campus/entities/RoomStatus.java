@@ -4,21 +4,21 @@ package com.revature.rms.campus.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+//import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.*;
 
-@Entity
+
 //@Document
-@Data
+
 //@NoArgsConstructor
 //@AllArgsConstructor
+@Entity
+@Data
 public class RoomStatus {
+
     @Id
+    @Column
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
 
@@ -29,13 +29,16 @@ public class RoomStatus {
     private boolean chairsOrdered;
 
     @Column(nullable=false)
-    private String SubmittedDateTime;
+    private String submittedDateTime;
 
     @Column(nullable=false)
     private int submitterId;
 
     @Column(nullable=false)
     private String otherNotes;
+
+    @ManyToOne
+    private Room room;
 
     @Column
     private boolean archived;
@@ -47,7 +50,7 @@ public class RoomStatus {
         this.id = id;
         this.whiteBoardCleaned = whiteBoardCleaned;
         this.chairsOrdered = chairsOrdered;
-        SubmittedDateTime = submittedDateTime;
+        this.submittedDateTime = submittedDateTime;
         this.submitterId = submitterId;
         this.otherNotes = otherNotes;
         this.archived = archived;
@@ -56,10 +59,17 @@ public class RoomStatus {
     public RoomStatus(boolean whiteBoardCleaned, boolean chairsOrdered, String submittedDateTime, int submitterId, String otherNotes, boolean archived) {
         this.whiteBoardCleaned = whiteBoardCleaned;
         this.chairsOrdered = chairsOrdered;
-        SubmittedDateTime = submittedDateTime;
+        this.submittedDateTime = submittedDateTime;
         this.submitterId = submitterId;
         this.otherNotes = otherNotes;
         this.archived = archived;
     }
 
+    public boolean isArchived() {
+        return archived;
+    }
+
+    public void setArchived(boolean archived) {
+        this.archived = archived;
+    }
 }

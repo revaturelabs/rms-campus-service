@@ -1,17 +1,16 @@
 package com.revature.rms.campus.entities;
 
 import lombok.*;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+//import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
 
-@Entity
 //@Document
-@Data
 //commentted out bc mangodb
 //@NoArgsConstructor
 //@AllArgsConstructor
+@Entity
+@Data
 public class Amenity {
 
     @Id
@@ -23,6 +22,9 @@ public class Amenity {
 
     @Enumerated(EnumType.STRING)
     private AmenityStatus status;
+
+    @ManyToOne
+    private Building building;
 
     public Amenity() {
     }

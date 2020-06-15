@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 
 
-//@Data
 //commentted out bc mangodb
 //@AllArgsConstructor
 //@NoArgsConstructor
+@Data
 public class ErrorResponse {
     private int status;
     private String message;

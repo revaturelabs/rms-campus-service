@@ -5,20 +5,23 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+//import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
-@Entity
+
 //@Document
-@Data
+
 //commentted out bc mangodb
 //@NoArgsConstructor
 //@AllArgsConstructor
+@Entity
+@Data
 public class Building {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -30,7 +33,8 @@ public class Building {
     @Column(nullable=false) //covert h2
     private String abbrName;
 
-    @Column(nullable=false) //covert h2
+    @OneToOne
+    @JoinColumn(nullable=false) //covert h2
     private Address physicalAddress;
 
     @Column(nullable=false) //covert h2
@@ -38,25 +42,27 @@ public class Building {
 
 //    @NotNull
 //    @NotEmpty
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn
+    @OneToMany(mappedBy = "building")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // copy from building service?
-    private ArrayList<Amenity> amenities;
+    private List<Amenity> amenities;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn
+    @OneToMany(mappedBy = "building")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // copy from building service?
-    private ArrayList<Room> rooms;
+    private List<Room> rooms;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // copy from building service?
     private ResourceMetadata resourceMetaData;
 
+    @ManyToOne
+    private Campus campus;
+
+
     public Building() {
     }
 
-    public Building(int id, String name, String abbrName, Address physicalAddress, Integer trainingLead, ArrayList<Amenity> amenities, ArrayList<Room> rooms, ResourceMetadata resourceMetaData) {
+    public Building(int id, String name, String abbrName, Address physicalAddress, Integer trainingLead, List<Amenity> amenities, List<Room> rooms, ResourceMetadata resourceMetaData) {
         this.id = id;
         this.name = name;
         this.abbrName = abbrName;
@@ -67,7 +73,7 @@ public class Building {
         this.resourceMetaData = resourceMetaData;
     }
 
-    public Building(String name, String abbrName, Address physicalAddress, Integer trainingLead, ArrayList<Amenity> amenities, ArrayList<Room> rooms, ResourceMetadata resourceMetaData) {
+    public Building(String name, String abbrName, Address physicalAddress, Integer trainingLead, List<Amenity> amenities, List<Room> rooms, ResourceMetadata resourceMetaData) {
         this.name = name;
         this.abbrName = abbrName;
         this.physicalAddress = physicalAddress;

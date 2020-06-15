@@ -4,18 +4,20 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+//import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
-@Entity
+
 //@Document
-@Data
+
 //commentted out bc mangodb
 //@NoArgsConstructor
 //@AllArgsConstructor
+@Entity
+@Data
 public class Room {
     /**
      * May need to add @NotNull annotations to some fields to prevent null values.
@@ -33,21 +35,23 @@ public class Room {
     @Column(nullable=false)
     private Boolean active;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // copy from building service?
-    private ArrayList <RoomStatus> roomStatus;
+    private List<RoomStatus> roomStatus;
 
     @Column(nullable=false)
     private String batchId;
 
-    @Column
-    private ArrayList<String> workOrders;
+    @ElementCollection
+    private List<String> workOrders;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // copy from building service?
     private ResourceMetadata resourceMetadata;
+
+    @ManyToOne
+    private Building building;
 
     public Room() {
     }
@@ -71,6 +75,10 @@ public class Room {
         this.batchId = batchId;
         this.workOrders = workOrders;
         this.resourceMetadata = resourceMetadata;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public void addRoomStatus(RoomStatus status) {

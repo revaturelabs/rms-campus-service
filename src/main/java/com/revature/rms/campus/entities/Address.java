@@ -1,26 +1,22 @@
 package com.revature.rms.campus.entities;
 
-import lombok.AllArgsConstructor;
+//import lombok.AllArgsConstructor;
+//import lombok.NoArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+//import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
+import javax.persistence.*;
 //@Document
-@Data
 //commentted out bc mangodb
 //@NoArgsConstructor
 //@AllArgsConstructor
-
+@Entity
+@Data
 public class Address {
     
     @Id
+    @Column
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
 
@@ -38,6 +34,7 @@ public class Address {
 
     @Column(nullable=false)
     private String country;
+
 
     public Address() {
     }
