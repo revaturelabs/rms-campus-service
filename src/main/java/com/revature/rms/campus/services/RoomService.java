@@ -239,7 +239,8 @@ public class RoomService {
      */
     @Transactional(readOnly = true)
     public List<RoomStatus> findAllByArchive(boolean active){
-        return roomStatusRepo.findByArchivedIsTrue(active);
+
+        return roomStatusRepo.findAllByArchived(active);
     }
 
     /**
