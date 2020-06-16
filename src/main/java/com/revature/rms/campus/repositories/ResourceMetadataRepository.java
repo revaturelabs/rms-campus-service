@@ -1,4 +1,8 @@
 package com.revature.rms.campus.repositories;
 
-public interface ResourceMetadataRepository {
+import com.revature.rms.campus.entities.ResourceMetadata;
+import org.springframework.data.repository.CrudRepository;
+
+public interface ResourceMetadataRepository extends CrudRepository<ResourceMetadata, Integer> {
+
 }
