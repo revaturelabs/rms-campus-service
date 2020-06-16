@@ -49,8 +49,8 @@ public class RoomController {
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Room updateRoom(@RequestBody Room room) { return roomService.update(room); }
 
-    @DeleteMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void deleteRoomById(@PathVariable int id) {
+    @DeleteMapping(value = "/{id}")
+    public @ResponseStatus(code = HttpStatus.NO_CONTENT) void deleteRoomById(@PathVariable int id) {
         if(id <= 0){
             throw new InvalidInputException();
         }

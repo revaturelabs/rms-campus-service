@@ -1,10 +1,12 @@
 package com.revature.rms.campus.services;
 
+import com.revature.rms.campus.entities.ResourceMetadata;
 import com.revature.rms.campus.entities.Room;
 import com.revature.rms.campus.entities.RoomStatus;
 import com.revature.rms.campus.exceptions.InvalidInputException;
 import com.revature.rms.campus.exceptions.ResourceNotFoundException;
 //import com.revature.rms.campus.repositories.RoomMongoRepository;
+import com.revature.rms.campus.repositories.ResourceMetadataRepository;
 import com.revature.rms.campus.repositories.RoomRepository;
 //import com.revature.rms.campus.repositories.RoomStatusMongoRepository;
 import com.revature.rms.campus.repositories.RoomStatusRepository;
@@ -25,7 +27,10 @@ public class RoomService {
 
     @Autowired
 //    private RoomStatusMongoRepository roomStatusRepo;
-    private RoomStatusRepository roomStatusRepo;
+    private RoomStatusRepository roomStatusRepository;
+
+    @Autowired
+    private ResourceMetadataRepository metadataRepository;
 
     /**
      * findAll method: returns a list of all the room objects in the database.
@@ -36,6 +41,7 @@ public class RoomService {
     public List<Room> findAll(){
             Iterable<Room> r = roomRepository.findAll();
             List<Room> list = getListFromIterator(r);
+            //List<RoomDTO> newList = list.stream().map(RoomDTO::new).collect(Collectors.toList());
             return list;
     }
 
@@ -134,8 +140,18 @@ public class RoomService {
         if(room == null){
             throw new ResourceNotFoundException();
         }
+        Room persisted = roomRepository.save(room);
+        ResourceMetadata data = metadataRepository.save(room.getResourceMetadata());
+        room.setResourceMetadata(data);
+        for (RoomStatus status: room.getRoomStatus()) {
+            status.setRoom(persisted);
+            saveStatus(status);
+        }
 //        return roomMongoRepository.save(room);
-        return roomRepository.save(room);
+
+
+
+        return persisted;
     }
 
     /**
@@ -146,7 +162,13 @@ public class RoomService {
      */
 //    public Room update(Room room){return roomMongoRepository.save(room);}
     @Transactional
-    public Room update(Room room){return roomRepository.save(room);}
+    public Room update(Room room){
+        Room oldRoom;
+        oldRoom = roomRepository.findById(room.getId()).get();
+
+        room.setBuilding(oldRoom.getBuilding());
+        return roomRepository.save(room);
+    }
 
     /**
      * Soft Delete Method: Updates the room object by setting active to
@@ -187,7 +209,7 @@ public class RoomService {
      */
     @Transactional(readOnly = true)
     public List<RoomStatus> findAllStatusBySubmitter(int id){
-        return roomStatusRepo.findAllBySubmitterId(id);
+        return roomStatusRepository.findAllBySubmitterId(id);
     }
 
     /**
@@ -200,7 +222,7 @@ public class RoomService {
      * @return the list of room status objects with the specified submitted date
      */
     @Transactional(readOnly = true)
-    public List<RoomStatus> findAllStatusByDate(String date){ return roomStatusRepo.findAllBySubmittedDateTime(date);}
+    public List<RoomStatus> findAllStatusByDate(String date){ return roomStatusRepository.findAllBySubmittedDateTime(date);}
 
     /**
      * findByStatusId Method: This takes in the status id parameter. The status id
@@ -213,7 +235,7 @@ public class RoomService {
      */
     @Transactional(readOnly = true)
     public Optional<RoomStatus> findStatusById(int id){
-        return roomStatusRepo.findById(id);
+        return roomStatusRepository.findById(id);
     }
 
     /**
@@ -223,7 +245,7 @@ public class RoomService {
      */
     @Transactional(readOnly = true)
     public List<RoomStatus> findAllStatus(){
-        Iterable<RoomStatus> r = roomStatusRepo.findAll();
+        Iterable<RoomStatus> r = roomStatusRepository.findAll();
         List<RoomStatus> list = getListFromIterator(r);
         return list;
 //        return roomStatusRepo.findAll();
@@ -240,7 +262,7 @@ public class RoomService {
     @Transactional(readOnly = true)
     public List<RoomStatus> findAllByArchive(boolean active){
 
-        return roomStatusRepo.findAllByArchived(active);
+        return roomStatusRepository.findAllByArchived(active);
     }
 
     /**
@@ -250,7 +272,7 @@ public class RoomService {
      */
     @Transactional
     public void saveStatus(RoomStatus roomStatus){
-        roomStatusRepo.save(roomStatus);
+        roomStatusRepository.save(roomStatus);
     }
 
 
@@ -262,7 +284,7 @@ public class RoomService {
      */
     @Transactional
     public RoomStatus updateStatus(RoomStatus roomStatus){
-        return roomStatusRepo.save(roomStatus);
+        return roomStatusRepository.save(roomStatus);
     }
 
     /**
@@ -281,7 +303,7 @@ public class RoomService {
      */
     @Transactional
     public void deleteRoomStatus(int statusId){
-        RoomStatus deleteStatus = roomStatusRepo.findById(statusId).get();
+        RoomStatus deleteStatus = roomStatusRepository.findById(statusId).get();
         deleteStatus.setArchived(true);
         saveStatus(deleteStatus);
     }
