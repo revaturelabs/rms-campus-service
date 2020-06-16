@@ -40,7 +40,7 @@ public class Campus {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private String id;
+    private int id;
 
 //    @NotNull
     @Column(nullable=false,unique=true) //covert h2
@@ -79,15 +79,14 @@ public class Campus {
     private List<Integer> corporateEmployees;
 
 //    @NotNull
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // copy from building service?
     private ResourceMetadata resourceMetadata;
 
     public Campus() {
     }
 
-    public Campus(String id, String name, String abbrName, Address shippingAddress, int trainingManagerId, int stagingManagerId, int hrLead, ArrayList<Building> buildings, ArrayList<Integer> corporateEmployees, ResourceMetadata resourceMetadata) {
+    public Campus(int id, String name, String abbrName, Address shippingAddress, int trainingManagerId, int stagingManagerId, int hrLead, ArrayList<Building> buildings, ArrayList<Integer> corporateEmployees, ResourceMetadata resourceMetadata) {
         this.id = id;
         this.name = name;
         this.abbrName = abbrName;

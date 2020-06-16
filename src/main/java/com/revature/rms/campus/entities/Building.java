@@ -1,18 +1,13 @@
 package com.revature.rms.campus.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 //import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 
 //@Document
@@ -38,31 +33,29 @@ public class Building {
     private Address physicalAddress;
 
     @Column(nullable=false) //covert h2
-    private Integer trainingLead;
+    private int trainingLead;
 
 //    @NotNull
 //    @NotEmpty
     @OneToMany(mappedBy = "building")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // copy from building service?
     private List<Amenity> amenities;
 
     @OneToMany(mappedBy = "building")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // copy from building service?
     private List<Room> rooms;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // copy from building service?
-    private ResourceMetadata resourceMetaData;
+    private ResourceMetadata resourceMetadata;
 
     @ManyToOne
+    @JsonIgnore
     private Campus campus;
 
 
     public Building() {
     }
 
-    public Building(int id, String name, String abbrName, Address physicalAddress, Integer trainingLead, List<Amenity> amenities, List<Room> rooms, ResourceMetadata resourceMetaData) {
+    public Building(int id, String name, String abbrName, Address physicalAddress, int trainingLead, List<Amenity> amenities, List<Room> rooms, ResourceMetadata resourceMetadata) {
         this.id = id;
         this.name = name;
         this.abbrName = abbrName;
@@ -70,16 +63,24 @@ public class Building {
         this.trainingLead = trainingLead;
         this.amenities = amenities;
         this.rooms = rooms;
-        this.resourceMetaData = resourceMetaData;
+        this.resourceMetadata = resourceMetadata;
     }
 
-    public Building(String name, String abbrName, Address physicalAddress, Integer trainingLead, List<Amenity> amenities, List<Room> rooms, ResourceMetadata resourceMetaData) {
+    public Building(String name, String abbrName, Address physicalAddress, int trainingLead, List<Amenity> amenities, List<Room> rooms, ResourceMetadata resourceMetadata) {
         this.name = name;
         this.abbrName = abbrName;
         this.physicalAddress = physicalAddress;
         this.trainingLead = trainingLead;
         this.amenities = amenities;
         this.rooms = rooms;
-        this.resourceMetaData = resourceMetaData;
+        this.resourceMetadata = resourceMetadata;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

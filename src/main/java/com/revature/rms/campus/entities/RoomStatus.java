@@ -1,6 +1,7 @@
 package com.revature.rms.campus.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,6 +39,7 @@ public class RoomStatus {
     private String otherNotes;
 
     @ManyToOne
+    @JsonIgnore
     private Room room;
 
     @Column
@@ -71,5 +73,13 @@ public class RoomStatus {
 
     public void setArchived(boolean archived) {
         this.archived = archived;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
     }
 }
