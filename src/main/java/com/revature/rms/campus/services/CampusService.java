@@ -1,12 +1,16 @@
 package com.revature.rms.campus.services;
 
 
+import com.revature.rms.campus.entities.Address;
 import com.revature.rms.campus.entities.Campus;
+import com.revature.rms.campus.entities.ResourceMetadata;
 import com.revature.rms.campus.entities.RoomStatus;
 import com.revature.rms.campus.exceptions.InvalidInputException;
 import com.revature.rms.campus.exceptions.ResourceNotFoundException;
 //import com.revature.rms.campus.repositories.CampusMongoRepository;
+import com.revature.rms.campus.repositories.AddressRepository;
 import com.revature.rms.campus.repositories.CampusRepository;
+import com.revature.rms.campus.repositories.ResourceMetadataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,15 +50,18 @@ import java.util.Optional;
 public class CampusService {
 
 //    private CampusMongoRepository campusMongoRepository;
+    @Autowired
     private CampusRepository campusRepository;
 
     @Autowired
+    private ResourceMetadataRepository metadataRepository;
+
+    @Autowired
+    private AddressRepository addressRepository;
+
 //    public CampusService(CampusMongoRepository repo) {
 //        this.campusMongoRepository = repo;
 //    }
-    public CampusService(CampusRepository repo) {
-        this.campusRepository = repo;
-    }
 
     @Transactional
     public Campus save(Campus campus) {
@@ -62,7 +69,13 @@ public class CampusService {
             throw new ResourceNotFoundException();
         }
 //        return campusMongoRepository.save(campus);
-        return campusRepository.save(campus);
+
+        Address address = addressRepository.save(campus.getShippingAddress());
+        ResourceMetadata data = metadataRepository.save(campus.getResourceMetadata());
+        campus.setShippingAddress(address);
+        campus.setResourceMetadata(data);
+        Campus persisted = campusRepository.save(campus);
+        return persisted;
     }
 
 

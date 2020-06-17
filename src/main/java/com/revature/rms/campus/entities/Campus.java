@@ -110,4 +110,32 @@ public class Campus {
         this.corporateEmployees = corporateEmployees;
         this.resourceMetadata = resourceMetadata;
     }
+
+    public Campus(int id, String name, String abbrName, Address shippingAddress, int trainingManagerId, int stagingManagerId, int hrLead, List<Integer> corporateEmployees, ResourceMetadata resourceMetadata) {
+        this.id = id;
+        this.name = name;
+        this.abbrName = abbrName;
+        this.shippingAddress = shippingAddress;
+        this.trainingManagerId = trainingManagerId;
+        this.stagingManagerId = stagingManagerId;
+        this.hrLead = hrLead;
+        this.corporateEmployees = corporateEmployees;
+        this.resourceMetadata = resourceMetadata;
+    }
+
+    public ResourceMetadata getResourceMetadata() {
+        return resourceMetadata;
+    }
+
+    public void setResourceMetadata(ResourceMetadata resourceMetadata) {
+        this.resourceMetadata = resourceMetadata;
+    }
+
+    public Address getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public void setShippingAddress(Address shippingAddress) {
+        this.shippingAddress = shippingAddress;
+    }
 }
