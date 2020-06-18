@@ -255,19 +255,19 @@ public class RoomService {
 //        return roomStatusRepo.findAll();
     }
 
-    /**
-     * findAllByArchive Method: This method takes in the boolean active parameter.
-     * The method will return a list of all the active room status objects if
-     * the input active is false. However, the method will return a list of all
-     * the inactive or archived room statuses if the input is false.
-     * @param active
-     * @return a list of all the room status objects that are active or inactive.
-     */
-    @Transactional(readOnly = true)
-    public List<RoomStatus> findAllByArchive(boolean active){
-
-        return roomStatusRepository.findAllByArchived(active);
-    }
+//    /**
+//     * findAllByArchive Method: This method takes in the boolean active parameter.
+//     * The method will return a list of all the active room status objects if
+//     * the input active is false. However, the method will return a list of all
+//     * the inactive or archived room statuses if the input is false.
+//     * @param active
+//     * @return a list of all the room status objects that are active or inactive.
+//     */
+//    @Transactional(readOnly = true)
+//    public List<RoomStatus> findAllByArchive(boolean active){
+//
+//        return roomStatusRepository.findAllByArchived(active);
+//    }
 
     /**
      * saveStatus Method: This method takes in a new room status object and
@@ -291,26 +291,26 @@ public class RoomService {
         return roomStatusRepository.save(roomStatus);
     }
 
-    /**
-     * Soft Delete Method: Similar to the room soft delete method. Updates
-     * the room status object by setting archived to true (to indicate the
-     * room status is no longer in use or archived). Soft delete is
-     * implemented to achieve data in the event of auditing. Soft delete
-     * may need some modifications to pass all tests.
-     *
-     * The method takes in and uses the room status id to retrieve the
-     * specific room status object. The archived parameter of the retrieved
-     * room status object is set to true and the room status object is saved
-     * or updated.
-     * @param statusId
-     * @return The Updated room status objected.
-     */
-    @Transactional
-    public void deleteRoomStatus(int statusId){
-        RoomStatus deleteStatus = roomStatusRepository.findById(statusId).get();
-        //deleteStatus.setArchived(true);
-        saveStatus(deleteStatus);
-    }
+//    /**
+//     * Soft Delete Method: Similar to the room soft delete method. Updates
+//     * the room status object by setting archived to true (to indicate the
+//     * room status is no longer in use or archived). Soft delete is
+//     * implemented to achieve data in the event of auditing. Soft delete
+//     * may need some modifications to pass all tests.
+//     *
+//     * The method takes in and uses the room status id to retrieve the
+//     * specific room status object. The archived parameter of the retrieved
+//     * room status object is set to true and the room status object is saved
+//     * or updated.
+//     * @param statusId
+//     * @return The Updated room status objected.
+//     */
+//    @Transactional
+//    public void deleteRoomStatus(int statusId){
+//        RoomStatus deleteStatus = roomStatusRepository.findById(statusId).get();
+//        //deleteStatus.setArchived(true);
+//        saveStatus(deleteStatus);
+//    }
 
     //added to convert to h2
     public static <T> List<T> getListFromIterator(Iterable<T> iterable)

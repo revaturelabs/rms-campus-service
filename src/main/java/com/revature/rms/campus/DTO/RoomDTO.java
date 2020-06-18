@@ -58,7 +58,6 @@ public class RoomDTO {
         this.id = room.getId();
         this.roomNumber = room.getRoomNumber();
         this.maxOccupancy = room.getMaxOccupancy();
-        this.active = room.isActive();
         this.roomStatus = room.getCurrentStatus();
         this.batchId = room.getBatchId();
         this.workOrders = room.getWorkOrders();

@@ -17,7 +17,5 @@ import java.util.List;
 public interface RoomStatusRepository extends CrudRepository<RoomStatus, Integer> {
     List<RoomStatus> findAllBySubmitterId(int submitterId);
 
-    List<RoomStatus> findAllByArchived(boolean archived);
-
     List<RoomStatus> findAllBySubmittedDateTime(String date);
 }
