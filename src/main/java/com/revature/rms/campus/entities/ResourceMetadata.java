@@ -65,4 +65,20 @@ public class ResourceMetadata {
         this.resourceOwner = resourceOwner;
         this.isActive = isActive;
     }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

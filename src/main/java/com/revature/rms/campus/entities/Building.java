@@ -76,6 +76,17 @@ public class Building {
         this.resourceMetadata = resourceMetadata;
     }
 
+    public Building(int id, String name, String abbrName, Address physicalAddress, int trainingLead, List<Amenity> amenities, ResourceMetadata resourceMetadata, Campus campus) {
+        this.id = id;
+        this.name = name;
+        this.abbrName = abbrName;
+        this.physicalAddress = physicalAddress;
+        this.trainingLead = trainingLead;
+        this.amenities = amenities;
+        this.resourceMetadata = resourceMetadata;
+        this.campus = campus;
+    }
+
     public int getId() {
         return id;
     }

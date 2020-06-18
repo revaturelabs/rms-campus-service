@@ -1,10 +1,7 @@
 package com.revature.rms.campus.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 //import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
@@ -33,11 +30,8 @@ public class Room {
     @Column(nullable=false)
     private int maxOccupancy;
 
-    @Column(nullable=false)
-    private boolean active;
-
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "room")
-    private List<RoomStatus> roomStatus;
+    private List<RoomStatus> currentStatus;
 
     @Column(nullable=false)
     private int batchId;
@@ -56,33 +50,27 @@ public class Room {
     public Room() {
     }
 
-    public Room(int id, String roomNumber, Integer maxOccupancy, Boolean active, ArrayList<RoomStatus> roomStatus, int batchId, ArrayList<Integer> workOrders, ResourceMetadata resourceMetadata) {
+    public Room(int id, String roomNumber, Integer maxOccupancy, ArrayList<RoomStatus> currentStatus, int batchId, ArrayList<Integer> workOrders, ResourceMetadata resourceMetadata) {
         this.id = id;
         this.roomNumber = roomNumber;
         this.maxOccupancy = maxOccupancy;
-        this.active = active;
-        this.roomStatus = roomStatus;
+        this.currentStatus = currentStatus;
         this.batchId = batchId;
         this.workOrders = workOrders;
         this.resourceMetadata = resourceMetadata;
     }
 
-    public Room(String roomNumber, Integer maxOccupancy, Boolean active, ArrayList<RoomStatus> roomStatus, int batchId, ArrayList<Integer> workOrders, ResourceMetadata resourceMetadata) {
+    public Room(String roomNumber, Integer maxOccupancy, ArrayList<RoomStatus> currentStatus, int batchId, ArrayList<Integer> workOrders, ResourceMetadata resourceMetadata) {
         this.roomNumber = roomNumber;
         this.maxOccupancy = maxOccupancy;
-        this.active = active;
-        this.roomStatus = roomStatus;
+        this.currentStatus = currentStatus;
         this.batchId = batchId;
         this.workOrders = workOrders;
         this.resourceMetadata = resourceMetadata;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
     }
 
     public void addRoomStatus(RoomStatus status) {
-        roomStatus.add(status);
+        currentStatus.add(status);
     }
 
     public int getId() {
@@ -109,20 +97,12 @@ public class Room {
         this.maxOccupancy = maxOccupancy;
     }
 
-    public boolean isActive() {
-        return active;
+    public List<RoomStatus> getCurrentStatus() {
+        return currentStatus;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public List<RoomStatus> getRoomStatus() {
-        return roomStatus;
-    }
-
-    public void setRoomStatus(List<RoomStatus> roomStatus) {
-        this.roomStatus = roomStatus;
+    public void setCurrentStatus(List<RoomStatus> currentStatus) {
+        this.currentStatus = currentStatus;
     }
 
     public int getBatchId() {

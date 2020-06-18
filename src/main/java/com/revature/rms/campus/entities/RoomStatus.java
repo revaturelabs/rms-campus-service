@@ -42,20 +42,18 @@ public class RoomStatus {
     @JsonIgnore
     private Room room;
 
-    @Column
-    private boolean archived;
+
 
     public RoomStatus() {
     }
 
-    public RoomStatus(int id, boolean whiteBoardCleaned, boolean chairsOrdered, String submittedDateTime, int submitterId, String otherNotes, boolean archived) {
+    public RoomStatus(int id, boolean whiteBoardCleaned, boolean chairsOrdered, String submittedDateTime, int submitterId, String otherNotes) {
         this.id = id;
         this.whiteBoardCleaned = whiteBoardCleaned;
         this.chairsOrdered = chairsOrdered;
         this.submittedDateTime = submittedDateTime;
         this.submitterId = submitterId;
         this.otherNotes = otherNotes;
-        this.archived = archived;
     }
 
     public RoomStatus(boolean whiteBoardCleaned, boolean chairsOrdered, String submittedDateTime, int submitterId, String otherNotes, boolean archived) {
@@ -64,16 +62,8 @@ public class RoomStatus {
         this.submittedDateTime = submittedDateTime;
         this.submitterId = submitterId;
         this.otherNotes = otherNotes;
-        this.archived = archived;
     }
 
-    public boolean isArchived() {
-        return archived;
-    }
-
-    public void setArchived(boolean archived) {
-        this.archived = archived;
-    }
 
     public Room getRoom() {
         return room;
