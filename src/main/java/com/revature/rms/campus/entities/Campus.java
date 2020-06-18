@@ -1,21 +1,24 @@
 package com.revature.rms.campus.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+//import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.List;
 
-@Data
-@Document
-@ToString
-@AllArgsConstructor
-@NoArgsConstructor
+
+//@Document
+
+//commentted out bc mangodb
+//@AllArgsConstructor
+//@NoArgsConstructor
 /**
  * POJO for the campus object. The annotations:
  * @Data handles the getter and setter methods for each field
@@ -30,37 +33,71 @@ import java.util.ArrayList;
  *
  * Lastly, we have a constructor containing every field except for the id.
  */
+@Data
+@ToString
+@Entity
 public class Campus {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private int id;
 
-    @NotNull
+//    @NotNull
+    @Column(nullable=false,unique=true) //covert h2
     private String name;
+
+    @Column(nullable=false) //covert h2
     private String abbrName;
 
-    @NotNull
+//    @NotNull
+    @OneToOne
+    @JoinColumn(nullable=false)
     private Address shippingAddress;
 
-    @NotNull
+//    @NotNull
+    @Column(nullable=false)
     private int trainingManagerId;
 
-    @NotNull
+//    @NotNull
+    @Column(nullable=false)
     private int stagingManagerId;
 
-    @NotNull
+//    @NotNull
+    @Column(nullable=false)
     private int hrLead;
 
-    @NotNull
-    @NotEmpty
-    private ArrayList<Building> buildings;
+//    @NotNull
+//    @NotEmpty
+    @OneToMany(mappedBy = "campus")
+    private List<Building> buildings;
 
-    @NotNull
-    @NotEmpty
-    private ArrayList<Integer> corporateEmployees;
+//    @NotNull
+//    @NotEmpty
 
-    @NotNull
+//    @Column(nullable=false) //covert h2
+    @ElementCollection
+    private List<Integer> corporateEmployees;
+
+//    @NotNull
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn
     private ResourceMetadata resourceMetadata;
+
+    public Campus() {
+    }
+
+    public Campus(int id, String name, String abbrName, Address shippingAddress, int trainingManagerId, int stagingManagerId, int hrLead, ArrayList<Building> buildings, ArrayList<Integer> corporateEmployees, ResourceMetadata resourceMetadata) {
+        this.id = id;
+        this.name = name;
+        this.abbrName = abbrName;
+        this.shippingAddress = shippingAddress;
+        this.trainingManagerId = trainingManagerId;
+        this.stagingManagerId = stagingManagerId;
+        this.hrLead = hrLead;
+        this.buildings = buildings;
+        this.corporateEmployees = corporateEmployees;
+        this.resourceMetadata = resourceMetadata;
+    }
 
     public Campus(String name, String abbrName, Address shippingAddress, int trainingManagerId, int stagingManagerId, int hrLead, ArrayList<Building> buildings, ArrayList<Integer> corporateEmployees, ResourceMetadata resourceMetadata) {
         this.name = name;
@@ -72,5 +109,33 @@ public class Campus {
         this.buildings = buildings;
         this.corporateEmployees = corporateEmployees;
         this.resourceMetadata = resourceMetadata;
+    }
+
+    public Campus(int id, String name, String abbrName, Address shippingAddress, int trainingManagerId, int stagingManagerId, int hrLead, List<Integer> corporateEmployees, ResourceMetadata resourceMetadata) {
+        this.id = id;
+        this.name = name;
+        this.abbrName = abbrName;
+        this.shippingAddress = shippingAddress;
+        this.trainingManagerId = trainingManagerId;
+        this.stagingManagerId = stagingManagerId;
+        this.hrLead = hrLead;
+        this.corporateEmployees = corporateEmployees;
+        this.resourceMetadata = resourceMetadata;
+    }
+
+    public ResourceMetadata getResourceMetadata() {
+        return resourceMetadata;
+    }
+
+    public void setResourceMetadata(ResourceMetadata resourceMetadata) {
+        this.resourceMetadata = resourceMetadata;
+    }
+
+    public Address getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public void setShippingAddress(Address shippingAddress) {
+        this.shippingAddress = shippingAddress;
     }
 }

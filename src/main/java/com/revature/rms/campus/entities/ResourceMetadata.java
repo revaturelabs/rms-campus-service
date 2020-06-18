@@ -3,24 +3,82 @@ package com.revature.rms.campus.entities;
 
 import lombok.*;
 
+import javax.persistence.*;
+
+@Entity
 @Data
 @ToString
-@AllArgsConstructor
-@NoArgsConstructor
+//commentted out bc mangodb
+//@AllArgsConstructor
+//@NoArgsConstructor
 public class ResourceMetadata {
 
+    @Id
+    @Column
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private int id;
+    
+    @Column(nullable=false) //covert h2
     private int resourceCreator;
-    private String resourceCreatorDateTime;
+    
+    @Column(nullable=false) //covert h2
+    private String resourceCreationDateTime;
+
+    @Column(nullable=false) //covert h2
     private int lastModifier;
+
+    @Column(nullable=false) //covert h2
     private String lastModifiedDateTime;
+
+    @Column(nullable=false) //covert h2
     private int resourceOwner;
 
-    public ResourceMetadata(String resourceCreatorDateTime, int lastModifier, String lastModifiedDateTime, int resourceOwner) {
-        this.resourceCreatorDateTime = resourceCreatorDateTime;
+    @Column(nullable=false)
+    private boolean isActive;
+
+    public ResourceMetadata() {
+    }
+
+    public ResourceMetadata(int id, int resourceCreator, String resourceCreationDateTime, int lastModifier, String lastModifiedDateTime, int resourceOwner, boolean isActive) {
+        this.id = id;
+        this.resourceCreator = resourceCreator;
+        this.resourceCreationDateTime = resourceCreationDateTime;
         this.lastModifier = lastModifier;
         this.lastModifiedDateTime = lastModifiedDateTime;
         this.resourceOwner = resourceOwner;
+        this.isActive = isActive;
     }
 
+    public ResourceMetadata(int resourceCreator, String resourceCreationDateTime, int lastModifier, String lastModifiedDateTime, int resourceOwner, boolean isActive) {
+        this.resourceCreator = resourceCreator;
+        this.resourceCreationDateTime = resourceCreationDateTime;
+        this.lastModifier = lastModifier;
+        this.lastModifiedDateTime = lastModifiedDateTime;
+        this.resourceOwner = resourceOwner;
+        this.isActive = isActive;
+    }
 
+    public ResourceMetadata(String resourceCreationDateTime, int lastModifier, String lastModifiedDateTime, int resourceOwner, boolean isActive) {
+        this.resourceCreationDateTime = resourceCreationDateTime;
+        this.lastModifier = lastModifier;
+        this.lastModifiedDateTime = lastModifiedDateTime;
+        this.resourceOwner = resourceOwner;
+        this.isActive = isActive;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

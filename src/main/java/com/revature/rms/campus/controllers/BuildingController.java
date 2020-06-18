@@ -32,7 +32,7 @@ public class BuildingController {
     }
 
     @GetMapping(value = "/trainer/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Building getBuildingByTrainingLeadId(@PathVariable String id) { return buildingService.findByTrainingLeadId(Integer.parseInt(id)); }
+    public Building getBuildingByTrainingLeadId(@PathVariable int id) { return buildingService.findByTrainingLeadId(id); }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Building saveBuilding(@RequestBody Building building) {
@@ -45,8 +45,8 @@ public class BuildingController {
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Building getBuildingById(@PathVariable String id) {
-        if (id.isEmpty() || Integer.parseInt(id) <= 0) {
+    public Building getBuildingById(@PathVariable int id) {
+        if (id <= 0) {
             throw new InvalidInputException();
         }
         Optional<Building> _building = buildingService.findById(id);
@@ -63,8 +63,8 @@ public class BuildingController {
     }
 
     @DeleteMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void deleteBuildingById(@PathVariable String id) {
-        if (id.isEmpty() || Integer.parseInt(id) <= 0) {
+    public void deleteBuildingById(@PathVariable int id) {
+        if (id <= 0) {
             throw new InvalidInputException();
         }
         buildingService.delete(id);
