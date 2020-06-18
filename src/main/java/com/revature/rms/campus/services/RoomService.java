@@ -32,6 +32,9 @@ public class RoomService {
     @Autowired
     private ResourceMetadataRepository metadataRepository;
 
+    @Autowired
+    private ResourceMetadataService metadataService;
+
     /**
      * findAll method: returns a list of all the room objects in the database.
      * @return a list of all the rooms
@@ -143,7 +146,7 @@ public class RoomService {
         Room persisted = roomRepository.save(room);
         ResourceMetadata data = metadataRepository.save(room.getResourceMetadata());
         room.setResourceMetadata(data);
-        for (RoomStatus status: room.getRoomStatus()) {
+        for (RoomStatus status: room.getCurrentStatus()) {
             status.setRoom(persisted);
             saveStatus(status);
         }
@@ -193,9 +196,10 @@ public class RoomService {
             throw new InvalidInputException();
         }
 //        Room deleteRoom = roomMongoRepository.findById(id).get();
-        Room deleteRoom = roomRepository.findById(id).get();
-        deleteRoom.setActive(false);
-        return update(deleteRoom);
+        Room deactivateRoom = roomRepository.findById(id).get();
+        ResourceMetadata resource = metadataService.deactivateResource(deactivateRoom.getResourceMetadata());
+        deactivateRoom.setResourceMetadata(resource);
+        return update(deactivateRoom);
     }
 
     /**
@@ -304,7 +308,7 @@ public class RoomService {
     @Transactional
     public void deleteRoomStatus(int statusId){
         RoomStatus deleteStatus = roomStatusRepository.findById(statusId).get();
-        deleteStatus.setArchived(true);
+        //deleteStatus.setArchived(true);
         saveStatus(deleteStatus);
     }
 
