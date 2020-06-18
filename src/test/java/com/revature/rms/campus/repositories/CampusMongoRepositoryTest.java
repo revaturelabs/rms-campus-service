@@ -1,4 +1,4 @@
-package com.revature.rms.campus.repositories;
-
-public class CampusMongoRepositoryTest {
-}
+//package com.revature.rms.campus.repositories;
+//
+//public class CampusMongoRepositoryTest {
+//}

@@ -1,13 +1,21 @@
 package com.revature.rms.campus.services;
 
 
+import com.revature.rms.campus.entities.Address;
 import com.revature.rms.campus.entities.Campus;
+import com.revature.rms.campus.entities.ResourceMetadata;
+import com.revature.rms.campus.entities.RoomStatus;
 import com.revature.rms.campus.exceptions.InvalidInputException;
 import com.revature.rms.campus.exceptions.ResourceNotFoundException;
-import com.revature.rms.campus.repositories.CampusMongoRepository;
+//import com.revature.rms.campus.repositories.CampusMongoRepository;
+import com.revature.rms.campus.repositories.AddressRepository;
+import com.revature.rms.campus.repositories.CampusRepository;
+import com.revature.rms.campus.repositories.ResourceMetadataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,66 +49,115 @@ import java.util.Optional;
 @Service
 public class CampusService {
 
-    private CampusMongoRepository campusMongoRepository;
+//    private CampusMongoRepository campusMongoRepository;
+    @Autowired
+    private CampusRepository campusRepository;
 
     @Autowired
-    public CampusService(CampusMongoRepository repo) {
-        this.campusMongoRepository = repo;
-    }
+    private ResourceMetadataRepository metadataRepository;
 
+    @Autowired
+    private AddressRepository addressRepository;
+
+//    public CampusService(CampusMongoRepository repo) {
+//        this.campusMongoRepository = repo;
+//    }
+
+    @Transactional
     public Campus save(Campus campus) {
         if (campus == null) {
             throw new ResourceNotFoundException();
         }
-        return campusMongoRepository.save(campus);
+//        return campusMongoRepository.save(campus);
+
+        Address address = addressRepository.save(campus.getShippingAddress());
+        ResourceMetadata data = metadataRepository.save(campus.getResourceMetadata());
+        campus.setShippingAddress(address);
+        campus.setResourceMetadata(data);
+        Campus persisted = campusRepository.save(campus);
+        return persisted;
     }
 
 
+//    public List<Campus> findAll() {
+//        return campusMongoRepository.findAll();
+//    }
+    @Transactional(readOnly = true)
     public List<Campus> findAll() {
-        return campusMongoRepository.findAll();
+        Iterable<Campus> r = campusRepository.findAll();
+        List<Campus> list = getListFromIterator(r);
+        return list;
+//        return campusRepository.findAll();
     }
 
-    public Optional<Campus> findById(String id) {
-        if (id.isEmpty() || (Integer.parseInt(id) <= 0)) {
+    @Transactional(readOnly = true)
+    public Optional<Campus> findById(int id) {
+//        if (id.isEmpty() || (Integer.parseInt(id) <= 0)) {
+        if (id <= 0) {
             throw new InvalidInputException();
         }
-        Optional<Campus> _campus = campusMongoRepository.findById(id);
+//        Optional<Campus> _campus = campusMongoRepository.findById(id);
+        Optional<Campus> _campus = campusRepository.findById(id);
         if (!_campus.isPresent()) {
             throw new  ResourceNotFoundException();
         }
         return _campus;
     }
 
+    @Transactional(readOnly = true)
     public Campus findByTrainingManagerId(Integer id) {
         if (id < 1) {
             throw new InvalidInputException();
         }
-        Campus campus = campusMongoRepository.findByTrainingManagerId(id);
+//        Campus campus = campusMongoRepository.findByTrainingManagerId(id);
+        Campus campus = campusRepository.findByTrainingManagerId(id);
         if (campus == null) throw new ResourceNotFoundException();
         else return campus;
     }
 
+    @Transactional(readOnly = true)
     public Campus findByStagingManagerId(Integer id) {
         if (id < 1) {
             throw new InvalidInputException();
         }
-        Campus campus = campusMongoRepository.findByStagingManagerId(id);
+//        Campus campus = campusMongoRepository.findByStagingManagerId(id);
+        Campus campus = campusRepository.findByStagingManagerId(id);
         if (campus == null) throw new ResourceNotFoundException();
         else return campus;
     }
 
+//    public Campus findByName(String name) {
+//        return campusMongoRepository.findByName(name);
+//    }
+    @Transactional(readOnly = true)
     public Campus findByName(String name) {
-        return campusMongoRepository.findByName(name);
+        return campusRepository.findByName(name);
     }
 
+//    public Campus update(Campus campus) {
+//        return campusMongoRepository.save(campus);
+//    }
+    @Transactional
     public Campus update(Campus campus) {
-        return campusMongoRepository.save(campus);
+        return campusRepository.save(campus);
     }
 
-    public void delete(String id) {
-        if (id.isEmpty() || Integer.parseInt(id) <= 0) {
+    @Transactional
+    public void delete(int id) {
+//        if (id.isEmpty() || Integer.parseInt(id) <= 0) { 
+        if (id <= 0) {
             throw new InvalidInputException();
         }
-        campusMongoRepository.deleteById(id);
+//        campusMongoRepository.deleteById(id);
+        campusRepository.deleteById(id);
+    }
+
+    //added to convert to h2
+    public static <T> List<T> getListFromIterator(Iterable<T> iterable)
+    {
+
+        List<T> list = new ArrayList<>();
+        iterable.forEach(list::add);
+        return list;
     }
 }
