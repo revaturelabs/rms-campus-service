@@ -107,6 +107,12 @@ public class BuildingService {
         return buildingRepository.findByName(name);
     }
 
+    /**
+     * findByBuildingOwnerId method: Retrieves list of Buildings owned by an app user
+     * @param id ID of the app user
+     * @return List of buildings
+     */
+
     @Transactional(readOnly = true)
     public List<Building> findByBuildingOwnerId(Integer id){
 
