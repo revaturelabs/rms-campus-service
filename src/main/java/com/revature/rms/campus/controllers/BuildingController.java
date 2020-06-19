@@ -74,6 +74,11 @@ public class BuildingController {
         return buildingService.findById(id).get();
     }
 
+    /**
+     * getBuildingByOwnerId method: Retrieves a list of Building owned by a specific app user
+     * @param id ID of the app user
+     * @return List of buildings
+     */
 
     @GetMapping(value = "/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Building> getBuildingByOwnerId(@PathVariable Integer id){

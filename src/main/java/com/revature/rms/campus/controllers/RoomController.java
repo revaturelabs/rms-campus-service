@@ -61,6 +61,11 @@ public class RoomController {
     return roomService.findById(id).get();
     }
 
+    /**
+     * getRoomByOwner method: gets a list of rooms owned by a person
+     * @param id ID of the owner
+     * @return List of rooms
+     */
 
     @GetMapping(value = "/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Room> getRoomByOwnerId(@PathVariable int id){
