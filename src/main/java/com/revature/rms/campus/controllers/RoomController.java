@@ -46,6 +46,11 @@ public class RoomController {
     return roomService.findById(id).get();
     }
 
+    @GetMapping(value = "/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Room> getRoomByOwnerId(@PathVariable int id){
+        return roomService.findByResourceOwner(id);
+    }
+
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Room updateRoom(@RequestBody Room room) { return roomService.update(room); }
 
