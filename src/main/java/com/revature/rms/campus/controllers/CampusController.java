@@ -97,6 +97,11 @@ public class CampusController {
         return campus;
     }
 
+    /**
+     * getByResourceOwnerId method: Retrieves list of campuses that a specific app user owns
+     * @param id ID of the app user
+     * @return List of campuses
+     */
 
     @GetMapping(value = "/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Campus> getByResourceOwnerId(@PathVariable int id){
