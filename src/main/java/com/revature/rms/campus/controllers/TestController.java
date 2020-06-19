@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v2/test")
 public class TestController {
 
+    /**
+     * Simple test for a controller
+     * @return String "Test Successful"
+     */
     @GetMapping(produces= MediaType.TEXT_PLAIN_VALUE)
     public String test() {return "Test Successful"; }
 
