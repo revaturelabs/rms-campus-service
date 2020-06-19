@@ -62,11 +62,11 @@ public class CampusController {
     }
 
     @GetMapping(value = "/training/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Campus getCampusByTrainingManagerId(@PathVariable int id) {
+    public List<Campus> getCampusByTrainingManagerId(@PathVariable int id) {
         if (id <= 0) {
             throw new InvalidInputException();
         }
-        Campus campus = campusService.findByTrainingManagerId(id);
+        List<Campus> campus = campusService.findByTrainingManagerId(id);
         if (campus == null) {
             throw new ResourceNotFoundException();
         }
@@ -74,11 +74,11 @@ public class CampusController {
     }
 
     @GetMapping(value = "/staging/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Campus getCampusByStagingManagerId(@PathVariable int id) {
+    public List<Campus> getCampusByStagingManagerId(@PathVariable int id) {
         if (id <= 0) {
             throw new InvalidInputException();
         }
-        Campus campus = campusService.findByStagingManagerId(id);
+        List<Campus> campus = campusService.findByStagingManagerId(id);
         if (campus == null) {
             throw new ResourceNotFoundException();
         }
@@ -88,12 +88,13 @@ public class CampusController {
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Campus updateCampus(@RequestBody Campus campus) { return campusService.update(campus); }
 
-    @DeleteMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void deleteCampusById(@PathVariable int id) {
+    @DeleteMapping(value = "/{id}")
+    public boolean deleteCampusById(@PathVariable int id) {
         if(id <= 0) {
             throw new InvalidInputException();
         }
         campusService.delete(id);
+        return true;
     }
 
     @ExceptionHandler
