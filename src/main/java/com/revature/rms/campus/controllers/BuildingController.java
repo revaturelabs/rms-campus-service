@@ -56,6 +56,11 @@ public class BuildingController {
         return buildingService.findById(id).get();
     }
 
+    @GetMapping(value = "/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Building> getBuildingByOwnerId(@PathVariable Integer id){
+        return buildingService.findByBuildingOwnerId(id);
+    }
+
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Building updateBuilding(@RequestBody Building building) {
