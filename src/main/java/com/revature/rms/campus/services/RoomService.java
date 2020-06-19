@@ -5,10 +5,8 @@ import com.revature.rms.campus.entities.Room;
 import com.revature.rms.campus.entities.RoomStatus;
 import com.revature.rms.campus.exceptions.InvalidInputException;
 import com.revature.rms.campus.exceptions.ResourceNotFoundException;
-//import com.revature.rms.campus.repositories.RoomMongoRepository;
 import com.revature.rms.campus.repositories.ResourceMetadataRepository;
 import com.revature.rms.campus.repositories.RoomRepository;
-//import com.revature.rms.campus.repositories.RoomStatusMongoRepository;
 import com.revature.rms.campus.repositories.RoomStatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,11 +20,9 @@ import java.util.Optional;
 public class RoomService {
 
     @Autowired
-//    private RoomMongoRepository roomMongoRepository;
     private RoomRepository roomRepository;
 
     @Autowired
-//    private RoomStatusMongoRepository roomStatusRepo;
     private RoomStatusRepository roomStatusRepository;
 
     @Autowired
@@ -39,12 +35,10 @@ public class RoomService {
      * findAll method: returns a list of all the room objects in the database.
      * @return a list of all the rooms
      */
-//    public List<Room> findAll(){ return roomMongoRepository.findAll();
     @Transactional(readOnly = true)
     public List<Room> findAll(){
             Iterable<Room> r = roomRepository.findAll();
             List<Room> list = getListFromIterator(r);
-            //List<RoomDTO> newList = list.stream().map(RoomDTO::new).collect(Collectors.toList());
             return list;
     }
 
@@ -66,7 +60,6 @@ public class RoomService {
         if (roomNum.isEmpty() || (Integer.parseInt(roomNum) <= 0)) {
             throw new InvalidInputException();
         }
-//        Optional<Room> _room = roomMongoRepository.findByRoomNumber(roomNum);
         Optional<Room> _room = roomRepository.findByRoomNumber(roomNum);
 
         if(!_room.isPresent()) {
@@ -91,11 +84,9 @@ public class RoomService {
      */
     @Transactional(readOnly = true)
     public Optional<Room> findById(int id){
-//        if (id.isEmpty() || (Integer.parseInt(id) <= 0)) {
         if (id <= 0) {
             throw new InvalidInputException();
         }
-//        Optional<Room> _room = roomMongoRepository.findById(id);
         Optional<Room> _room = roomRepository.findById(id);
         if(!_room.isPresent()){
             throw new ResourceNotFoundException();
@@ -150,10 +141,6 @@ public class RoomService {
             status.setRoom(persisted);
             saveStatus(status);
         }
-//        return roomMongoRepository.save(room);
-
-
-
         return persisted;
     }
 
@@ -163,7 +150,6 @@ public class RoomService {
      * @param room
      * @return Updated/Modified room object
      */
-//    public Room update(Room room){return roomMongoRepository.save(room);}
     @Transactional
     public Room update(Room room){
         Room oldRoom;
@@ -291,28 +277,6 @@ public class RoomService {
         return roomStatusRepository.save(roomStatus);
     }
 
-//    /**
-//     * Soft Delete Method: Similar to the room soft delete method. Updates
-//     * the room status object by setting archived to true (to indicate the
-//     * room status is no longer in use or archived). Soft delete is
-//     * implemented to achieve data in the event of auditing. Soft delete
-//     * may need some modifications to pass all tests.
-//     *
-//     * The method takes in and uses the room status id to retrieve the
-//     * specific room status object. The archived parameter of the retrieved
-//     * room status object is set to true and the room status object is saved
-//     * or updated.
-//     * @param statusId
-//     * @return The Updated room status objected.
-//     */
-//    @Transactional
-//    public void deleteRoomStatus(int statusId){
-//        RoomStatus deleteStatus = roomStatusRepository.findById(statusId).get();
-//        //deleteStatus.setArchived(true);
-//        saveStatus(deleteStatus);
-//    }
-
-    //added to convert to h2
     public static <T> List<T> getListFromIterator(Iterable<T> iterable)
     {
 
