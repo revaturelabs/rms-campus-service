@@ -131,6 +131,11 @@ public class CampusService {
         else return campus;
     }
 
+    /**
+     * findByResourceOwnerId method: Finds all campuses owned by a specific app user
+     * @param id Id of the app user
+     * @return List of campuses
+     */
 
     @Transactional(readOnly = true)
     public List<Campus> findByResourceOwnerId(Integer id){
