@@ -81,4 +81,12 @@ public class ResourceMetadata {
     public void setId(int id) {
         this.id = id;
     }
+
+    public int getResourceOwner() {
+        return resourceOwner;
+    }
+
+    public void setResourceOwner(int resourceOwner) {
+        this.resourceOwner = resourceOwner;
+    }
 }
