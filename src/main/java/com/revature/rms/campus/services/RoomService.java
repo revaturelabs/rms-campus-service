@@ -40,6 +40,7 @@ public class RoomService {
      * findAll method: returns a list of all the room objects in the database.
      * @return a list of all the rooms
      */
+
     @Transactional(readOnly = true)
     public List<Room> findAll(){
             Iterable<Room> r = roomRepository.findAll();
@@ -65,6 +66,7 @@ public class RoomService {
         if (roomNum.isEmpty() || (Integer.parseInt(roomNum) <= 0)) {
             throw new InvalidInputException();
         }
+
         Optional<Room> _room = roomRepository.findByRoomNumber(roomNum);
 
         if(!_room.isPresent()) {
@@ -89,9 +91,12 @@ public class RoomService {
      */
     @Transactional(readOnly = true)
     public Optional<Room> findById(int id){
+
+
         if (id <= 0) {
             throw new InvalidInputException();
         }
+
         Optional<Room> _room = roomRepository.findById(id);
         if(!_room.isPresent()){
             throw new ResourceNotFoundException();
@@ -108,8 +113,33 @@ public class RoomService {
      */
     @Transactional(readOnly = true)
     public List<Room> findByMaxOccupancy(int occupancy){
-//        return roomMongoRepository.findByMaxOccupancy(occupancy);
+
         return roomRepository.findByMaxOccupancy(occupancy);
+    }
+
+    @Transactional
+    public List<Room> findByResourceOwner(Integer id){
+        if(id < 1){
+            throw new InvalidInputException();
+        }
+
+        Iterable<Room> allRooms = roomRepository.findAll();
+
+        List<Room> rooms = new ArrayList<Room>();
+
+        for(Room room : allRooms){
+            ResourceMetadata data = room.getResourceMetadata();
+            if(data.getResourceOwner() == id){
+                rooms.add(room);
+            }
+        }
+
+        if(rooms.isEmpty()){
+            throw new ResourceNotFoundException();
+        }
+
+        return rooms;
+
     }
 
     /**
@@ -133,6 +163,7 @@ public class RoomService {
             status.setRoom(persisted);
             saveStatus(status);
         }
+
         return persisted;
     }
 
@@ -142,6 +173,7 @@ public class RoomService {
      * @param room
      * @return Updated/Modified room object
      */
+
     @Transactional
     public Room update(Room room){
         Room oldRoom;
@@ -169,11 +201,11 @@ public class RoomService {
      */
     @Transactional
     public Room delete(int id){
-//        if (id.isEmpty() || Integer.parseInt(id) <= 0) {
+
         if (id <= 0) {
             throw new InvalidInputException();
         }
-//        Room deleteRoom = roomMongoRepository.findById(id).get();
+
         Room deactivateRoom = roomRepository.findById(id).get();
         ResourceMetadata resource = metadataService.deactivateResource(deactivateRoom.getResourceMetadata());
         deactivateRoom.setResourceMetadata(resource);
@@ -230,22 +262,9 @@ public class RoomService {
         Iterable<RoomStatus> r = roomStatusRepository.findAll();
         List<RoomStatus> list = getListFromIterator(r);
         return list;
-//        return roomStatusRepo.findAll();
     }
 
-//    /**
-//     * findAllByArchive Method: This method takes in the boolean active parameter.
-//     * The method will return a list of all the active room status objects if
-//     * the input active is false. However, the method will return a list of all
-//     * the inactive or archived room statuses if the input is false.
-//     * @param active
-//     * @return a list of all the room status objects that are active or inactive.
-//     */
-//    @Transactional(readOnly = true)
-//    public List<RoomStatus> findAllByArchive(boolean active){
-//
-//        return roomStatusRepository.findAllByArchived(active);
-//    }
+
 
     /**
      * saveStatus Method: This method takes in a new room status object and
@@ -275,6 +294,7 @@ public class RoomService {
      * @param <T> Generic of any ObjectType
      * @return Returns a List of type T
      */
+
     public static <T> List<T> getListFromIterator(Iterable<T> iterable)
     {
 

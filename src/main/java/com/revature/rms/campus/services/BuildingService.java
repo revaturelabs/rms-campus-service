@@ -6,6 +6,7 @@ import com.revature.rms.campus.exceptions.ResourceNotFoundException;
 import com.revature.rms.campus.exceptions.ResourcePersistenceException;
 //import com.revature.rms.campus.repositories.BuildingMongoRepository;
 import com.revature.rms.campus.repositories.BuildingRepository;
+import com.revature.rms.campus.repositories.ResourceMetadataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,12 +24,13 @@ import java.util.Optional;
 @Service
 public class BuildingService {
 
+
+    @Autowired
     private BuildingRepository buildingRepository;
 
     @Autowired
-    public BuildingService(BuildingRepository buildingRepository) {
-        this.buildingRepository = buildingRepository;
-    }
+    private ResourceMetadataRepository resourceMetadataRepo;
+
 
     /**
      * Save Method: Takes in a building object as the input. The input room
@@ -56,9 +58,11 @@ public class BuildingService {
      */
     @Transactional(readOnly = true)
     public List<Building> findAll() {
+
         Iterable<Building> b = buildingRepository.findAll();
         List<Building> list = getListFromIterator(b);
         return list;
+
     }
 
     /**
@@ -77,9 +81,11 @@ public class BuildingService {
      */
     @Transactional(readOnly = true)
     public Optional<Building> findById(int id) {
+
         if (id <= 0) {
             throw new InvalidInputException();
         }
+
         Optional<Building> theBuilding = buildingRepository.findById(id);
         if (!theBuilding.isPresent()) {
             throw new ResourceNotFoundException();
@@ -95,11 +101,37 @@ public class BuildingService {
      * @param name
      * @return the room object with the same room number as the input parameter.
      */
+  
     @Transactional(readOnly = true)
     public Building findByName(String name) {
         return buildingRepository.findByName(name);
     }
 
+    @Transactional(readOnly = true)
+    public List<Building> findByBuildingOwnerId(Integer id){
+
+        if(id < 1){
+            throw new InvalidInputException();
+        }
+
+        Iterable<Building> allBuildings = buildingRepository.findAll();
+
+        List<Building> buildings = new ArrayList<Building>();
+
+        for (Building build : allBuildings){
+            ResourceMetadata metadata = build.getResourceMetadata();
+            if(metadata.getResourceOwner() == id){
+                buildings.add(build);
+            }
+        }
+
+        if(buildings.isEmpty()){
+            throw new ResourceNotFoundException();
+        }
+
+        return buildings;
+
+    }
 
     /**
      * Update Method: The building object is inputted and changes are saved.
@@ -108,6 +140,7 @@ public class BuildingService {
      * @param building
      * @return Updated/Modified room object
      */
+
     @Transactional
     public Building update(Building building) {
         return buildingRepository.save(building);
@@ -125,9 +158,11 @@ public class BuildingService {
      */
     @Transactional
     public void delete(int id) {
+
         if (id <= 0) {
             throw new InvalidInputException();
         }
+
         buildingRepository.deleteById(id);
     }
 

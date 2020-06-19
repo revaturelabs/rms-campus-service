@@ -74,11 +74,18 @@ public class BuildingController {
         return buildingService.findById(id).get();
     }
 
+
+    @GetMapping(value = "/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Building> getBuildingByOwnerId(@PathVariable Integer id){
+        return buildingService.findByBuildingOwnerId(id);
+    }
+
     /**
      * updateBuilding method: The building object is inputted and changes are saved.
      * @param building newly updated building object
      * @return updated/modified building object
      */
+
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Building updateBuilding(@RequestBody Building building) {
         return buildingService.update(building);

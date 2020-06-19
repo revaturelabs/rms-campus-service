@@ -97,11 +97,19 @@ public class CampusController {
         return campus;
     }
 
+
+    @GetMapping(value = "/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Campus> getByResourceOwnerId(@PathVariable int id){
+        return campusService.findByResourceOwnerId(id);
+    }
+
+
     /**
      * updateCampus method: The campus object is inputted and changes are saved.
      * @param campus newly updated campus object
      * @return updated/modified campus object
      */
+
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Campus updateCampus(@RequestBody Campus campus) { return campusService.update(campus); }
 
