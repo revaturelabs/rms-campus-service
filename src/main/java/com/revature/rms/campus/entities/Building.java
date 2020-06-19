@@ -94,4 +94,12 @@ public class Building {
     public void setId(int id) {
         this.id = id;
     }
+
+    public ResourceMetadata getResourceMetadata() {
+        return resourceMetadata;
+    }
+
+    public void setResourceMetadata(ResourceMetadata resourceMetadata) {
+        this.resourceMetadata = resourceMetadata;
+    }
 }
