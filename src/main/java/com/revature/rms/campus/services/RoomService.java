@@ -22,11 +22,9 @@ import java.util.Optional;
 public class RoomService {
 
     @Autowired
-//    private RoomMongoRepository roomMongoRepository;
     private RoomRepository roomRepository;
 
     @Autowired
-//    private RoomStatusMongoRepository roomStatusRepo;
     private RoomStatusRepository roomStatusRepository;
 
     @Autowired
@@ -39,12 +37,11 @@ public class RoomService {
      * findAll method: returns a list of all the room objects in the database.
      * @return a list of all the rooms
      */
-//    public List<Room> findAll(){ return roomMongoRepository.findAll();
+
     @Transactional(readOnly = true)
     public List<Room> findAll(){
             Iterable<Room> r = roomRepository.findAll();
             List<Room> list = getListFromIterator(r);
-            //List<RoomDTO> newList = list.stream().map(RoomDTO::new).collect(Collectors.toList());
             return list;
     }
 
@@ -66,7 +63,7 @@ public class RoomService {
         if (roomNum.isEmpty() || (Integer.parseInt(roomNum) <= 0)) {
             throw new InvalidInputException();
         }
-//        Optional<Room> _room = roomMongoRepository.findByRoomNumber(roomNum);
+
         Optional<Room> _room = roomRepository.findByRoomNumber(roomNum);
 
         if(!_room.isPresent()) {
@@ -91,11 +88,11 @@ public class RoomService {
      */
     @Transactional(readOnly = true)
     public Optional<Room> findById(int id){
-//        if (id.isEmpty() || (Integer.parseInt(id) <= 0)) {
+
         if (id <= 0) {
             throw new InvalidInputException();
         }
-//        Optional<Room> _room = roomMongoRepository.findById(id);
+
         Optional<Room> _room = roomRepository.findById(id);
         if(!_room.isPresent()){
             throw new ResourceNotFoundException();
@@ -125,8 +122,33 @@ public class RoomService {
      */
     @Transactional(readOnly = true)
     public List<Room> findByMaxOccupancy(int occupancy){
-//        return roomMongoRepository.findByMaxOccupancy(occupancy);
+
         return roomRepository.findByMaxOccupancy(occupancy);
+    }
+
+    @Transactional
+    public List<Room> findByResourceOwner(Integer id){
+        if(id < 1){
+            throw new InvalidInputException();
+        }
+
+        Iterable<Room> allRooms = roomRepository.findAll();
+
+        List<Room> rooms = new ArrayList<Room>();
+
+        for(Room room : allRooms){
+            ResourceMetadata data = room.getResourceMetadata();
+            if(data.getResourceOwner() == id){
+                rooms.add(room);
+            }
+        }
+
+        if(rooms.isEmpty()){
+            throw new ResourceNotFoundException();
+        }
+
+        return rooms;
+
     }
 
     /**
@@ -150,9 +172,6 @@ public class RoomService {
             status.setRoom(persisted);
             saveStatus(status);
         }
-//        return roomMongoRepository.save(room);
-
-
 
         return persisted;
     }
@@ -163,7 +182,7 @@ public class RoomService {
      * @param room
      * @return Updated/Modified room object
      */
-//    public Room update(Room room){return roomMongoRepository.save(room);}
+
     @Transactional
     public Room update(Room room){
         Room oldRoom;
@@ -191,11 +210,11 @@ public class RoomService {
      */
     @Transactional
     public Room delete(int id){
-//        if (id.isEmpty() || Integer.parseInt(id) <= 0) {
+
         if (id <= 0) {
             throw new InvalidInputException();
         }
-//        Room deleteRoom = roomMongoRepository.findById(id).get();
+
         Room deactivateRoom = roomRepository.findById(id).get();
         ResourceMetadata resource = metadataService.deactivateResource(deactivateRoom.getResourceMetadata());
         deactivateRoom.setResourceMetadata(resource);
@@ -252,22 +271,9 @@ public class RoomService {
         Iterable<RoomStatus> r = roomStatusRepository.findAll();
         List<RoomStatus> list = getListFromIterator(r);
         return list;
-//        return roomStatusRepo.findAll();
     }
 
-//    /**
-//     * findAllByArchive Method: This method takes in the boolean active parameter.
-//     * The method will return a list of all the active room status objects if
-//     * the input active is false. However, the method will return a list of all
-//     * the inactive or archived room statuses if the input is false.
-//     * @param active
-//     * @return a list of all the room status objects that are active or inactive.
-//     */
-//    @Transactional(readOnly = true)
-//    public List<RoomStatus> findAllByArchive(boolean active){
-//
-//        return roomStatusRepository.findAllByArchived(active);
-//    }
+
 
     /**
      * saveStatus Method: This method takes in a new room status object and
@@ -291,28 +297,6 @@ public class RoomService {
         return roomStatusRepository.save(roomStatus);
     }
 
-//    /**
-//     * Soft Delete Method: Similar to the room soft delete method. Updates
-//     * the room status object by setting archived to true (to indicate the
-//     * room status is no longer in use or archived). Soft delete is
-//     * implemented to achieve data in the event of auditing. Soft delete
-//     * may need some modifications to pass all tests.
-//     *
-//     * The method takes in and uses the room status id to retrieve the
-//     * specific room status object. The archived parameter of the retrieved
-//     * room status object is set to true and the room status object is saved
-//     * or updated.
-//     * @param statusId
-//     * @return The Updated room status objected.
-//     */
-//    @Transactional
-//    public void deleteRoomStatus(int statusId){
-//        RoomStatus deleteStatus = roomStatusRepository.findById(statusId).get();
-//        //deleteStatus.setArchived(true);
-//        saveStatus(deleteStatus);
-//    }
-
-    //added to convert to h2
     public static <T> List<T> getListFromIterator(Iterable<T> iterable)
     {
 
