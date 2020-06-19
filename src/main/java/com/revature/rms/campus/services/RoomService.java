@@ -117,6 +117,12 @@ public class RoomService {
         return roomRepository.findByMaxOccupancy(occupancy);
     }
 
+    /**
+     * findByResourceOwner: Takes the ID of an appuser, and finds a list of rooms they own
+     * @param id ID of the owner
+     * @return List of rooms
+     */
+
     @Transactional
     public List<Room> findByResourceOwner(Integer id){
         if(id < 1){
