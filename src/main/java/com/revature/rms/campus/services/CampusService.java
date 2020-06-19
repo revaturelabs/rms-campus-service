@@ -11,6 +11,7 @@ import com.revature.rms.campus.exceptions.ResourceNotFoundException;
 import com.revature.rms.campus.repositories.AddressRepository;
 import com.revature.rms.campus.repositories.CampusRepository;
 import com.revature.rms.campus.repositories.ResourceMetadataRepository;
+import org.hibernate.boot.Metadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,7 +50,6 @@ import java.util.Optional;
 @Service
 public class CampusService {
 
-//    private CampusMongoRepository campusMongoRepository;
     @Autowired
     private CampusRepository campusRepository;
 
@@ -59,16 +59,11 @@ public class CampusService {
     @Autowired
     private AddressRepository addressRepository;
 
-//    public CampusService(CampusMongoRepository repo) {
-//        this.campusMongoRepository = repo;
-//    }
-
     @Transactional
     public Campus save(Campus campus) {
         if (campus == null) {
             throw new ResourceNotFoundException();
         }
-//        return campusMongoRepository.save(campus);
 
         Address address = addressRepository.save(campus.getShippingAddress());
         ResourceMetadata data = metadataRepository.save(campus.getResourceMetadata());
@@ -79,24 +74,21 @@ public class CampusService {
     }
 
 
-//    public List<Campus> findAll() {
-//        return campusMongoRepository.findAll();
-//    }
+
     @Transactional(readOnly = true)
     public List<Campus> findAll() {
         Iterable<Campus> r = campusRepository.findAll();
         List<Campus> list = getListFromIterator(r);
         return list;
-//        return campusRepository.findAll();
     }
 
     @Transactional(readOnly = true)
     public Optional<Campus> findById(int id) {
-//        if (id.isEmpty() || (Integer.parseInt(id) <= 0)) {
+
         if (id <= 0) {
             throw new InvalidInputException();
         }
-//        Optional<Campus> _campus = campusMongoRepository.findById(id);
+
         Optional<Campus> _campus = campusRepository.findById(id);
         if (!_campus.isPresent()) {
             throw new  ResourceNotFoundException();
@@ -109,7 +101,7 @@ public class CampusService {
         if (id < 1) {
             throw new InvalidInputException();
         }
-//        Campus campus = campusMongoRepository.findByTrainingManagerId(id);
+
         Campus campus = campusRepository.findByTrainingManagerId(id);
         if (campus == null) throw new ResourceNotFoundException();
         else return campus;
@@ -120,23 +112,45 @@ public class CampusService {
         if (id < 1) {
             throw new InvalidInputException();
         }
-//        Campus campus = campusMongoRepository.findByStagingManagerId(id);
+
         Campus campus = campusRepository.findByStagingManagerId(id);
         if (campus == null) throw new ResourceNotFoundException();
         else return campus;
     }
 
-//    public Campus findByName(String name) {
-//        return campusMongoRepository.findByName(name);
-//    }
+    @Transactional(readOnly = true)
+    public List<Campus> findByResourceOwnerId(Integer id){
+
+        if(id < 1){
+            throw new InvalidInputException();
+        }
+
+        Iterable<Campus> allCampuses = campusRepository.findAll();
+
+        List<Campus> campuses = new ArrayList<Campus>();
+
+        for(Campus campus : allCampuses){
+            ResourceMetadata data = campus.getResourceMetadata();
+            if(data.getResourceOwner() == id){
+                campuses.add(campus);
+            }
+        }
+
+        if(campuses.isEmpty()){
+            throw new ResourceNotFoundException();
+        }
+
+        return campuses;
+
+    }
+
+
     @Transactional(readOnly = true)
     public Campus findByName(String name) {
         return campusRepository.findByName(name);
     }
 
-//    public Campus update(Campus campus) {
-//        return campusMongoRepository.save(campus);
-//    }
+
     @Transactional
     public Campus update(Campus campus) {
         return campusRepository.save(campus);
@@ -144,15 +158,14 @@ public class CampusService {
 
     @Transactional
     public void delete(int id) {
-//        if (id.isEmpty() || Integer.parseInt(id) <= 0) { 
+
         if (id <= 0) {
             throw new InvalidInputException();
         }
-//        campusMongoRepository.deleteById(id);
+
         campusRepository.deleteById(id);
     }
 
-    //added to convert to h2
     public static <T> List<T> getListFromIterator(Iterable<T> iterable)
     {
 
