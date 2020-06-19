@@ -1,7 +1,6 @@
 package com.revature.rms.campus;
 
 import com.revature.rms.campus.entities.*;
-//import com.revature.rms.campus.repositories.CampusMongoRepository;
 import com.revature.rms.campus.repositories.CampusRepository;
 import com.revature.rms.campus.services.BuildingService;
 import com.revature.rms.campus.services.CampusService;
@@ -56,6 +55,5 @@ public class CampusServiceApplication  {
 				.build()
 				.apiInfo(new ApiInfoBuilder().version("1.0").title("Campus API").description("Documentation Campus API v1.0").build());
 	}
-
 
 }
