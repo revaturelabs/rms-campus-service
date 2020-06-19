@@ -15,7 +15,7 @@ public class ResourceMetadataService {
     @Transactional
     public ResourceMetadata deactivateResource(ResourceMetadata resourceMetadata) {
         ResourceMetadata resource = metadataRepository.findById(resourceMetadata.getId()).get();
-        resource.setActive(false);
+        resource.setCurrentlyActive(false);
         return resource;
 
     }

@@ -34,44 +34,44 @@ public class ResourceMetadata {
     private int resourceOwner;
 
     @Column(nullable=false)
-    private boolean isActive;
+    private boolean currentlyActive;
 
     public ResourceMetadata() {
     }
 
-    public ResourceMetadata(int id, int resourceCreator, String resourceCreationDateTime, int lastModifier, String lastModifiedDateTime, int resourceOwner, boolean isActive) {
+    public ResourceMetadata(int id, int resourceCreator, String resourceCreationDateTime, int lastModifier, String lastModifiedDateTime, int resourceOwner, boolean currentlyActive) {
         this.id = id;
         this.resourceCreator = resourceCreator;
         this.resourceCreationDateTime = resourceCreationDateTime;
         this.lastModifier = lastModifier;
         this.lastModifiedDateTime = lastModifiedDateTime;
         this.resourceOwner = resourceOwner;
-        this.isActive = isActive;
+        this.currentlyActive = currentlyActive;
     }
 
-    public ResourceMetadata(int resourceCreator, String resourceCreationDateTime, int lastModifier, String lastModifiedDateTime, int resourceOwner, boolean isActive) {
+    public ResourceMetadata(int resourceCreator, String resourceCreationDateTime, int lastModifier, String lastModifiedDateTime, int resourceOwner, boolean currentlyActive) {
         this.resourceCreator = resourceCreator;
         this.resourceCreationDateTime = resourceCreationDateTime;
         this.lastModifier = lastModifier;
         this.lastModifiedDateTime = lastModifiedDateTime;
         this.resourceOwner = resourceOwner;
-        this.isActive = isActive;
+        this.currentlyActive = currentlyActive;
     }
 
-    public ResourceMetadata(String resourceCreationDateTime, int lastModifier, String lastModifiedDateTime, int resourceOwner, boolean isActive) {
+    public ResourceMetadata(String resourceCreationDateTime, int lastModifier, String lastModifiedDateTime, int resourceOwner, boolean currentlyActive) {
         this.resourceCreationDateTime = resourceCreationDateTime;
         this.lastModifier = lastModifier;
         this.lastModifiedDateTime = lastModifiedDateTime;
         this.resourceOwner = resourceOwner;
-        this.isActive = isActive;
+        this.currentlyActive = currentlyActive;
     }
 
-    public boolean isActive() {
-        return isActive;
+    public boolean isCurrentlyActive() {
+        return currentlyActive;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setCurrentlyActive(boolean currentlyActive) {
+        this.currentlyActive = currentlyActive;
     }
 
     public int getId() {
