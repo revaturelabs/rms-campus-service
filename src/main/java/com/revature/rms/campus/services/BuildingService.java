@@ -15,15 +15,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The methods in this service call to methods from the buildingRepository in order to give the basic CRUD features to
+ * the application. The methods in this service are custom as a result of TDD. For more information about the testing
+ * see BuildingServiceTests.
+ */
 @Service
 public class BuildingService {
-//    private BuildingMongoRepository buildingMongoRepository;
+
     private BuildingRepository buildingRepository;
 
-//    @Autowired
-//    public BuildingService(BuildingMongoRepository buildingMongoRepository) {
-//        this.buildingMongoRepository = buildingMongoRepository;
-//    }
     @Autowired
     public BuildingService(BuildingRepository buildingRepository) {
         this.buildingRepository = buildingRepository;
@@ -39,14 +40,12 @@ public class BuildingService {
      * @param building
      * @return The new saved building object
      */
-
     @Transactional
     public Building save(Building building) {
 
         if (building == null) {
             throw new ResourcePersistenceException();
         }
-//        return buildingMongoRepository.save(building);
         return buildingRepository.save(building);
     }
 
@@ -57,11 +56,9 @@ public class BuildingService {
      */
     @Transactional(readOnly = true)
     public List<Building> findAll() {
-//        return buildingMongoRepository.findAll();
         Iterable<Building> b = buildingRepository.findAll();
         List<Building> list = getListFromIterator(b);
         return list;
-//        return buildingRepository.findAll();
     }
 
     /**
@@ -80,17 +77,14 @@ public class BuildingService {
      */
     @Transactional(readOnly = true)
     public Optional<Building> findById(int id) {
-//        if (id.isEmpty() || (Integer.parseInt(id) <= 0)) {
         if (id <= 0) {
             throw new InvalidInputException();
         }
-//        Optional<Building> theBuilding = buildingMongoRepository.findById(id);
         Optional<Building> theBuilding = buildingRepository.findById(id);
         if (!theBuilding.isPresent()) {
             throw new ResourceNotFoundException();
         }
 
-//        return buildingMongoRepository.findById(id);
         return buildingRepository.findById(id);
     }
 
@@ -101,9 +95,6 @@ public class BuildingService {
      * @param name
      * @return the room object with the same room number as the input parameter.
      */
-//    public Building findByName(String name) {
-//        return buildingMongoRepository.findByName(name);
-//    }
     @Transactional(readOnly = true)
     public Building findByName(String name) {
         return buildingRepository.findByName(name);
@@ -117,10 +108,6 @@ public class BuildingService {
      * @param building
      * @return Updated/Modified room object
      */
-
-//    public Building update(Building building) {
-//        return buildingMongoRepository.save(building);
-//    }
     @Transactional
     public Building update(Building building) {
         return buildingRepository.save(building);
@@ -138,11 +125,9 @@ public class BuildingService {
      */
     @Transactional
     public void delete(int id) {
-//        if (id.isEmpty() || Integer.parseInt(id) <= 0) {
         if (id <= 0) {
             throw new InvalidInputException();
         }
-//        buildingMongoRepository.deleteById(id);
         buildingRepository.deleteById(id);
     }
 
@@ -156,17 +141,20 @@ public class BuildingService {
      * @param id
      * @return The building object.
      */
-
     @Transactional(readOnly = true)
     public Building findByTrainingLeadId(int id) {
         if (id < 1) throw new InvalidInputException();
-//        Building temp = buildingMongoRepository.findByTrainingLead(id);
         Building temp = buildingRepository.findByTrainingLead(id);
         if (temp == null) throw new ResourceNotFoundException();
         else return temp;
     }
-    
-    //added to convert to h2
+
+    /**
+     * getListFromIterator Method: Is a custom method that iterates and adds each object to a list of the specified Generic.
+     * @param iterable an Iterable that wants to be converted into an ArrayList
+     * @param <T> Generic of any ObjectType
+     * @return Returns a List of type T
+     */
     public static <T> List<T> getListFromIterator(Iterable<T> iterable)
     {
 

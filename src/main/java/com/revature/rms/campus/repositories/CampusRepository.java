@@ -5,18 +5,13 @@ import com.revature.rms.campus.entities.Campus;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-//public interface CampusMongoRepository extends MongoRepository<Campus, String> {
-//    public Campus findByName(String name);
-//
-//    public Campus findByTrainingManagerId(Integer id);
-//
-//    public Campus findByStagingManagerId(Integer id);
-//}
+import java.util.List;
+
 @Repository
 public interface CampusRepository extends CrudRepository<Campus, Integer> {
     Campus findByName(String name);
 
-    Campus findByTrainingManagerId(Integer id);
+    List<Campus> findByTrainingManagerId(Integer id);
 
-    Campus findByStagingManagerId(Integer id);
+    List<Campus> findByStagingManagerId(Integer id);
 }
