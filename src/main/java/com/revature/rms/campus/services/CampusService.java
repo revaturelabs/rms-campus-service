@@ -4,10 +4,8 @@ package com.revature.rms.campus.services;
 import com.revature.rms.campus.entities.Address;
 import com.revature.rms.campus.entities.Campus;
 import com.revature.rms.campus.entities.ResourceMetadata;
-import com.revature.rms.campus.entities.RoomStatus;
 import com.revature.rms.campus.exceptions.InvalidInputException;
 import com.revature.rms.campus.exceptions.ResourceNotFoundException;
-//import com.revature.rms.campus.repositories.CampusMongoRepository;
 import com.revature.rms.campus.repositories.AddressRepository;
 import com.revature.rms.campus.repositories.CampusRepository;
 import com.revature.rms.campus.repositories.ResourceMetadataRepository;
@@ -21,31 +19,9 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * The methods in this service call to methods from the campusMongoRepository in order to give the basic CRUD features to
+ * The methods in this service call to methods from the campusRepository, addressRepository, metadataService and metadataRepository in order to give the basic CRUD features to
  * the application. The methods in this service are custom as a result of TDD. For more information about the testing
  * see CampusServiceTests.
- * The methods in this service are:
- * - save(), this method returns the result of campusMongoRepository.save when a non-null campus object is passed in.
- * Otherwise this method will throw a ResourceNotFoundException as the desired campus to save is missing. Campus field
- * level validation is handled in entities.Campus
- * - findAll(), this method returns the result of campusMongoRepository.findAll. The method will return a list of Campus
- * objects if there are any existing. Otherwise, it will return an empty list.
- * - findById, this method returns the result of campusMongoRepository.findById. If the provided input is invalid, an
- * empty string or and int less than or equal to 0 the method will thrown an InvalidInputException. Alternatively, if
- * the id is valid but there is no campus object associated with the id, the method will throw a
- * ResourceNotFoundException.
- * - findByName, this method returns the result of campusMongoRepository.findByName. This is a custom method made for
- * proof of concept and thoughts of additional functionality. The method functions similar to findById but instead will
- * return the object using either the name or the abbreviatedName associated with the campus object. Because this method
- * has not been used there is no validation other than testing functionality. If deciding to implement please develop
- * with TDD in the CampusServiceTests.
- * - update, this method returns the result of campusMongoRepository.save. This will update the edited fields for the
- * persisted campus object. Since the object is already persisted when using this method, there is no reason to check
- * if it's null. Additionally field checks are still handled in entities.Campus.
- * - delete, this method uses campusMongoRepository.deleteById. This will delete the persisted object from the database
- * if the user has provided a valid id. If the provided input is invalid, an empty string or and int less than or equal
- * to 0 the method will thrown an InvalidInputException. No exception a valid id but no associated object. Technically,
- * this object does not exist and therefore is not an issue.
  */
 @Service
 public class CampusService {
@@ -57,7 +33,18 @@ public class CampusService {
     private ResourceMetadataRepository metadataRepository;
 
     @Autowired
+    private ResourceMetadataService metadataService;
+
+    @Autowired
     private AddressRepository addressRepository;
+
+    /**
+     *  save Method: this method returns the result of campusRepository.save when a non-null campus object is passed in.
+     *  * Otherwise this method will throw a ResourceNotFoundException as the desired campus to save is missing. Campus field
+     *  * level validation is handled in entities.Campus
+     * @param campus Takes in a Campus object to be persisted to the database.
+     * @return The persisted Campus object with its specific serialized id.
+     */
 
     @Transactional
     public Campus save(Campus campus) {
@@ -73,7 +60,11 @@ public class CampusService {
         return persisted;
     }
 
-
+    /**
+     * findAll Method: this method returns the result of campusRepository.findAll. The method will return a list of Campus
+     *  * objects if there are any existing. Otherwise, it will return an empty list.
+     * @return An arraylist of Campus Objects.
+     */
 
     @Transactional(readOnly = true)
     public List<Campus> findAll() {
@@ -82,6 +73,14 @@ public class CampusService {
         return list;
     }
 
+    /**
+     *  findById Method: this method returns the result of campusMongoRepository.findById. If the provided input is invalid, an
+     *  * empty string or and int less than or equal to 0 the method will thrown an InvalidInputException. Alternatively, if
+     *  * the id is valid but there is no campus object associated with the id, the method will throw a
+     *  * ResourceNotFoundException.
+     * @param id
+     * @return
+     */
     @Transactional(readOnly = true)
     public Optional<Campus> findById(int id) {
 
@@ -96,27 +95,42 @@ public class CampusService {
         return _campus;
     }
 
+    /**
+     * findByTrainingManagerId Method: searches for a list of Campuses by the training Manager ID, if the ID is less than 1 it will throw and InvalidInputException.
+     *  * If the List of campuses is null it will throw a ResourceNotFoundException.
+     * @param id Passes as a parameter an Integer of name id.
+     * @return Returns a list of Campus Objects.
+     */
     @Transactional(readOnly = true)
-    public Campus findByTrainingManagerId(Integer id) {
+    public List<Campus> findByTrainingManagerId(Integer id) {
         if (id < 1) {
             throw new InvalidInputException();
         }
+      
+        List<Campus> campus = campusRepository.findByTrainingManagerId(id);
 
-        Campus campus = campusRepository.findByTrainingManagerId(id);
         if (campus == null) throw new ResourceNotFoundException();
         else return campus;
     }
 
+    /**
+     * findByStagingManagerId Method: searches for a list of Campuses by the staging Manager ID, if the ID is less than 1 it will throw and InvalidInputException.
+     *  * If the List of campuses is null it will throw a ResourceNotFoundException.
+     * @param id Passes as a parameter an Integer of name id.
+     * @return Returns a list of Campus Objects.
+     */
     @Transactional(readOnly = true)
-    public Campus findByStagingManagerId(Integer id) {
+    public List<Campus> findByStagingManagerId(Integer id) {
         if (id < 1) {
             throw new InvalidInputException();
         }
 
-        Campus campus = campusRepository.findByStagingManagerId(id);
+        List<Campus> campus = campusRepository.findByStagingManagerId(id);
+
         if (campus == null) throw new ResourceNotFoundException();
         else return campus;
     }
+
 
     @Transactional(readOnly = true)
     public List<Campus> findByResourceOwnerId(Integer id){
@@ -144,6 +158,15 @@ public class CampusService {
 
     }
 
+    /**
+     * findByName Method: this method returns the result of campusRepository.findByName. This is a custom method made for
+     *  * proof of concept and thoughts of additional functionality. The method functions similar to findById but instead will
+     *  * return the object using either the name or the abbreviatedName associated with the campus object. Because this method
+     *  * has not been used there is no validation other than testing functionality. If deciding to implement please develop
+     *  * with TDD in the CampusServiceTests.
+     * @param name Takes in a string of the campus name or abbreviation name.
+     * @return Returns a campus Object.
+     */
 
     @Transactional(readOnly = true)
     public Campus findByName(String name) {
@@ -151,20 +174,41 @@ public class CampusService {
     }
 
 
+    /**
+     * update Method: This method updates a currently persisted object by using the save method to overwrite any changes method to the passed in Campus Object.
+     * @param campus Campus object
+     * @return Returns the modified Campus Object.
+     */
     @Transactional
     public Campus update(Campus campus) {
         return campusRepository.save(campus);
     }
 
+    /**
+     * delete Method: This method soft deletes the campus object by changing the boolean value of the field currentlyActive to false,
+     * that belongs to the ResourceMetadata of the specified Campus Object.
+     * @param id int value that is used to find the Campus Object.
+     * @return Returns the boolean value of true.
+     */
     @Transactional
-    public void delete(int id) {
 
+    public boolean delete(int id) {
         if (id <= 0) {
             throw new InvalidInputException();
         }
-
-        campusRepository.deleteById(id);
+        Campus campus = campusRepository.findById(id).get();
+        ResourceMetadata metadata = metadataService.deactivateResource(campus.getResourceMetadata());
+        campus.setResourceMetadata(metadata);
+        campusRepository.save(campus);
+        return true;
     }
+
+    /**
+     * getListFromIterator Method: Is a custom method that iterates and adds each object to a list of the specified Generic.
+     * @param iterable an Iterable that wants to be converted into an ArrayList
+     * @param <T> Generic of any ObjectType
+     * @return Returns a List of type T
+     */
 
     public static <T> List<T> getListFromIterator(Iterable<T> iterable)
     {

@@ -5,10 +5,8 @@ import com.revature.rms.campus.entities.Room;
 import com.revature.rms.campus.entities.RoomStatus;
 import com.revature.rms.campus.exceptions.InvalidInputException;
 import com.revature.rms.campus.exceptions.ResourceNotFoundException;
-//import com.revature.rms.campus.repositories.RoomMongoRepository;
 import com.revature.rms.campus.repositories.ResourceMetadataRepository;
 import com.revature.rms.campus.repositories.RoomRepository;
-//import com.revature.rms.campus.repositories.RoomStatusMongoRepository;
 import com.revature.rms.campus.repositories.RoomStatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The methods in this service call to methods from the roomRepository, roomStatusRepository, metadataService and metadataRepository in order to give the basic CRUD features to
+ * the application. The methods in this service are custom as a result of TDD. For more information about the testing
+ * see RoomServiceTests.
+ */
 @Service
 public class RoomService {
 
@@ -89,6 +92,7 @@ public class RoomService {
     @Transactional(readOnly = true)
     public Optional<Room> findById(int id){
 
+
         if (id <= 0) {
             throw new InvalidInputException();
         }
@@ -99,19 +103,6 @@ public class RoomService {
         }
         return _room;
     }
-
-    /**
-     * findAllActiveRooms Method: This takes in the active parameter,
-     * that is, true or false. This allows us to get a list of all
-     * active rooms if true is passed in or a list of all the inactive
-     * rooms if false is passed in.
-     * @param active
-     * @return a list of all the active or available rooms
-
-    public List<Room> findAllActiveRooms(boolean active){
-        return roomMongoRepository.findByActiveRooms(active);
-    }
-    */
 
     /**
      * findByMaxOccupancy Method: This takes in the required or specified
@@ -296,6 +287,13 @@ public class RoomService {
     public RoomStatus updateStatus(RoomStatus roomStatus){
         return roomStatusRepository.save(roomStatus);
     }
+
+    /**
+     * getListFromIterator Method: Is a custom method that iterates and adds each object to a list of the specified Generic.
+     * @param iterable an Iterable that wants to be converted into an ArrayList
+     * @param <T> Generic of any ObjectType
+     * @return Returns a List of type T
+     */
 
     public static <T> List<T> getListFromIterator(Iterable<T> iterable)
     {

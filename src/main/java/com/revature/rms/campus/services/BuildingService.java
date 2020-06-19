@@ -16,8 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The methods in this service call to methods from the buildingRepository in order to give the basic CRUD features to
+ * the application. The methods in this service are custom as a result of TDD. For more information about the testing
+ * see BuildingServiceTests.
+ */
 @Service
 public class BuildingService {
+
 
     @Autowired
     private BuildingRepository buildingRepository;
@@ -36,14 +42,12 @@ public class BuildingService {
      * @param building
      * @return The new saved building object
      */
-
     @Transactional
     public Building save(Building building) {
 
         if (building == null) {
             throw new ResourcePersistenceException();
         }
-//        return buildingMongoRepository.save(building);
         return buildingRepository.save(building);
     }
 
@@ -97,7 +101,7 @@ public class BuildingService {
      * @param name
      * @return the room object with the same room number as the input parameter.
      */
-
+  
     @Transactional(readOnly = true)
     public Building findByName(String name) {
         return buildingRepository.findByName(name);
@@ -137,7 +141,6 @@ public class BuildingService {
      * @return Updated/Modified room object
      */
 
-
     @Transactional
     public Building update(Building building) {
         return buildingRepository.save(building);
@@ -173,16 +176,20 @@ public class BuildingService {
      * @param id
      * @return The building object.
      */
-
     @Transactional(readOnly = true)
     public Building findByTrainingLeadId(int id) {
         if (id < 1) throw new InvalidInputException();
-
         Building temp = buildingRepository.findByTrainingLead(id);
         if (temp == null) throw new ResourceNotFoundException();
         else return temp;
     }
 
+    /**
+     * getListFromIterator Method: Is a custom method that iterates and adds each object to a list of the specified Generic.
+     * @param iterable an Iterable that wants to be converted into an ArrayList
+     * @param <T> Generic of any ObjectType
+     * @return Returns a List of type T
+     */
     public static <T> List<T> getListFromIterator(Iterable<T> iterable)
     {
 

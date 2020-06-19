@@ -12,7 +12,7 @@ import java.util.List;
 public interface CampusRepository extends CrudRepository<Campus, Integer> {
     Campus findByName(String name);
 
-    Campus findByTrainingManagerId(Integer id);
+    List<Campus> findByTrainingManagerId(Integer id);
 
-    Campus findByStagingManagerId(Integer id);
+    List<Campus> findByStagingManagerId(Integer id);
 }
