@@ -15,6 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The methods in this service call to methods from the buildingRepository in order to give the basic CRUD features to
+ * the application. The methods in this service are custom as a result of TDD. For more information about the testing
+ * see BuildingServiceTests.
+ */
 @Service
 public class BuildingService {
 
@@ -144,6 +149,12 @@ public class BuildingService {
         else return temp;
     }
 
+    /**
+     * getListFromIterator Method: Is a custom method that iterates and adds each object to a list of the specified Generic.
+     * @param iterable an Iterable that wants to be converted into an ArrayList
+     * @param <T> Generic of any ObjectType
+     * @return Returns a List of type T
+     */
     public static <T> List<T> getListFromIterator(Iterable<T> iterable)
     {
 

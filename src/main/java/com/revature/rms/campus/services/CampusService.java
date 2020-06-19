@@ -18,17 +18,9 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * The methods in this service call to methods from the campusMongoRepository in order to give the basic CRUD features to
+ * The methods in this service call to methods from the campusRepository, addressRepository, metadataService and metadataRepository in order to give the basic CRUD features to
  * the application. The methods in this service are custom as a result of TDD. For more information about the testing
  * see CampusServiceTests.
- * The methods in this service are:
- * - update, this method returns the result of campusMongoRepository.save. This will update the edited fields for the
- * persisted campus object. Since the object is already persisted when using this method, there is no reason to check
- * if it's null. Additionally field checks are still handled in entities.Campus.
- * - delete, this method uses campusMongoRepository.deleteById. This will delete the persisted object from the database
- * if the user has provided a valid id. If the provided input is invalid, an empty string or and int less than or equal
- * to 0 the method will thrown an InvalidInputException. No exception a valid id but no associated object. Technically,
- * this object does not exist and therefore is not an issue.
  */
 @Service
 public class CampusService {
@@ -38,6 +30,9 @@ public class CampusService {
 
     @Autowired
     private ResourceMetadataRepository metadataRepository;
+
+    @Autowired
+    private ResourceMetadataService metadataService;
 
     @Autowired
     private AddressRepository addressRepository;
@@ -151,19 +146,30 @@ public class CampusService {
         return campusRepository.save(campus);
     }
 
+    /**
+     * delete Method: This method soft deletes the campus object by changing the boolean value of the field currentlyActive to false,
+     * that belongs to the ResourceMetadata of the specified Campus Object.
+     * @param id int value that is used to find the Campus Object.
+     * @return Returns the boolean value of true.
+     */
     @Transactional
     public boolean delete(int id) {
         if (id <= 0) {
             throw new InvalidInputException();
         }
         Campus campus = campusRepository.findById(id).get();
-        ResourceMetadata metadata = campus.getResourceMetadata();
-        metadata.setCurrentlyActive(false);
-        metadataRepository.save(metadata);
+        ResourceMetadata metadata = metadataService.deactivateResource(campus.getResourceMetadata());
         campus.setResourceMetadata(metadata);
+        campusRepository.save(campus);
         return true;
     }
 
+    /**
+     * getListFromIterator Method: Is a custom method that iterates and adds each object to a list of the specified Generic.
+     * @param iterable an Iterable that wants to be converted into an ArrayList
+     * @param <T> Generic of any ObjectType
+     * @return Returns a List of type T
+     */
     public static <T> List<T> getListFromIterator(Iterable<T> iterable)
     {
 
