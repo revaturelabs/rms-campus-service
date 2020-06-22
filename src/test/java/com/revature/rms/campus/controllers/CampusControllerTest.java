@@ -85,21 +85,21 @@ public class CampusControllerTest {
         Campus expectedResult = new Campus(32, "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 
-        when(campusService.findById(Mockito.any())).thenReturn(Optional.of(expectedResult));
+        when(campusService.findById(32)).thenReturn(Optional.of(expectedResult));
         assertEquals(campusController.getCampusById(id),  expectedResult);
     }
 
     @Test (expected = ResourceNotFoundException.class)
     public void testGetCampusWithByIdNotFound() {
         int id = 21;
-        when(campusService.findById(Mockito.any())).thenReturn(Optional.empty());
+        when(campusService.findById(id)).thenReturn(Optional.empty());
         campusController.getCampusById(id);
     }
 
     @Test(expected = InvalidInputException.class)
     public void testGetCampusWithInvalidCampus() {
         int id = 0;  // was ""
-        when(campusService.findById(Mockito.any())).thenReturn(null);
+        when(campusService.findById(id)).thenReturn(null);
         assertEquals(campusController.getCampusById(id), null);
     }
 
@@ -120,7 +120,7 @@ public class CampusControllerTest {
         Campus testCampus = new Campus(32,"University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 
-        when(campusService.findById(Mockito.any())).thenReturn(Optional.of(testCampus));
+        when(campusService.findById(32)).thenReturn(Optional.of(testCampus));
         campusController.deleteCampusById(testCampus.getId());
         verify(campusService, times(1)).delete(testCampus.getId());
     }
@@ -131,7 +131,7 @@ public class CampusControllerTest {
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 
         int testId = -1; //was "-1"
-        when(campusService.findById(Mockito.any())).thenReturn(Optional.of(testCampus));
+        when(campusService.findById(testId)).thenReturn(Optional.of(testCampus));
         campusController.deleteCampusById(testId);
         verify(campusService, times(0)).delete(testId);
     }
@@ -141,7 +141,7 @@ public class CampusControllerTest {
         Campus expectedResult = new Campus(32, "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 
-        when(campusService.findByTrainingManagerId(Mockito.any())).thenReturn(expectedResult);
+        when(campusService.findByTrainingManagerId(2)).thenReturn(expectedResult);
         assertEquals(campusController.getCampusByTrainingManagerId(2),  expectedResult);
     }
 

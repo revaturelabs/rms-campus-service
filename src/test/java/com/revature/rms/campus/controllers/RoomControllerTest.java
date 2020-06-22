@@ -76,21 +76,21 @@ public class RoomControllerTest {
         int id = 1;
         Room expectedResult = new Room(1, "2301", 25, new ArrayList<RoomStatus>(5),
                 1, new ArrayList<Integer>(3), new ResourceMetadata());
-        when(roomService.findById(Mockito.any())).thenReturn(Optional.of(expectedResult));
+        when(roomService.findById(id)).thenReturn(Optional.of(expectedResult));
         assertEquals(roomController.getRoomById(id), expectedResult);
     }
 
     @Test(expected = ResourceNotFoundException.class)
     public void testGetRoomByIdNotFound(){
         int id = 32;
-        when(roomService.findById(Mockito.any())).thenReturn(Optional.empty());
+        when(roomService.findById(32)).thenReturn(Optional.empty());
         roomController.getRoomById(id);
     }
 
     @Test(expected = InvalidInputException.class)
     public void testGetRoomWithInvalidRoom(){
         int id = 0; //was ""
-        when(roomService.findById(Mockito.any())).thenReturn(null);
+        when(roomService.findById(id)).thenReturn(null);
         assertEquals(roomController.getRoomById(id), null);
     }
 
@@ -107,21 +107,21 @@ public class RoomControllerTest {
 
     @Test
     public void testDeleteRoomWithValidId(){
-        Room testRoom = new Room("2301", 25, new ArrayList<RoomStatus>(5),
+        Room testRoom = new Room(1,"2301", 25, new ArrayList<RoomStatus>(5),
                 1, new ArrayList<Integer>(3), new ResourceMetadata());
 
-        when(roomService.findById(Mockito.any())).thenReturn(Optional.of(testRoom));
+        when(roomService.findById(1)).thenReturn(Optional.of(testRoom));
         roomController.deleteRoomById(testRoom.getId());
         verify(roomService, times(1)).delete(testRoom.getId());
     }
 
     @Test(expected = InvalidInputException.class)
     public void testDeleteRoomWithInvalidId(){
-        Room testRoom = new Room("2301", 25, new ArrayList<RoomStatus>(5),
+        Room testRoom = new Room(1,"2301", 25, new ArrayList<RoomStatus>(5),
                 1, new ArrayList<Integer>(3), new ResourceMetadata());
 
         int id = -1;
-        when(roomService.findById(Mockito.any())).thenReturn(Optional.of(testRoom));
+        when(roomService.findById(id)).thenReturn(Optional.of(testRoom));
         roomController.deleteRoomById(id);
         verify(roomService, times(0)).delete(id);
 

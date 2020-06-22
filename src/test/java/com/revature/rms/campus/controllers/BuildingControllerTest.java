@@ -94,9 +94,12 @@ public class BuildingControllerTest {
 
     @Test(expected = InvalidInputException.class)
     public void testGetBuildingWithInvalidBuilding() {
+        Building expectedResult = new Building(1, "Muma School of Business", "MSB", new Address(),
+                2, new ArrayList<Amenity>(1), new ArrayList<Room>(3), new ResourceMetadata());
+
         int id = 0; // was ""
-        when(buildingService.findById(Mockito.any())).thenReturn(null);
-        assertEquals(buildingController.getBuildingById(0), null);
+        when(buildingService.findById(1)).thenReturn(Optional.of(expectedResult));
+        assertEquals(buildingController.getBuildingById(id), null);
     }
 
     @Test
@@ -121,12 +124,11 @@ public class BuildingControllerTest {
                 1, new ArrayList<Integer>(3), new ResourceMetadata(1, 1,"3.16.2020 10:00 PM", 1, "3.16.2020 10:00 PM", 1, true)));
 
         Building testBuilding = new Building(1, "Muma School of Business", "MSB", new Address(1, "4202 E Fowler Ave", "Tampa","Florida","33620", "United States"),
-                1, amenityList, roomList, new ResourceMetadata(1, 1,"3.16.2020 10:00 PM", 1, "3.16.2020 10:00 PM", 1, true), new Campus(1, "USF", 1, "University of South Florida", 2, 3, 1, 1));
+                1, amenityList, roomList, new ResourceMetadata(1, 1,"3.16.2020 10:00 PM", 1, "3.16.2020 10:00 PM", 1, true));
 
-        System.out.println(testBuilding);
-//        when(buildingService.findById(Mockito.any())).thenReturn(Optional.of(testBuilding));
-//        buildingController.deleteBuildingById(testBuilding.getId());
-//        verify(buildingService, times(1)).delete(testBuilding.getId());
+        Mockito.when(buildingService.findById(1)).thenReturn(Optional.of(testBuilding));
+        buildingController.deleteBuildingById(testBuilding.getId());
+        verify(buildingService, times(1)).delete(testBuilding.getId());
     }
 
     @Test(expected = InvalidInputException.class)
@@ -134,8 +136,8 @@ public class BuildingControllerTest {
         Building testBuilding = new Building(1, "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3), new ResourceMetadata());
 
-                int testId = -1;  //can't take in neg number, it return a NullPointerException>
-        when(buildingService.findById(Mockito.any())).thenReturn(Optional.of(testBuilding));
+                int testId = -1;
+        when(buildingService.findById(testId)).thenReturn(Optional.of(testBuilding));
         buildingController.deleteBuildingById(testId);
         verify(buildingService, times(0)).delete(testId);
     }
