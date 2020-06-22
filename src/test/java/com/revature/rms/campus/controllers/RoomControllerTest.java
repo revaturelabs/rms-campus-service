@@ -125,4 +125,26 @@ public class RoomControllerTest {
         verify(roomService, times(0)).delete(id);
 
     }
+
+    @Test
+    public void testGetRoomByOwnerId() {
+        int id = 1;
+        List<Room> rooms = new ArrayList<>();
+        Room testRoom = new Room(1,"2301", 25,  new ArrayList<RoomStatus>(5),
+                1612, new ArrayList<Integer>(3), new ResourceMetadata(1,1,"",1,"",1,true));
+        rooms.add(testRoom);
+        when(roomService.findByResourceOwner(Mockito.anyInt())).thenReturn(rooms);
+        assertEquals(roomController.getRoomByOwnerId(id), rooms);
+    }
+
+    @Test(expected = InvalidInputException.class)
+    public void testGetRoomByInvalidOwnerId(){
+        int id = -1;
+        List<Room> rooms = new ArrayList<>();
+        Room testRoom = new Room(1,"2301", 25,  new ArrayList<RoomStatus>(5),
+                1612, new ArrayList<Integer>(3), new ResourceMetadata(1,1,"",1,"",1,true));
+        rooms.add(testRoom);
+        when(roomService.findByResourceOwner(id)).thenThrow(new InvalidInputException());
+        assertEquals(roomController.getRoomByOwnerId(id), rooms);
+    }
 }
