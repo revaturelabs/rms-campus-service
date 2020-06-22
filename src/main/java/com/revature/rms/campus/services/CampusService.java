@@ -45,7 +45,6 @@ public class CampusService {
      * @param campus Takes in a Campus object to be persisted to the database.
      * @return The persisted Campus object with its specific serialized id.
      */
-
     @Transactional
     public Campus save(Campus campus) {
         if (campus == null) {
@@ -65,7 +64,6 @@ public class CampusService {
      *  * objects if there are any existing. Otherwise, it will return an empty list.
      * @return An arraylist of Campus Objects.
      */
-
     @Transactional(readOnly = true)
     public List<Campus> findAll() {
         Iterable<Campus> r = campusRepository.findAll();
@@ -136,31 +134,24 @@ public class CampusService {
      * @param id Id of the app user
      * @return List of campuses
      */
-
     @Transactional(readOnly = true)
     public List<Campus> findByResourceOwnerId(Integer id){
 
         if(id < 1){
             throw new InvalidInputException();
         }
-
         Iterable<Campus> allCampuses = campusRepository.findAll();
-
         List<Campus> campuses = new ArrayList<Campus>();
-
         for(Campus campus : allCampuses){
             ResourceMetadata data = campus.getResourceMetadata();
             if(data.getResourceOwner() == id){
                 campuses.add(campus);
             }
         }
-
         if(campuses.isEmpty()){
             throw new ResourceNotFoundException();
         }
-
         return campuses;
-
     }
 
     /**
@@ -172,7 +163,6 @@ public class CampusService {
      * @param name Takes in a string of the campus name or abbreviation name.
      * @return Returns a campus Object.
      */
-
     @Transactional(readOnly = true)
     public Campus findByName(String name) {
         return campusRepository.findByName(name);
@@ -196,7 +186,6 @@ public class CampusService {
      * @return Returns the boolean value of true.
      */
     @Transactional
-
     public boolean delete(int id) {
         if (id <= 0) {
             throw new InvalidInputException();
@@ -214,7 +203,6 @@ public class CampusService {
      * @param <T> Generic of any ObjectType
      * @return Returns a List of type T
      */
-
     public static <T> List<T> getListFromIterator(Iterable<T> iterable)
     {
 

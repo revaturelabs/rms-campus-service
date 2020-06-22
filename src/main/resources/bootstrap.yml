@@ -16,17 +16,3 @@ spring:
   cloud:
     config:
       uri: http://localhost:8888
-#  data:
-#    mongodb:
-#      repositories:
-#        enabled: true
-#
-#logging:
-#  level:
-#    org:
-#      mogodb:
-#      springframework:
-#        boot:
-#          autoconfigure:
-#            mongo:
-#              embedded:

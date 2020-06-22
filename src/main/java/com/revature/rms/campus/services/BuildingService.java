@@ -24,13 +24,11 @@ import java.util.Optional;
 @Service
 public class BuildingService {
 
-
     @Autowired
     private BuildingRepository buildingRepository;
 
     @Autowired
     private ResourceMetadataRepository resourceMetadataRepo;
-
 
     /**
      * Save Method: Takes in a building object as the input. The input room
@@ -101,7 +99,6 @@ public class BuildingService {
      * @param name
      * @return the room object with the same room number as the input parameter.
      */
-  
     @Transactional(readOnly = true)
     public Building findByName(String name) {
         return buildingRepository.findByName(name);
@@ -112,31 +109,24 @@ public class BuildingService {
      * @param id ID of the app user
      * @return List of buildings
      */
-
     @Transactional(readOnly = true)
     public List<Building> findByBuildingOwnerId(Integer id){
 
         if(id < 1){
             throw new InvalidInputException();
         }
-
         Iterable<Building> allBuildings = buildingRepository.findAll();
-
         List<Building> buildings = new ArrayList<Building>();
-
         for (Building build : allBuildings){
             ResourceMetadata metadata = build.getResourceMetadata();
             if(metadata.getResourceOwner() == id){
                 buildings.add(build);
             }
         }
-
         if(buildings.isEmpty()){
             throw new ResourceNotFoundException();
         }
-
         return buildings;
-
     }
 
     /**
@@ -146,7 +136,6 @@ public class BuildingService {
      * @param building
      * @return Updated/Modified room object
      */
-
     @Transactional
     public Building update(Building building) {
         return buildingRepository.save(building);
@@ -168,7 +157,6 @@ public class BuildingService {
         if (id <= 0) {
             throw new InvalidInputException();
         }
-
         buildingRepository.deleteById(id);
     }
 
