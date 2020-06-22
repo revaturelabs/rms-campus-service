@@ -28,7 +28,5 @@ public class ResourceMetadataService {
         resource.setCurrentlyActive(false);
         metadataRepository.save(resource);
         return resource;
-
     }
-
 }

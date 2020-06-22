@@ -40,7 +40,6 @@ public class RoomService {
      * findAll method: returns a list of all the room objects in the database.
      * @return a list of all the rooms
      */
-
     @Transactional(readOnly = true)
     public List<Room> findAll(){
             Iterable<Room> r = roomRepository.findAll();
@@ -122,30 +121,23 @@ public class RoomService {
      * @param id ID of the owner
      * @return List of rooms
      */
-
     @Transactional
     public List<Room> findByResourceOwner(Integer id){
         if(id < 1){
             throw new InvalidInputException();
         }
-
         Iterable<Room> allRooms = roomRepository.findAll();
-
         List<Room> rooms = new ArrayList<Room>();
-
         for(Room room : allRooms){
             ResourceMetadata data = room.getResourceMetadata();
             if(data.getResourceOwner() == id){
                 rooms.add(room);
             }
         }
-
         if(rooms.isEmpty()){
             throw new ResourceNotFoundException();
         }
-
         return rooms;
-
     }
 
     /**
@@ -169,7 +161,6 @@ public class RoomService {
             status.setRoom(persisted);
             saveStatus(status);
         }
-
         return persisted;
     }
 
@@ -179,7 +170,6 @@ public class RoomService {
      * @param room
      * @return Updated/Modified room object
      */
-
     @Transactional
     public Room update(Room room){
         Room oldRoom;
@@ -211,7 +201,6 @@ public class RoomService {
         if (id <= 0) {
             throw new InvalidInputException();
         }
-
         Room deactivateRoom = roomRepository.findById(id).get();
         ResourceMetadata resource = metadataService.deactivateResource(deactivateRoom.getResourceMetadata());
         deactivateRoom.setResourceMetadata(resource);
@@ -270,8 +259,6 @@ public class RoomService {
         return list;
     }
 
-
-
     /**
      * saveStatus Method: This method takes in a new room status object and
      * saves it to the database.
@@ -281,7 +268,6 @@ public class RoomService {
     public void saveStatus(RoomStatus roomStatus){
         roomStatusRepository.save(roomStatus);
     }
-
 
     /**
      * Update Method: The room status object is inputted and changes are saved.
@@ -300,10 +286,8 @@ public class RoomService {
      * @param <T> Generic of any ObjectType
      * @return Returns a List of type T
      */
-
     public static <T> List<T> getListFromIterator(Iterable<T> iterable)
     {
-
         List<T> list = new ArrayList<>();
         iterable.forEach(list::add);
         return list;
