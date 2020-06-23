@@ -95,11 +95,11 @@ public class Building {
         this.id = id;
     }
 
-    public String getAbbrName() {
-        return abbrName;
+    public ResourceMetadata getResourceMetadata() {
+        return resourceMetadata;
     }
 
-    public void setAbbrName(String abbrName) {
-        this.abbrName = abbrName;
+    public void setResourceMetadata(ResourceMetadata resourceMetadata) {
+        this.resourceMetadata = resourceMetadata;
     }
 }

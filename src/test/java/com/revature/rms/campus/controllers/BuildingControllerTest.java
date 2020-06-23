@@ -53,20 +53,23 @@ public class BuildingControllerTest {
 
     @Test
     public void testSaveBuildingWithValidBuilding() {
-        Building testBuilding = new Building(1, "Muma School of Business", "MSB", new Address(),
-                2, new ArrayList<Amenity>(1), new ArrayList<Room>(3), new ResourceMetadata(1, 1,"3.16.2020 10:00 PM", 1, "3.16.2020 10:00 PM", 1, true));
+
+        Building testBuilding = new Building("Muma School of Business", "MSB", new Address(),
+                2, new ArrayList<Amenity>(1), new ArrayList<Room>(3), new ResourceMetadata());
 
         Building persistedBuilding = new Building(1, "Muma School of Business", "MSB", new Address(),
-                2, new ArrayList<Amenity>(1), new ArrayList<Room>(3), new ResourceMetadata(1, 1,"3.16.2020 10:00 PM", 1, "3.16.2020 10:00 PM", 1, true));
+                2, new ArrayList<Amenity>(1), new ArrayList<Room>(3), new ResourceMetadata());
 
-        when(buildingService.save(Mockito.any())).thenReturn(persistedBuilding);
+        when(buildingService.save(testBuilding)).thenReturn(persistedBuilding);
+
 
         assertEquals(buildingController.saveBuilding(testBuilding), persistedBuilding);
     }
 
     @Test(expected = ResourceNotFoundException.class)
     public void testSaveBuildingWithNullBuilding() {
-        int id = 1;
+
+        String id = "1";
 
         Building expectedResult = new Building(1, "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3), new ResourceMetadata());
@@ -75,30 +78,33 @@ public class BuildingControllerTest {
         assertEquals(buildingController.saveBuilding(null), expectedResult);
     }
 
+
+    @Test
     public void testGetBuildingByValidId() {
         int id = 1;
 
         Building expectedResult = new Building(1, "Muma School of Business", "MSB", new Address(),
-                2, new ArrayList<Amenity>(1), new ArrayList<Room>(3), new ResourceMetadata());
+                2, new ArrayList<Amenity>(), new ArrayList<Room>(), new ResourceMetadata());
 
-        when(buildingService.findById(Mockito.any())).thenReturn(Optional.of(expectedResult));
+        when(buildingService.findById(1)).thenReturn(Optional.of(expectedResult));
         assertEquals(buildingController.getBuildingById(id), expectedResult);
     }
 
+    @Test(expected = ResourceNotFoundException.class)
     public void testGetBuildingByNotFoundId() {
         int id = 1;
 
-        when(buildingService.findById(Mockito.any())).thenReturn(Optional.empty());
+        when(buildingService.findById(1)).thenThrow(new ResourceNotFoundException());
+
         buildingController.getBuildingById(id);
     }
 
     @Test(expected = InvalidInputException.class)
     public void testGetBuildingWithInvalidBuilding() {
-        Building expectedResult = new Building(1, "Muma School of Business", "MSB", new Address(),
-                2, new ArrayList<Amenity>(1), new ArrayList<Room>(3), new ResourceMetadata());
 
-        int id = 0; // was ""
-        when(buildingService.findById(1)).thenReturn(Optional.of(expectedResult));
+        int id = 0;
+        when(buildingService.findById(id)).thenReturn(null);
+
         assertEquals(buildingController.getBuildingById(id), null);
     }
 
@@ -116,19 +122,11 @@ public class BuildingControllerTest {
 
     @Test
     public void testDeleteBuildingWithValidId() {
-        ArrayList<Amenity> amenityList = new ArrayList<Amenity>();
-        amenityList.add(new Amenity(2, AmenityType.TEA, AmenityStatus.OK));
 
-        ArrayList<Room> roomList = new ArrayList<Room>();
-        roomList.add(new Room(1, "2301", 25, new ArrayList<RoomStatus>(5),
-                1, new ArrayList<Integer>(3), new ResourceMetadata(1, 1,"3.16.2020 10:00 PM", 1, "3.16.2020 10:00 PM", 1, true)));
+        int id = 1;
 
-        Building testBuilding = new Building(1, "Muma School of Business", "MSB", new Address(1, "4202 E Fowler Ave", "Tampa","Florida","33620", "United States"),
-                1, amenityList, roomList, new ResourceMetadata(1, 1,"3.16.2020 10:00 PM", 1, "3.16.2020 10:00 PM", 1, true));
-
-        Mockito.when(buildingService.findById(1)).thenReturn(Optional.of(testBuilding));
-        buildingController.deleteBuildingById(testBuilding.getId());
-        verify(buildingService, times(1)).delete(testBuilding.getId());
+        buildingController.deleteBuildingById(id);
+        verify(buildingService, times(1)).delete(id);
     }
 
     @Test(expected = InvalidInputException.class)

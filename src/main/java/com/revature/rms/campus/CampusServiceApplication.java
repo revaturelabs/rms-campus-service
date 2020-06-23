@@ -29,7 +29,6 @@ import java.util.ArrayList;
 @OpenAPIDefinition(info =
 	@Info(title = "Campus API", version = "1.0", description = "Documentation Campus API v1.0")
 )
-//implements CommandLineRunner
 public class CampusServiceApplication  {
 
 	@Autowired
@@ -55,5 +54,4 @@ public class CampusServiceApplication  {
 				.build()
 				.apiInfo(new ApiInfoBuilder().version("1.0").title("Campus API").description("Documentation Campus API v1.0").build());
 	}
-
 }

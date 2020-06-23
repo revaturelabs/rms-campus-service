@@ -85,21 +85,26 @@ public class CampusControllerTest {
         Campus expectedResult = new Campus(32, "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 
-        when(campusService.findById(32)).thenReturn(Optional.of(expectedResult));
+        when(campusService.findById(Mockito.anyInt())).thenReturn(Optional.of(expectedResult));
+
         assertEquals(campusController.getCampusById(id),  expectedResult);
     }
 
     @Test (expected = ResourceNotFoundException.class)
     public void testGetCampusWithByIdNotFound() {
         int id = 21;
-        when(campusService.findById(id)).thenReturn(Optional.empty());
+
+        when(campusService.findById(Mockito.any(Integer.class))).thenReturn(Optional.empty());
+
         campusController.getCampusById(id);
     }
 
     @Test(expected = InvalidInputException.class)
     public void testGetCampusWithInvalidCampus() {
-        int id = 0;  // was ""
-        when(campusService.findById(id)).thenReturn(null);
+
+        int id = 0;
+        when(campusService.findById(Mockito.any(Integer.class))).thenReturn(null);
+
         assertEquals(campusController.getCampusById(id), null);
     }
 
@@ -111,7 +116,8 @@ public class CampusControllerTest {
         Campus expectedResult = new Campus(32, "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 
-        when(campusService.update(Mockito.any())).thenReturn(expectedResult);
+        when(campusService.update(Mockito.any(Campus.class))).thenReturn(expectedResult);
+
         assertEquals(campusController.updateCampus(testCampus), expectedResult);
     }
 
@@ -120,7 +126,7 @@ public class CampusControllerTest {
         Campus testCampus = new Campus(32,"University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 
-        when(campusService.findById(32)).thenReturn(Optional.of(testCampus));
+        when(campusService.findById(Mockito.any(Integer.class))).thenReturn(Optional.of(testCampus));
         campusController.deleteCampusById(testCampus.getId());
         verify(campusService, times(1)).delete(testCampus.getId());
     }
@@ -130,25 +136,31 @@ public class CampusControllerTest {
         Campus testCampus = new Campus(32,"University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 
-        int testId = -1; //was "-1"
-        when(campusService.findById(testId)).thenReturn(Optional.of(testCampus));
+        int testId = -1;
+        when(campusService.findById(Mockito.any(Integer.class))).thenReturn(Optional.of(testCampus));
         campusController.deleteCampusById(testId);
         verify(campusService, times(0)).delete(testId);
     }
 
     @Test
     public void testGetCampusByTrainingManagerId() {
-        Campus expectedResult = new Campus(32, "University of South Florida", "USF", new Address(),
-                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 
-        when(campusService.findByTrainingManagerId(2)).thenReturn(expectedResult);
-        assertEquals(campusController.getCampusByTrainingManagerId(2),  expectedResult);
+        List<Campus> campuses = new ArrayList<>();
+        Campus expectedResult = new Campus(32, "University of South Florida", "USF", new Address(),
+                2, 3, 4, new ArrayList<Building>(), new ArrayList<Integer>(), new ResourceMetadata());
+        campuses.add(expectedResult);
+        List<Campus> result = campuses;
+        when(campusService.findByTrainingManagerId(Mockito.any(Integer.class))).thenReturn(campuses);
+        assertEquals(campusController.getCampusByTrainingManagerId(2),  result);
+
     }
 
     @Test(expected = ResourceNotFoundException.class)
     public void testGetCampusByTrainingManagerIdWithNull() {
         Campus expectedResult = new Campus(32, "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
+
+        when(campusService.findByTrainingManagerId(5)).thenThrow(new ResourceNotFoundException());
         campusController.getCampusByTrainingManagerId(5);
     }
 
@@ -161,17 +173,23 @@ public class CampusControllerTest {
 
     @Test
     public void testGetCampusByStagingManagerId() {
+
+        List<Campus> campuses= new ArrayList<>();
         Campus expectedResult = new Campus(32, "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 
-        when(campusService.findByStagingManagerId(Mockito.any())).thenReturn(expectedResult);
-        assertEquals(campusController.getCampusByStagingManagerId(3),  expectedResult);
+        campuses.add(expectedResult);
+        when(campusService.findByStagingManagerId(Mockito.any())).thenReturn(campuses);
+        assertEquals(campusController.getCampusByStagingManagerId(3),  campuses);
+
     }
 
     @Test(expected =  ResourceNotFoundException.class)
     public void testGetCampusByStagingManagerIdWithNull() {
         Campus expectedResult = new Campus(32, "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
+
+        when(campusService.findByStagingManagerId(5)).thenThrow(new ResourceNotFoundException());
         campusController.getCampusByStagingManagerId(5);
     }
 
