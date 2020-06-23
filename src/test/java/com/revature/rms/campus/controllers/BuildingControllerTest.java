@@ -52,6 +52,31 @@ public class BuildingControllerTest {
     }
 
     @Test
+    public void testFindBuildingByTrainingLeadId() {
+        int id=2;
+        Building testBuilding = new Building("Muma School of Business", "MSB", new Address(),
+                2, new ArrayList<Amenity>(1), new ArrayList<Room>(3), new ResourceMetadata());
+
+        when(buildingService.findByTrainingLeadId(Mockito.anyInt())).thenReturn(testBuilding);
+
+        assertEquals(buildingController.getBuildingByTrainingLeadId(id), testBuilding);
+    }
+
+    @Test(expected = InvalidInputException.class)
+    public void testFindBuildingByInvalidTrainingLeadId() {
+        int id=-2;
+        when(buildingService.findByTrainingLeadId(Mockito.anyInt())).thenThrow(new InvalidInputException());
+        buildingController.getBuildingByTrainingLeadId(id);
+    }
+
+    @Test(expected = ResourceNotFoundException.class)
+    public void testFindBuildingByTrainingLeadIdWithNullResult() {
+        int id=2;
+        when(buildingService.findByTrainingLeadId(Mockito.anyInt())).thenThrow(new ResourceNotFoundException());
+        buildingController.getBuildingByTrainingLeadId(id);
+    }
+
+    @Test
     public void testSaveBuildingWithValidBuilding() {
         Building testBuilding = new Building("Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3), new ResourceMetadata());
@@ -99,6 +124,28 @@ public class BuildingControllerTest {
         int id = 0;
         when(buildingService.findById(id)).thenReturn(null);
         assertEquals(buildingController.getBuildingById(id), null);
+    }
+
+    @Test
+    public void testFindBuildingByOwnerId() {
+        int id = 1;
+        Building expectedResult = new Building(1, "Muma School of Business", "MSB", new Address(),
+                2, new ArrayList<Amenity>(), new ArrayList<Room>(), new ResourceMetadata(1,1,"",1,"",1,true));
+        List<Building> result = new ArrayList<>();
+        result.add(expectedResult);
+        when(buildingService.findByBuildingOwnerId(Mockito.anyInt())).thenReturn(result);
+        assertEquals(buildingController.getBuildingByOwnerId(id), result);
+    }
+
+    @Test(expected = InvalidInputException.class)
+    public void testFindBuildingByInvalidOwnerId() {
+        int id = -1;
+        Building expectedResult = new Building(1, "Muma School of Business", "MSB", new Address(),
+                2, new ArrayList<Amenity>(), new ArrayList<Room>(), new ResourceMetadata(1,1,"",1,"",1,true));
+        List<Building> result = new ArrayList<>();
+        result.add(expectedResult);
+        when(buildingService.findByBuildingOwnerId(Mockito.anyInt())).thenThrow(new InvalidInputException());
+        assertEquals(buildingController.getBuildingByOwnerId(id), result);
     }
 
     @Test

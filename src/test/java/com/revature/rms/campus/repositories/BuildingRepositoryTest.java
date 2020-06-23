@@ -10,9 +10,9 @@
 //
 //@SpringBootTest
 //@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-//public class BuildingMongoRepositoryTest {
+//public class BuildingRepositoryTest {
 //    @Autowired
-//    private BuildingMongoRepository sut;
+//    private BuildingRepository sut;
 //    @BeforeEach
 //    public void setup() throws Exception {
 //        Building building1 = new Building("NEC", "NEC", new Address(), 1, null, null, null);
