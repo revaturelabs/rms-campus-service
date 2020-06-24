@@ -6,7 +6,7 @@
 //import com.revature.rms.campus.entities.ResourceMetadata;
 //import com.revature.rms.campus.exceptions.InvalidInputException;
 //import com.revature.rms.campus.exceptions.ResourceNotFoundException;
-//import com.revature.rms.campus.repositories.CampusMongoRepository;
+//import com.revature.rms.campus.repositories.CampusRepository;
 //import org.junit.Test;
 //import org.junit.runner.RunWith;
 //import org.mockito.InjectMocks;
@@ -40,9 +40,9 @@
 //@SpringBootTest
 //@RunWith(MockitoJUnitRunner.class)
 //public class CampusServiceTests {
-//
+
 //    @Mock
-//    CampusMongoRepository repo;
+//    CampusRepository repo;
 //
 //    @InjectMocks
 //    CampusService sut;
@@ -63,7 +63,7 @@
 //        Campus testCampus = new Campus("University of South Florida", "USF", new Address(),
 //                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 //
-//        Campus expectedResult = new Campus("32", "University of South Florida", "USF", new Address(),
+//        Campus expectedResult = new Campus(32, "University of South Florida", "USF", new Address(),
 //                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 //
 //        when(repo.save(Mockito.any())).thenReturn(expectedResult);
@@ -84,7 +84,7 @@
 //        Campus testCampus = new Campus("University of South Florida", "USF", new Address(),
 //                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 //
-//        Campus expectedResult = new Campus("32", "University of South Florida", "USF", new Address(),
+//        Campus expectedResult = new Campus(32, "University of South Florida", "USF", new Address(),
 //                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 //
 //        Campus actualResults = sut.save(null);
@@ -100,7 +100,7 @@
 //     */
 //    @Test
 //    public void testFindAll() {
-//        Campus testCampus = new Campus("32", "University of South Florida", "USF", new Address(),
+//        Campus testCampus = new Campus(32, "University of South Florida", "USF", new Address(),
 //                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 //        List<Campus> mockCampusList = Arrays.asList(testCampus);
 //        when(repo.findAll()).thenReturn(mockCampusList);
@@ -128,11 +128,11 @@
 //     */
 //    @Test
 //    public void findCampusByIdWithValidId() {
-//        Optional<Campus> expectedResult = Optional.of(new Campus("32", "University of South Florida", "USF", new Address(),
+//        Optional<Campus> expectedResult = Optional.of(new Campus(32, "University of South Florida", "USF", new Address(),
 //                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata()));
 //
 //        when(repo.findById(Mockito.any())).thenReturn(expectedResult);
-//        Optional<Campus> actualResult = sut.findById("32");
+//        Optional<Campus> actualResult = sut.findById(32);
 //        assertEquals(actualResult, expectedResult);
 //    }
 //
@@ -143,7 +143,7 @@
 //    @Test(expected = ResourceNotFoundException.class)
 //    public void findCampusWithValidIdNotFound() {
 //        when(repo.findById(Mockito.any())).thenReturn(Optional.empty());
-//        sut.findById("21");
+//        sut.findById(21);
 //    }
 //
 //    /**
@@ -152,8 +152,8 @@
 //     */
 //    @Test(expected = InvalidInputException.class)
 //    public void findCampusWithInvalidId() {
-//        sut.findById(""); sut.findById("0");
-//        verify(repo.findById("0"), times(0));
+//        sut.findById(0); sut.findById(0);
+//        verify(repo.findById(0), times(0));
 //    }
 //
 //    /**
@@ -170,7 +170,7 @@
 //    @Test
 //    public void findCampusWithValidName() {
 //        String name = "University of South Florida";
-//        Campus expectedResult = new Campus("32", "University of South Florida", "USF", new Address(),
+//        Campus expectedResult = new Campus(32, "University of South Florida", "USF", new Address(),
 //                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 //
 //        when(repo.findByName(Mockito.any())).thenReturn(expectedResult);
@@ -185,7 +185,7 @@
 //    @Test
 //    public void findCampusWithValidNameUsingAbbreviatedName() {
 //        String name = "USF";
-//        Campus expectedResult = new Campus("32", "University of South Florida", "USF", new Address(),
+//        Campus expectedResult = new Campus(32, "University of South Florida", "USF", new Address(),
 //                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 //
 //        when(repo.findByName(Mockito.any())).thenReturn(expectedResult);
@@ -201,7 +201,7 @@
 //     */
 //    @Test
 //    public void findCampusByTrainingManagerId() {
-//        Campus expectedResult = new Campus("32", "University of South Florida", "USF", new Address(),
+//        Campus expectedResult = new Campus(32, "University of South Florida", "USF", new Address(),
 //                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 //        when(repo.findByTrainingManagerId(Mockito.any())).thenReturn(expectedResult);
 //        Campus actualResult = sut.findByTrainingManagerId(2);
@@ -210,7 +210,7 @@
 //
 //    @Test(expected = ResourceNotFoundException.class)
 //    public void findCampusByTrainingManagerIdWithNull() {
-//        Campus expectedResult = new Campus("32", "University of South Florida", "USF", new Address(),
+//        Campus expectedResult = new Campus(32, "University of South Florida", "USF", new Address(),
 //                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 //        when(repo.findByTrainingManagerId(Mockito.any())).thenReturn(null);
 //        Campus actualResult = sut.findByTrainingManagerId(2);
@@ -218,14 +218,14 @@
 //
 //    @Test(expected = InvalidInputException.class)
 //    public void findCampusByTrainingManagerIdWithInvalidId() {
-//        Campus expectedResult = new Campus("32", "University of South Florida", "USF", new Address(),
+//        Campus expectedResult = new Campus(32, "University of South Florida", "USF", new Address(),
 //                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 //        Campus actualResult = sut.findByTrainingManagerId(0);
 //    }
 //
 //    @Test
 //    public void findCampusByStagingManagerId() {
-//        Campus expectedResult = new Campus("32", "University of South Florida", "USF", new Address(),
+//        Campus expectedResult = new Campus(32, "University of South Florida", "USF", new Address(),
 //                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 //        when(repo.findByStagingManagerId(Mockito.any())).thenReturn(expectedResult);
 //        Campus actualResult = sut.findByStagingManagerId(3);
@@ -234,7 +234,7 @@
 //
 //    @Test(expected = ResourceNotFoundException.class)
 //    public void findCampusByStagingManagerIdWithNull() {
-//        Campus expectedResult = new Campus("32", "University of South Florida", "USF", new Address(),
+//        Campus expectedResult = new Campus(32, "University of South Florida", "USF", new Address(),
 //                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 //        when(repo.findByStagingManagerId(Mockito.any())).thenReturn(null);
 //        Campus actualResult = sut.findByStagingManagerId(2);
@@ -242,17 +242,17 @@
 //
 //    @Test(expected = InvalidInputException.class)
 //    public void findCampusByStagingManagerIdWithInvalidId() {
-//        Campus expectedResult = new Campus("32", "University of South Florida", "USF", new Address(),
+//        Campus expectedResult = new Campus(32, "University of South Florida", "USF", new Address(),
 //                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 //        Campus actualResult = sut.findByStagingManagerId(0);
 //    }
 //
 //    @Test
 //    public void testUpdateWithValidCampus() {
-//        Campus testCampus = new Campus("32", "mocked", "m", new Address(),
+//        Campus testCampus = new Campus(32, "mocked", "m", new Address(),
 //                3, 4, 5, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 //
-//        Campus expectedResult = new Campus("32","mocked", "m", new Address(),
+//        Campus expectedResult = new Campus(32,"mocked", "m", new Address(),
 //                3, 4, 5, new ArrayList<Building>(2), new ArrayList<Integer>(4), new ResourceMetadata());
 //
 //        when(repo.save(Mockito.any())).thenReturn((expectedResult));
@@ -272,7 +272,7 @@
 //     */
 //    @Test
 //    public void testDeleteWithValidId() {
-//        Campus testCampus = new Campus("32","University of South Florida", "USF", new Address(),
+//        Campus testCampus = new Campus(32,"University of South Florida", "USF", new Address(),
 //                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 //        sut.delete(testCampus.getId());
 //        verify(repo, times(1)).deleteById(testCampus.getId());
@@ -284,9 +284,9 @@
 //     */
 //    @Test(expected = InvalidInputException.class)
 //    public void testDeleteWithInvalidId() {
-//        Campus testCampus = new Campus("32","University of South Florida", "USF", new Address(),
+//        Campus testCampus = new Campus(32,"University of South Florida", "USF", new Address(),
 //                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
-//        sut.delete("-1");
-//        verify(repo, times(0)).deleteById("-1");
+//        sut.delete(-1);
+//        verify(repo, times(0)).deleteById(-1);
 //    }
 //}
