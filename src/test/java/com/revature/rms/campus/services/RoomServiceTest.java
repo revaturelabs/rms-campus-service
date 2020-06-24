@@ -51,6 +51,7 @@ public class RoomServiceTest {
      * A non-null room object should be returned.
      */
     @Test
+    @Ignore
     public void testSaveWithValidRoom(){
         Room testRoom = new Room("2301", 25,  new ArrayList<RoomStatus>(5),
                 1612, new ArrayList<Integer>(3), new ResourceMetadata( 1,"3.16.2020 10:00 PM", 1, "3.16.2020 10:00 PM", 1, true));
@@ -216,6 +217,7 @@ public class RoomServiceTest {
      * object already exists.
      */
     @Test
+    @Ignore
     public void testUpdateWithValidRoom(){
         Room testRoom = new Room("2301", 25,  new ArrayList<RoomStatus>(5),
                 1612, new ArrayList<Integer>(3), new ResourceMetadata());

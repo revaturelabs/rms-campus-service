@@ -1,45 +1,45 @@
-package com.revature.rms.campus.services;
-
-import com.revature.rms.campus.entities.Address;
-import com.revature.rms.campus.entities.Building;
-import com.revature.rms.campus.entities.Campus;
-import com.revature.rms.campus.entities.ResourceMetadata;
-import com.revature.rms.campus.exceptions.InvalidInputException;
-import com.revature.rms.campus.exceptions.ResourceNotFoundException;
-import com.revature.rms.campus.repositories.CampusRepository;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.boot.test.context.SpringBootTest;
-
-
-import java.util.*;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
-/**
- * Testing for the CampusService class. The methods included in these tests are:
- * - testSaveWithValidCampus
- * - testSaveWithNullCampus
- * - testFindAll
- * - testFindAllCampusWithNoCampus
- * - testFindByCampusWithValidId
- * - testFindByCampusWithValidIdNotFound
- * - testFindByCampusWithInvalidId
- * - testFindCampusWithName
- * - testFindCampusWithNameUsingAbbreviatedName
- * - testUpdatedWithValidCampus
- * - testDeleteWithValidId
- * - testDeleteWithInvalidId
- */
-
-@SpringBootTest
-@RunWith(MockitoJUnitRunner.class)
-public class CampusServiceTests {
+//package com.revature.rms.campus.services;
+//
+//import com.revature.rms.campus.entities.Address;
+//import com.revature.rms.campus.entities.Building;
+//import com.revature.rms.campus.entities.Campus;
+//import com.revature.rms.campus.entities.ResourceMetadata;
+//import com.revature.rms.campus.exceptions.InvalidInputException;
+//import com.revature.rms.campus.exceptions.ResourceNotFoundException;
+//import com.revature.rms.campus.repositories.CampusRepository;
+//import org.junit.Test;
+//import org.junit.runner.RunWith;
+//import org.mockito.InjectMocks;
+//import org.mockito.Mock;
+//import org.mockito.Mockito;
+//import org.mockito.junit.MockitoJUnitRunner;
+//import org.springframework.boot.test.context.SpringBootTest;
+//
+//
+//import java.util.*;
+//
+//import static org.junit.jupiter.api.Assertions.*;
+//import static org.mockito.Mockito.*;
+//
+///**
+// * Testing for the CampusService class. The methods included in these tests are:
+// * - testSaveWithValidCampus
+// * - testSaveWithNullCampus
+// * - testFindAll
+// * - testFindAllCampusWithNoCampus
+// * - testFindByCampusWithValidId
+// * - testFindByCampusWithValidIdNotFound
+// * - testFindByCampusWithInvalidId
+// * - testFindCampusWithName
+// * - testFindCampusWithNameUsingAbbreviatedName
+// * - testUpdatedWithValidCampus
+// * - testDeleteWithValidId
+// * - testDeleteWithInvalidId
+// */
+//
+//@SpringBootTest
+//@RunWith(MockitoJUnitRunner.class)
+//public class CampusServiceTests {
 
 //    @Mock
 //    CampusRepository repo;
@@ -289,4 +289,4 @@ public class CampusServiceTests {
 //        sut.delete(-1);
 //        verify(repo, times(0)).deleteById(-1);
 //    }
-}
+//}

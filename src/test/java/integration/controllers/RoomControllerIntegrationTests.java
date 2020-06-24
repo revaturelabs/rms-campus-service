@@ -102,7 +102,7 @@ public class RoomControllerIntegrationTests {
      */
     @Test
     public void testUpdateRoomWithValidRoomExpecting200() throws Exception{
-        Room testRoom = new Room("2301", 30,
+        Room testRoom = new Room(1,"2301", 30,
                 new ArrayList<RoomStatus>(5), 1, new ArrayList<Integer>(3), new ResourceMetadata(1, 1,"3.16.2020 10:00 PM", 1, "3.16.2020 10:00 PM", 1, true));
         this.mvc.perform(put("/v2/room").content(asJSON(testRoom)).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));

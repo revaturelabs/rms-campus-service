@@ -95,6 +95,14 @@ public class Building {
         this.id = id;
     }
 
+    public String getAbbrName() {
+        return abbrName;
+    }
+
+    public void setAbbrName(String abbrName) {
+        this.abbrName = abbrName;
+    }
+
     public ResourceMetadata getResourceMetadata() {
         return resourceMetadata;
     }

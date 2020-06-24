@@ -199,4 +199,28 @@ public class CampusControllerTest {
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
         campusController.getCampusByStagingManagerId(0);
     }
+
+    @Test
+    public void testGetCampusListByResourceOwnerId() {
+        int id = 1;
+        Campus expectedResult = new Campus(32, "University of South Florida", "USF", new Address(),
+                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata(1,1,"",1,"",1,true));
+        List<Campus> result = new ArrayList<>();
+        result.add(expectedResult);
+        when(campusService.findByResourceOwnerId(Mockito.anyInt())).thenReturn(result);
+        assertEquals(campusController.getByResourceOwnerId(id), result);
+
+    }
+
+    @Test(expected = InvalidInputException.class)
+    public void testGetCampusListByInvalidResourceOwnerId() {
+        int id = -1;
+        Campus expectedResult = new Campus(32, "University of South Florida", "USF", new Address(),
+                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata(1,1,"",1,"",1,true));
+        List<Campus> result = new ArrayList<>();
+        result.add(expectedResult);
+        when(campusService.findByResourceOwnerId(Mockito.anyInt())).thenThrow(new InvalidInputException());
+        assertEquals(campusController.getByResourceOwnerId(id), result);
+
+    }
 }

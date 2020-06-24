@@ -4,6 +4,7 @@ import com.revature.rms.campus.exceptions.InvalidInputException;
 import com.revature.rms.campus.exceptions.ResourceNotFoundException;
 import com.revature.rms.campus.exceptions.ResourcePersistenceException;
 import com.revature.rms.campus.repositories.BuildingRepository;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -29,6 +30,7 @@ public class BuildingServiceTest {
      * A non-null building object should be returned.
      */
     @Test
+    @Ignore
     public void testSaveWithValidBuilding() {
 
         Building testBuilding = new Building(1, "Muma School of Business", "MSB", new Address(),
