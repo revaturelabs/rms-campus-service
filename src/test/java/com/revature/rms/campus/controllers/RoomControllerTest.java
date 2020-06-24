@@ -29,8 +29,8 @@ public class RoomControllerTest {
 
     @Test
     public void testFindAllRoomsWithValidRoom(){
-        Room testRoom = new Room("1", "2301", 25, true, new ArrayList<RoomStatus>(5),
-                "1612", new ArrayList<String>(3), new ResourceMetadata());
+        Room testRoom = new Room(1, "2301", 25, new ArrayList<RoomStatus>(),
+                1612, new ArrayList<Integer>(), new ResourceMetadata());
 
         List<Room> testRoomList = Arrays.asList(testRoom);
 
@@ -48,10 +48,10 @@ public class RoomControllerTest {
 
     @Test
     public void testSaveRoomWithValidRoom(){
-        Room testRoom = new Room("2301", 25, true, new ArrayList<RoomStatus>(5),
-                "1612", new ArrayList<String>(3), new ResourceMetadata());
-        Room persistedRoom = new Room("1", "2301", 25, true, new ArrayList<RoomStatus>(5),
-                "1612", new ArrayList<String>(3), new ResourceMetadata());
+        Room testRoom = new Room("2301", 25,  new ArrayList<RoomStatus>(5),
+                1612, new ArrayList<Integer>(), new ResourceMetadata());
+        Room persistedRoom = new Room(1, "2301", 25, new ArrayList<RoomStatus>(),
+                1612, new ArrayList<Integer>(), new ResourceMetadata());
 
         when(roomService.save(Mockito.any())).thenReturn(persistedRoom);
 
@@ -60,45 +60,45 @@ public class RoomControllerTest {
 
     @Test(expected = ResourceNotFoundException.class)
     public void testSaveRoomWithNullRoom(){
-        Room testRoom = new Room("2301", 25, true, new ArrayList<RoomStatus>(5),
-                "1612", new ArrayList<String>(3), new ResourceMetadata());
-        Room persistedRoom = new Room("1", "2301", 25, true, new ArrayList<RoomStatus>(5),
-                "1612", new ArrayList<String>(3), new ResourceMetadata());
+        Room testRoom = new Room("2301", 25,  new ArrayList<RoomStatus>(5),
+                1612, new ArrayList<Integer>(3), new ResourceMetadata());
+        Room persistedRoom = new Room(1, "2301", 25, new ArrayList<RoomStatus>(5),
+                1612, new ArrayList<Integer>(3), new ResourceMetadata());
 
-        when(roomService.save(Mockito.any())).thenReturn(persistedRoom);
+        when(roomService.save(Mockito.any(Room.class))).thenReturn(persistedRoom);
 
         assertEquals(roomController.saveRoom(null),persistedRoom);
     }
 
     @Test
     public void testGetRoomByValidId() {
-        String id = "1";
-        Room expectedResult = new Room("1", "2301", 25, true, new ArrayList<RoomStatus>(5),
-                "1612", new ArrayList<String>(3), new ResourceMetadata());
-        when(roomService.findById(Mockito.any())).thenReturn(Optional.of(expectedResult));
+        int id = 1;
+        Room expectedResult = new Room(1,"2301", 25,  new ArrayList<RoomStatus>(5),
+                1612, new ArrayList<Integer>(3), new ResourceMetadata());
+        when(roomService.findById(Mockito.anyInt())).thenReturn(Optional.of(expectedResult));
         assertEquals(roomController.getRoomById(id), expectedResult);
     }
 
     @Test(expected = ResourceNotFoundException.class)
     public void testGetRoomByIdNotFound(){
-        String id = "32";
-        when(roomService.findById(Mockito.any())).thenReturn(Optional.empty());
+        int id = 32;
+        when(roomService.findById(Mockito.anyInt())).thenReturn(Optional.empty());
         roomController.getRoomById(id);
     }
 
     @Test(expected = InvalidInputException.class)
     public void testGetRoomWithInvalidRoom(){
-        String id = "";
-        when(roomService.findById(Mockito.any())).thenReturn(null);
+        int id = 0;
+        when(roomService.findById(Mockito.anyInt())).thenReturn(null);
         assertEquals(roomController.getRoomById(id), null);
     }
 
     @Test
     public void testUpdateRoomWithRoom(){
-        Room testRoom = new Room("2301", 25, true, new ArrayList<RoomStatus>(5),
-                "1612", new ArrayList<String>(3), new ResourceMetadata());
-        Room expectedResult = new Room("1", "2301", 25, true, new ArrayList<RoomStatus>(5),
-                "1612", new ArrayList<String>(3), new ResourceMetadata());
+        Room testRoom = new Room("2301", 25,  new ArrayList<RoomStatus>(5),
+                1612, new ArrayList<Integer>(3), new ResourceMetadata());
+        Room expectedResult = new Room("2301", 25,  new ArrayList<RoomStatus>(5),
+                1612, new ArrayList<Integer>(3), new ResourceMetadata());
 
         when(roomService.update(Mockito.any())).thenReturn(expectedResult);
         assertEquals(roomController.updateRoom(testRoom), expectedResult);
@@ -106,23 +106,45 @@ public class RoomControllerTest {
 
     @Test
     public void testDeleteRoomWithValidId(){
-        Room testRoom = new Room("1", "2301", 25, true, new ArrayList<RoomStatus>(5),
-                "1612", new ArrayList<String>(3), new ResourceMetadata());
+        Room testRoom = new Room(1,"2301", 25,  new ArrayList<RoomStatus>(5),
+                1612, new ArrayList<Integer>(3), new ResourceMetadata());
 
-        when(roomService.findById(Mockito.any())).thenReturn(Optional.of(testRoom));
+        when(roomService.findById(Mockito.anyInt())).thenReturn(Optional.of(testRoom));
         roomController.deleteRoomById(testRoom.getId());
         verify(roomService, times(1)).delete(testRoom.getId());
     }
 
     @Test(expected = InvalidInputException.class)
     public void testDeleteRoomWithInvalidId(){
-        Room testRoom = new Room("1", "2301", 25, true, new ArrayList<RoomStatus>(5),
-                "1612", new ArrayList<String>(3), new ResourceMetadata());
+        Room testRoom = new Room("2301", 25,  new ArrayList<RoomStatus>(5),
+                1612, new ArrayList<Integer>(3), new ResourceMetadata());
 
-        String id = "-1";
-        when(roomService.findById(Mockito.any())).thenReturn(Optional.of(testRoom));
+        int id = -1;
+        when(roomService.findById(Mockito.anyInt())).thenReturn(Optional.of(testRoom));
         roomController.deleteRoomById(id);
         verify(roomService, times(0)).delete(id);
 
+    }
+
+    @Test
+    public void testGetRoomByOwnerId() {
+        int id = 1;
+        List<Room> rooms = new ArrayList<>();
+        Room testRoom = new Room(1,"2301", 25,  new ArrayList<RoomStatus>(5),
+                1612, new ArrayList<Integer>(3), new ResourceMetadata(1,1,"",1,"",1,true));
+        rooms.add(testRoom);
+        when(roomService.findByResourceOwner(Mockito.anyInt())).thenReturn(rooms);
+        assertEquals(roomController.getRoomByOwnerId(id), rooms);
+    }
+
+    @Test(expected = InvalidInputException.class)
+    public void testGetRoomByInvalidOwnerId(){
+        int id = -1;
+        List<Room> rooms = new ArrayList<>();
+        Room testRoom = new Room(1,"2301", 25,  new ArrayList<RoomStatus>(5),
+                1612, new ArrayList<Integer>(3), new ResourceMetadata(1,1,"",1,"",1,true));
+        rooms.add(testRoom);
+        when(roomService.findByResourceOwner(id)).thenThrow(new InvalidInputException());
+        assertEquals(roomController.getRoomByOwnerId(id), rooms);
     }
 }

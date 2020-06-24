@@ -1,54 +1,113 @@
 package com.revature.rms.campus.entities;
 
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+//import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
+import javax.persistence.*;
+import java.util.List;
 
-@Document
+
+//@Document
+
+//commentted out bc mangodb
+//@NoArgsConstructor
+//@AllArgsConstructor
+@Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Building {
     @Id
-    private String id;
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private int id;
 
-    @NotNull
+    @Column(nullable=false,unique=true) //covert h2
     private String name;
 
-    @NotNull
+    @Column(nullable=false) //covert h2
     private String abbrName;
 
-    @NotNull
+    @OneToOne
+    @JoinColumn(nullable=false) //covert h2
     private Address physicalAddress;
 
-    @NotNull
-    private Integer trainingLead;
+    @Column(nullable=false) //covert h2
+    private int trainingLead;
 
-    @NotNull
-    @NotEmpty
-    private ArrayList<Amenity> amenities;
+//    @NotNull
+//    @NotEmpty
+    @OneToMany(mappedBy = "building")
+    private List<Amenity> amenities;
 
-    @NotNull
-    @NotEmpty
-    private ArrayList<Room> rooms;
+    @OneToMany(mappedBy = "building")
+    private List<Room> rooms;
 
-    @NotNull
-    private ResourceMetadata resourceMetaData;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn
+    private ResourceMetadata resourceMetadata;
 
-    public Building(String name, String abbrName, Address physicalAddress, Integer trainingLead, ArrayList<Amenity> amenities, ArrayList<Room> rooms, ResourceMetadata resourceMetaData) {
+    @ManyToOne
+    @JsonIgnore
+    private Campus campus;
+
+
+    public Building() {
+    }
+
+    public Building(int id, String name, String abbrName, Address physicalAddress, int trainingLead, List<Amenity> amenities, List<Room> rooms, ResourceMetadata resourceMetadata) {
+        this.id = id;
         this.name = name;
         this.abbrName = abbrName;
         this.physicalAddress = physicalAddress;
         this.trainingLead = trainingLead;
         this.amenities = amenities;
         this.rooms = rooms;
-        this.resourceMetaData = resourceMetaData;
+        this.resourceMetadata = resourceMetadata;
+    }
+
+    public Building(String name, String abbrName, Address physicalAddress, int trainingLead, List<Amenity> amenities, List<Room> rooms, ResourceMetadata resourceMetadata) {
+        this.name = name;
+        this.abbrName = abbrName;
+        this.physicalAddress = physicalAddress;
+        this.trainingLead = trainingLead;
+        this.amenities = amenities;
+        this.rooms = rooms;
+        this.resourceMetadata = resourceMetadata;
+    }
+
+    public Building(int id, String name, String abbrName, Address physicalAddress, int trainingLead, List<Amenity> amenities, ResourceMetadata resourceMetadata, Campus campus) {
+        this.id = id;
+        this.name = name;
+        this.abbrName = abbrName;
+        this.physicalAddress = physicalAddress;
+        this.trainingLead = trainingLead;
+        this.amenities = amenities;
+        this.resourceMetadata = resourceMetadata;
+        this.campus = campus;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getAbbrName() {
+        return abbrName;
+    }
+
+    public void setAbbrName(String abbrName) {
+        this.abbrName = abbrName;
+    }
+
+    public ResourceMetadata getResourceMetadata() {
+        return resourceMetadata;
+    }
+
+    public void setResourceMetadata(ResourceMetadata resourceMetadata) {
+        this.resourceMetadata = resourceMetadata;
     }
 }

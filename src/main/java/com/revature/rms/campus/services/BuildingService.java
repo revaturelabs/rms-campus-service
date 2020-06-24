@@ -4,21 +4,31 @@ import com.revature.rms.campus.entities.*;
 import com.revature.rms.campus.exceptions.InvalidInputException;
 import com.revature.rms.campus.exceptions.ResourceNotFoundException;
 import com.revature.rms.campus.exceptions.ResourcePersistenceException;
-import com.revature.rms.campus.repositories.BuildingMongoRepository;
+//import com.revature.rms.campus.repositories.BuildingMongoRepository;
+import com.revature.rms.campus.repositories.BuildingRepository;
+import com.revature.rms.campus.repositories.ResourceMetadataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.beans.Transient;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The methods in this service call to methods from the buildingRepository in order to give the basic CRUD features to
+ * the application. The methods in this service are custom as a result of TDD. For more information about the testing
+ * see BuildingServiceTests.
+ */
 @Service
 public class BuildingService {
-    private BuildingMongoRepository buildingMongoRepository;
 
     @Autowired
-    public BuildingService(BuildingMongoRepository buildingMongoRepository) {
-        this.buildingMongoRepository = buildingMongoRepository;
-    }
+    private BuildingRepository buildingRepository;
+
+    @Autowired
+    private ResourceMetadataRepository resourceMetadataRepo;
 
     /**
      * Save Method: Takes in a building object as the input. The input room
@@ -30,13 +40,13 @@ public class BuildingService {
      * @param building
      * @return The new saved building object
      */
-
+    @Transactional
     public Building save(Building building) {
 
         if (building == null) {
             throw new ResourcePersistenceException();
         }
-        return buildingMongoRepository.save(building);
+        return buildingRepository.save(building);
     }
 
     /**
@@ -44,8 +54,13 @@ public class BuildingService {
      *
      * @return a list of all the buildings
      */
+    @Transactional(readOnly = true)
     public List<Building> findAll() {
-        return buildingMongoRepository.findAll();
+
+        Iterable<Building> b = buildingRepository.findAll();
+        List<Building> list = getListFromIterator(b);
+        return list;
+
     }
 
     /**
@@ -62,17 +77,19 @@ public class BuildingService {
      * @param id
      * @return the building object with the same building id as the input parameter.
      */
+    @Transactional(readOnly = true)
+    public Optional<Building> findById(int id) {
 
-    public Optional<Building> findById(String id) {
-        if (id.isEmpty() || (Integer.parseInt(id) <= 0)) {
+        if (id <= 0) {
             throw new InvalidInputException();
         }
-        Optional<Building> theBuilding = buildingMongoRepository.findById(id);
+
+        Optional<Building> theBuilding = buildingRepository.findById(id);
         if (!theBuilding.isPresent()) {
             throw new ResourceNotFoundException();
         }
 
-        return buildingMongoRepository.findById(id);
+        return buildingRepository.findById(id);
     }
 
     /**
@@ -82,10 +99,35 @@ public class BuildingService {
      * @param name
      * @return the room object with the same room number as the input parameter.
      */
+    @Transactional(readOnly = true)
     public Building findByName(String name) {
-        return buildingMongoRepository.findByName(name);
+        return buildingRepository.findByName(name);
     }
 
+    /**
+     * findByBuildingOwnerId method: Retrieves list of Buildings owned by an app user
+     * @param id ID of the app user
+     * @return List of buildings
+     */
+    @Transactional(readOnly = true)
+    public List<Building> findByBuildingOwnerId(Integer id){
+
+        if(id < 1){
+            throw new InvalidInputException();
+        }
+        Iterable<Building> allBuildings = buildingRepository.findAll();
+        List<Building> buildings = new ArrayList<Building>();
+        for (Building build : allBuildings){
+            ResourceMetadata metadata = build.getResourceMetadata();
+            if(metadata.getResourceOwner() == id){
+                buildings.add(build);
+            }
+        }
+        if(buildings.isEmpty()){
+            throw new ResourceNotFoundException();
+        }
+        return buildings;
+    }
 
     /**
      * Update Method: The building object is inputted and changes are saved.
@@ -94,11 +136,10 @@ public class BuildingService {
      * @param building
      * @return Updated/Modified room object
      */
-
+    @Transactional
     public Building update(Building building) {
-        return buildingMongoRepository.save(building);
+        return buildingRepository.save(building);
     }
-
 
     /**
      * Delete Method: Building object is found by id and deleted
@@ -110,12 +151,13 @@ public class BuildingService {
      * @param id
      * @return The deleted building object.
      */
+    @Transactional
+    public void delete(int id) {
 
-    public void delete(String id) {
-        if (id.isEmpty() || Integer.parseInt(id) <= 0) {
+        if (id <= 0) {
             throw new InvalidInputException();
         }
-        buildingMongoRepository.deleteById(id);
+        buildingRepository.deleteById(id);
     }
 
     /**
@@ -128,11 +170,25 @@ public class BuildingService {
      * @param id
      * @return The building object.
      */
-
-    public Building findByTrainingLeadId(Integer id) {
+    @Transactional(readOnly = true)
+    public Building findByTrainingLeadId(int id) {
         if (id < 1) throw new InvalidInputException();
-        Building temp = buildingMongoRepository.findByTrainingLead(id);
+        Building temp = buildingRepository.findByTrainingLead(id);
         if (temp == null) throw new ResourceNotFoundException();
         else return temp;
+    }
+
+    /**
+     * getListFromIterator Method: Is a custom method that iterates and adds each object to a list of the specified Generic.
+     * @param iterable an Iterable that wants to be converted into an ArrayList
+     * @param <T> Generic of any ObjectType
+     * @return Returns a List of type T
+     */
+    public static <T> List<T> getListFromIterator(Iterable<T> iterable)
+    {
+
+        List<T> list = new ArrayList<>();
+        iterable.forEach(list::add);
+        return list;
     }
 }

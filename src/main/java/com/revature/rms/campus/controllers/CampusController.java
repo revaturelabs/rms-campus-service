@@ -13,20 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Rest controller for the CampusService. All of the methods below either produce or produce and consume JSON values
- * The methods provide validations through the result of TDD in CampusServiceTests and CampusControllerTests.
- * Methods include:
- * - getAllCampus, this method performs a get with the url in the RequestMapping annotation and returns the result
- * of campusService.findAll() as a list of JSON campus objects.
- * - saveCampus, this method performs a post with provided url in the RequestMapping annotation. Expected the provided
- * information to be a JSON and returns the JSON of campusService.save()
- * - getCampusById, this method performs a get with the url in the RequestMapping annotation and including the provided
- * param. Returns the result of campusService.findById() as a JSON.
- * - updateCampus this method performs a put with the provided url and returns the result of campusService.update().
- * - deleteCampusById, this method performs a get with the url in the RequestMapping annotation and including the provided
- *  * param. Returns the result of campusService.delete() as a JSON.
- */
 @RestController
 @RequestMapping("/v2/campus")
 public class CampusController {
@@ -38,9 +24,18 @@ public class CampusController {
         this.campusService = campusService;
     }
 
+    /**
+     * getAllCampus method: Returns a list of all the campus objects in the database.
+     * @return a list of all the campuses
+     */
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Campus> getAllCampus() { return campusService.findAll(); }
 
+    /**
+     * saveCampus method: Takes in a campus object as the input.
+     * @param campus newly persisted campus object
+     * @return the newly added campus object
+     */
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Campus saveCampus(@RequestBody Campus campus) {
         if (campus == null) {
@@ -49,9 +44,14 @@ public class CampusController {
         return campusService.save(campus);
     }
 
+    /**
+     * getCampusById method: Returns a campus object when the id int matches a record in the database.
+     * @param id campusId int value
+     * @return a campus with matching id
+     */
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Campus getCampusById(@PathVariable String id) {
-        if (id.isEmpty() || Integer.parseInt(id) <= 0) {
+    public Campus getCampusById(@PathVariable int id) {
+        if (id <= 0) {
             throw new InvalidInputException();
         }
         Optional<Campus> _campus = campusService.findById(id);
@@ -61,41 +61,83 @@ public class CampusController {
         return campusService.findById(id).get();
     }
 
+    /**
+     * getCampusByTrainingManagerId method: Returns a campus object
+     * that matches a trainingLeadId int id.
+     * @param id trainingLeadId int value
+     * @return a campus with matching trainerLeadId
+     */
     @GetMapping(value = "/training/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Campus getCampusByTrainingManagerId(@PathVariable String id) {
-        if (id.isEmpty() || Integer.parseInt(id) <= 0) {
+    public List<Campus> getCampusByTrainingManagerId(@PathVariable int id) {
+        if (id <= 0) {
             throw new InvalidInputException();
         }
-        Campus campus = campusService.findByTrainingManagerId(Integer.parseInt(id));
+        List<Campus> campus = campusService.findByTrainingManagerId(id);
         if (campus == null) {
             throw new ResourceNotFoundException();
         }
         return campus;
     }
 
+    /**
+     * getCampusByStagingManagerId method: Returns a campus object
+     * that matches a stagingManagerId int id.
+     * @param id stagingManagerId int value
+     * @return a campus with matching stagingManagerId
+     */
     @GetMapping(value = "/staging/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Campus getCampusByStagingManagerId(@PathVariable String id) {
-        if (id.isEmpty() || Integer.parseInt(id) <= 0) {
+    public List<Campus> getCampusByStagingManagerId(@PathVariable int id) {
+        if (id <= 0) {
             throw new InvalidInputException();
         }
-        Campus campus = campusService.findByStagingManagerId(Integer.parseInt(id));
+        List<Campus> campus = campusService.findByStagingManagerId(id);
         if (campus == null) {
             throw new ResourceNotFoundException();
         }
         return campus;
     }
+
+    /**
+     * getByResourceOwnerId method: Retrieves list of campuses that a specific app user owns
+     * @param id ID of the app user
+     * @return List of campuses
+     */
+
+    @GetMapping(value = "/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Campus> getByResourceOwnerId(@PathVariable int id){
+        return campusService.findByResourceOwnerId(id);
+    }
+
+
+    /**
+     * updateCampus method: The campus object is inputted and changes are saved.
+     * @param campus newly updated campus object
+     * @return updated/modified campus object
+     */
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Campus updateCampus(@RequestBody Campus campus) { return campusService.update(campus); }
 
-    @DeleteMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void deleteCampusById(@PathVariable String id) {
-        if(id.isEmpty() || Integer.parseInt(id) <= 0) {
+
+    /**
+     * deleteCampusById method: The campus object is deleted based on its campusId int
+     * @param id campusId int value
+     */
+    @DeleteMapping(value = "/{id}")
+    public boolean deleteCampusById(@PathVariable int id) {
+        if(id <= 0) {
             throw new InvalidInputException();
         }
         campusService.delete(id);
+        return true;
     }
 
+    /**
+     * handleInvalidRequestException method: Exception handler method that provides the correct
+     * error response based on a InvalidInputException
+     * @param e InvalidInputException where input from user is invalid
+     * @return ErrorResponse that provides status, message, and timestamp of the exception
+     */
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleInvalidRequestException(InvalidInputException e) {
@@ -106,6 +148,12 @@ public class CampusController {
         return err;
     }
 
+    /**
+     * handleResourceNotFoundException method: Exception handler method that provides the correct
+     * error response based on a ResourceNotFoundException
+     * @param e ResourceNotFoundException where a resource is not found in the database
+     * @return ErrorResponse that provides status, message, and timestamp of the exception
+     */
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleResourceNotFoundException(ResourceNotFoundException e) {
