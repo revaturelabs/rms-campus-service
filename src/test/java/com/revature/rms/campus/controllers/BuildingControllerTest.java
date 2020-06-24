@@ -78,6 +78,7 @@ public class BuildingControllerTest {
 
     @Test
     public void testSaveBuildingWithValidBuilding() {
+
         Building testBuilding = new Building("Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3), new ResourceMetadata());
 
@@ -86,11 +87,13 @@ public class BuildingControllerTest {
 
         when(buildingService.save(testBuilding)).thenReturn(persistedBuilding);
 
+
         assertEquals(buildingController.saveBuilding(testBuilding), persistedBuilding);
     }
 
     @Test(expected = ResourceNotFoundException.class)
     public void testSaveBuildingWithNullBuilding() {
+
         String id = "1";
 
         Building expectedResult = new Building(1, "Muma School of Business", "MSB", new Address(),
@@ -99,6 +102,7 @@ public class BuildingControllerTest {
         when(buildingService.save(Mockito.any())).thenReturn(expectedResult);
         assertEquals(buildingController.saveBuilding(null), expectedResult);
     }
+
 
     @Test
     public void testGetBuildingByValidId() {
@@ -116,13 +120,16 @@ public class BuildingControllerTest {
         int id = 1;
 
         when(buildingService.findById(1)).thenThrow(new ResourceNotFoundException());
+
         buildingController.getBuildingById(id);
     }
 
     @Test(expected = InvalidInputException.class)
     public void testGetBuildingWithInvalidBuilding() {
+
         int id = 0;
         when(buildingService.findById(id)).thenReturn(null);
+
         assertEquals(buildingController.getBuildingById(id), null);
     }
 
@@ -162,6 +169,7 @@ public class BuildingControllerTest {
 
     @Test
     public void testDeleteBuildingWithValidId() {
+
         int id = 1;
 
         buildingController.deleteBuildingById(id);
