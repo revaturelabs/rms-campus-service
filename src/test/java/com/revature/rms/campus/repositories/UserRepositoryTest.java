@@ -13,9 +13,9 @@
 ////@RunWith(SpringRunner.class)
 //@SpringBootTest
 //@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-//public class UserMongoRepositoryTest {
+//public class UserRepositoryTest {
 //    @Autowired
-//    private UserMongoRepository userMongoRepository;
+//    private UserRepository userRepository;
 //    @BeforeAll
 //    public void setUp() throws Exception {
 //        User user1 = new User("Alice", "A");
