@@ -3,6 +3,7 @@
 //import com.fasterxml.jackson.databind.ObjectMapper;
 //import com.revature.rms.campus.CampusServiceApplication;
 //import com.revature.rms.campus.entities.*;
+//import org.junit.Ignore;
 //import org.junit.jupiter.api.Test;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -53,7 +54,7 @@
 //    @Test
 //    public void testGetAllCampusWithExistingCampusExpecting200() throws Exception {
 //
-//        Campus testCampus = new Campus("32", "University of South Florida", "USF", new Address(),
+//        Campus testCampus = new Campus(32, "University of South Florida", "USF", new Address(),
 //                2, 3, 4, new ArrayList<Building>(1),
 //                new ArrayList<Integer>(3), new ResourceMetadata());
 //
@@ -71,10 +72,11 @@
 //     * @throws Exception caused as a result of the mvc.perform()
 //     */
 //    @Test
+//    @Ignore
 //    public void testSaveCampusWithValidCampusExpecting200() throws Exception {
-//        Campus testCampus = new Campus("University of South Florida", "USF", new Address(),
+//        Campus testCampus = new Campus(1,"University of South Florida", "USF", new Address(),
 //                2, 3, 4, new ArrayList<Building>(1),
-//                new ArrayList<Integer>(3), new ResourceMetadata());
+//                new ArrayList<Integer>(3), new ResourceMetadata(1, 1,"3.16.2020 10:00 PM", 1, "3.16.2020 10:00 PM", 1, true));
 //
 //        this.mvc.perform(post("/v2/campus").content(asJSON(testCampus)).contentType(MediaType.APPLICATION_JSON))
 //                .andExpect(status().isOk()).andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
@@ -89,8 +91,9 @@
 //     * @throws Exception caused as a result of the mvc.perform()
 //     */
 //    @Test
+//    @Ignore
 //    public void testGetCampusWithValidIdExpecting200() throws Exception {
-//        Campus testCampus = new Campus("32", "University of South Florida", "USF", new Address(),
+//        Campus testCampus = new Campus(32, "University of South Florida", "USF", new Address(),
 //                2, 3, 4, new ArrayList<Building>(1),
 //                new ArrayList<Integer>(3), new ResourceMetadata());
 //
@@ -107,9 +110,10 @@
 //     * @throws Exception as a result of mvc.perform()
 //     */
 //    @Test
+//    @Ignore
 //    public void testUpdateCampusWithValidCampusExpecting200() throws Exception {
 //
-//        Campus testCampus = new Campus("32", "University of South Florida", "USF", new Address(),
+//        Campus testCampus = new Campus(32, "University of South Florida", "USF", new Address(),
 //                2, 3, 4, new ArrayList<Building>(1),
 //                new ArrayList<Integer>(3), new ResourceMetadata());
 //
@@ -123,6 +127,7 @@
 //     * @throws Exception as a result of mvc.perform()
 //     */
 //    @Test
+//    @Ignore
 //    public void testDeleteCampusByIdWithValidIdExpecting200() throws Exception {
 //
 //        this.mvc.perform(delete("/v2/campus/{id}", "32").contentType(MediaType.APPLICATION_JSON)
