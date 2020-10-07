@@ -47,6 +47,9 @@ public class Building {
     @JoinColumn
     private ResourceMetadata resourceMetadata;
 
+    @Embedded
+    private ResourceMetadataEmbeddable resourceMetadataEmbeddable;
+
     @ManyToOne
     @JsonIgnore
     private Campus campus;

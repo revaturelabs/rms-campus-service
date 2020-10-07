@@ -43,6 +43,9 @@ public class Room {
     @JoinColumn
     private ResourceMetadata resourceMetadata;
 
+    @Embedded
+    private ResourceMetadataEmbeddable resourceMetadataEmbeddable;
+
     @ManyToOne
     @JsonIgnore
     private Building building;

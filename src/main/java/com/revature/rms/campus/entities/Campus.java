@@ -83,6 +83,9 @@ public class Campus {
     @JoinColumn
     private ResourceMetadata resourceMetadata;
 
+    @Embedded
+    private ResourceMetadataEmbeddable resourceMetadataEmbeddable;
+
     public Campus() {
     }
 
