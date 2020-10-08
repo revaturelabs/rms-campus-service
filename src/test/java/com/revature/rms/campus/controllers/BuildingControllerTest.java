@@ -3,7 +3,6 @@ import com.revature.rms.campus.entities.*;
 import com.revature.rms.campus.exceptions.InvalidInputException;
 import com.revature.rms.campus.exceptions.ResourceNotFoundException;
 import com.revature.rms.campus.services.BuildingService;
-import com.revature.rms.campus.services.CampusService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -59,21 +58,21 @@ public class BuildingControllerTest {
 
         when(buildingService.findByTrainingLeadId(Mockito.anyInt())).thenReturn(testBuilding);
 
-        assertEquals(buildingController.getBuildingByTrainingLeadId(id), testBuilding);
+        assertEquals(buildingController.getBuildingByTrainerId(id), testBuilding);
     }
 
     @Test(expected = InvalidInputException.class)
     public void testFindBuildingByInvalidTrainingLeadId() {
         int id=-2;
         when(buildingService.findByTrainingLeadId(Mockito.anyInt())).thenThrow(new InvalidInputException());
-        buildingController.getBuildingByTrainingLeadId(id);
+        buildingController.getBuildingByTrainerId(id);
     }
 
     @Test(expected = ResourceNotFoundException.class)
     public void testFindBuildingByTrainingLeadIdWithNullResult() {
         int id=2;
         when(buildingService.findByTrainingLeadId(Mockito.anyInt())).thenThrow(new ResourceNotFoundException());
-        buildingController.getBuildingByTrainingLeadId(id);
+        buildingController.getBuildingByTrainerId(id);
     }
 
     @Test

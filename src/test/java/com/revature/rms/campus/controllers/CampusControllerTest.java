@@ -42,7 +42,7 @@ public class CampusControllerTest {
 
         when(campusService.findAll()).thenReturn(testCampusList);
 
-        assertEquals(campusController.getAllCampus(), testCampusList);
+        assertEquals(campusController.getAllCampuses(), testCampusList);
     }
 
     @Test
@@ -52,7 +52,7 @@ public class CampusControllerTest {
 
         when(campusService.findAll()).thenReturn(testListCampus);
 
-        assertEquals(campusController.getAllCampus(), testListCampus);
+        assertEquals(campusController.getAllCampuses(), testListCampus);
     }
 
     @Test
