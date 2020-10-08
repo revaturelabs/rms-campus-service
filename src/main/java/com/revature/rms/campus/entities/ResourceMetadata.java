@@ -5,18 +5,17 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Entity
+@Embeddable
 @Data
-@ToString
 //commentted out bc mangodb
 //@AllArgsConstructor
 //@NoArgsConstructor
 public class ResourceMetadata {
 
-    @Id
-    @Column
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id;
+//    @Id
+//    @Column
+//    @GeneratedValue(strategy= GenerationType.IDENTITY)
+//    private int id;
     
     @Column(nullable=false) //covert h2
     private int resourceCreator;
@@ -40,7 +39,7 @@ public class ResourceMetadata {
     }
 
     public ResourceMetadata(int id, int resourceCreator, String resourceCreationDateTime, int lastModifier, String lastModifiedDateTime, int resourceOwner, boolean currentlyActive) {
-        this.id = id;
+//        this.id = id;
         this.resourceCreator = resourceCreator;
         this.resourceCreationDateTime = resourceCreationDateTime;
         this.lastModifier = lastModifier;
@@ -74,13 +73,13 @@ public class ResourceMetadata {
         this.currentlyActive = currentlyActive;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+//    public int getId() {
+//        return id;
+//    }
+//
+//    public void setId(int id) {
+//        this.id = id;
+//    }
 
     public int getResourceOwner() {
         return resourceOwner;

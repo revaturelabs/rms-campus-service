@@ -39,8 +39,11 @@ public class Room {
     @ElementCollection
     private List<Integer> workOrders;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn
+//    @OneToOne(fetch = FetchType.EAGER)
+//    @JoinColumn
+//    private ResourceMetadata resourceMetadata;
+
+    @Embedded
     private ResourceMetadata resourceMetadata;
 
     @ManyToOne

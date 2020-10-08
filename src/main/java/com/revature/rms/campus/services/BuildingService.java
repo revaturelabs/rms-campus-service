@@ -6,7 +6,6 @@ import com.revature.rms.campus.exceptions.ResourceNotFoundException;
 import com.revature.rms.campus.exceptions.ResourcePersistenceException;
 //import com.revature.rms.campus.repositories.BuildingMongoRepository;
 import com.revature.rms.campus.repositories.BuildingRepository;
-import com.revature.rms.campus.repositories.ResourceMetadataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,9 +25,6 @@ public class BuildingService {
 
     @Autowired
     private BuildingRepository buildingRepository;
-
-    @Autowired
-    private ResourceMetadataRepository resourceMetadataRepo;
 
     /**
      * Save Method: Takes in a building object as the input. The input room
