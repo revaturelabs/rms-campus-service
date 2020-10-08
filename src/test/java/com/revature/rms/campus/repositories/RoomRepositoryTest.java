@@ -62,25 +62,26 @@ public class RoomRepositoryTest {
 //        assertThat(result.getMaxOccupancy()).isEqualTo(100);
 //    }
 
-    @Test
-    public void testFindByRoomNumber() {
-        Room room1 = new Room(1,"2301D", 45, null, 1, null, null);
-        sut.save(room1);
-        Room expected = sut.findByRoomNumber("2301D").get();
+    //Replace resourceMetaData with the columns ResourceMetaData had. Leave out the Id column. (Stephen, if you have any questions, let sean know)
+//    @Test
+//    public void testFindByRoomNumber() {
+//        Room room1 = new Room(1,"2301D", 45, null, 1, null, null);
+//        sut.save(room1);
+//        Room expected = sut.findByRoomNumber("2301D").get();
+//
+//        assertThat(expected.getMaxOccupancy()).isEqualTo(45);
+//    }
+//
+//    @Test
+//    public void testFindByMaxOccupancy() {
+//        Room room1 = new Room(1,"301D", 45, null, 1, null, null);
+//        Room room2 = new Room(2,"2301D", 45, null, 1, null, null);
+//        sut.save(room1);
+//        sut.save(room2);
+//        List<Room> expected = sut.findByMaxOccupancy(45);
+//        assertThat(expected.size()).isEqualTo(2);
 
-        assertThat(expected.getMaxOccupancy()).isEqualTo(45);
-    }
-
-    @Test
-    public void testFindByMaxOccupancy() {
-        Room room1 = new Room(1,"301D", 45, null, 1, null, null);
-        Room room2 = new Room(2,"2301D", 45, null, 1, null, null);
-        sut.save(room1);
-        sut.save(room2);
-        List<Room> expected = sut.findByMaxOccupancy(45);
-        assertThat(expected.size()).isEqualTo(2);
-
-    }
+//    }
 //    @Test
 //    public void testFindAll() {
 //        Iterable<Room> rooms = sut.findAll();
