@@ -52,15 +52,15 @@ public class RoomRepositoryTest {
 
     }
 
-//    @Test
-//    public void testFindByRoomNumberH2() {
+    @Test
+    public void testFindByRoomNumberH2() {
 //        Room room1 = new Room(1,"105A", 100, new ArrayList<>(), 1, new ArrayList<>(), new ResourceMetadata());
 //        room1.setBuilding(Mockito.mock(Building.class));
 //        System.out.println(room1.toString());
 //        sut.save(room1);
 //        Room result = sut.findByRoomNumber("105A").get();
 //        assertThat(result.getMaxOccupancy()).isEqualTo(100);
-//    }
+    }
 
     //Replace resourceMetaData with the columns ResourceMetaData had. Leave out the Id column. (Stephen, if you have any questions, let sean know)
 //    @Test
