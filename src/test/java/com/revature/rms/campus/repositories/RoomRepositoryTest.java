@@ -42,8 +42,6 @@ public class RoomRepositoryTest {
     @Autowired
     private RoomRepository sut;
 
-    @Autowired
-    ResourceMetadataRepository metadataRepository;
 
     @Autowired
     RoomStatusRepository statusRepository;

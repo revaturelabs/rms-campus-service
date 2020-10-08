@@ -8,8 +8,6 @@ import com.revature.rms.campus.exceptions.InvalidInputException;
 import com.revature.rms.campus.exceptions.ResourceNotFoundException;
 import com.revature.rms.campus.repositories.AddressRepository;
 import com.revature.rms.campus.repositories.CampusRepository;
-import com.revature.rms.campus.repositories.ResourceMetadataRepository;
-import org.hibernate.boot.Metadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,12 +28,6 @@ public class CampusService {
     private CampusRepository campusRepository;
 
     @Autowired
-    private ResourceMetadataRepository metadataRepository;
-
-    @Autowired
-    private ResourceMetadataService metadataService;
-
-    @Autowired
     private AddressRepository addressRepository;
 
     /**
@@ -52,9 +44,7 @@ public class CampusService {
         }
 
         Address address = addressRepository.save(campus.getShippingAddress());
-        ResourceMetadata data = metadataRepository.save(campus.getResourceMetadata());
         campus.setShippingAddress(address);
-        campus.setResourceMetadata(data);
         Campus persisted = campusRepository.save(campus);
         return persisted;
     }
@@ -191,8 +181,6 @@ public class CampusService {
             throw new InvalidInputException();
         }
         Campus campus = campusRepository.findById(id).get();
-        ResourceMetadata metadata = metadataService.deactivateResource(campus.getResourceMetadata());
-        campus.setResourceMetadata(metadata);
         campusRepository.save(campus);
         return true;
     }
