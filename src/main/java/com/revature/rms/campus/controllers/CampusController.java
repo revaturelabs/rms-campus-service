@@ -54,11 +54,9 @@ public class CampusController {
         if (id <= 0) {
             throw new InvalidInputException();
         }
-        Optional<Campus> _campus = campusService.findById(id);
-        if (!_campus.isPresent()) {
-            throw new ResourceNotFoundException();
-        }
-        return campusService.findById(id).get();
+        Campus campus = campusService.findById(id);
+
+        return campusService.findById(id);
     }
 
     /**
