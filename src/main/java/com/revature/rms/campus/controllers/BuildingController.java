@@ -82,7 +82,7 @@ public class BuildingController {
 
     @GetMapping(value = "/owners/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Building> getBuildingByOwnerId(@PathVariable Integer id){
-        return buildingService.findByBuildingOwnerId(id);
+        return buildingService.findAllBuildingsByOwnerId(id);
     }
 
     /**
