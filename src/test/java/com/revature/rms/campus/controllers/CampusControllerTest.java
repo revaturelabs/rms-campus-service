@@ -85,7 +85,7 @@ public class CampusControllerTest {
         Campus expectedResult = new Campus(32, "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 
-        when(campusService.findById(Mockito.anyInt())).thenReturn(Optional.of(expectedResult));
+        when(campusService.findById(Mockito.anyInt())).thenReturn(expectedResult);
 
         assertEquals(campusController.getCampusById(id),  expectedResult);
     }
@@ -94,7 +94,7 @@ public class CampusControllerTest {
     public void testGetCampusWithByIdNotFound() {
         int id = 21;
 
-        when(campusService.findById(Mockito.any(Integer.class))).thenReturn(Optional.empty());
+        when(campusService.findById(Mockito.any(Integer.class))).thenReturn(null);
 
         campusController.getCampusById(id);
     }
@@ -126,7 +126,7 @@ public class CampusControllerTest {
         Campus testCampus = new Campus(32,"University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 
-        when(campusService.findById(Mockito.any(Integer.class))).thenReturn(Optional.of(testCampus));
+        when(campusService.findById(Mockito.any(Integer.class))).thenReturn(testCampus);
         campusController.deleteCampusById(testCampus.getId());
         verify(campusService, times(1)).delete(testCampus.getId());
     }
@@ -137,7 +137,7 @@ public class CampusControllerTest {
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 
         int testId = -1;
-        when(campusService.findById(Mockito.any(Integer.class))).thenReturn(Optional.of(testCampus));
+        when(campusService.findById(Mockito.any(Integer.class))).thenReturn(testCampus);
         campusController.deleteCampusById(testId);
         verify(campusService, times(0)).delete(testId);
     }
