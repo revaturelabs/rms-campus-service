@@ -91,10 +91,11 @@ public class CampusControllerTest {
     }
 
     @Test (expected = ResourceNotFoundException.class)
-    public void testGetCampusWithByIdNotFound() {
-        int id = 21;
+    public void testGetCampusWithIdNotFound() {
 
-        when(campusService.findById(Mockito.any(Integer.class))).thenReturn(null);
+        int id = 1;
+
+        when(campusService.findById(1)).thenThrow(new ResourceNotFoundException());
 
         campusController.getCampusById(id);
     }
