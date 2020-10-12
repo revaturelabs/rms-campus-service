@@ -164,6 +164,7 @@ public class BuildingService {
 
     /**
      * getListFromIterator Method: Is a custom method that iterates and adds each object to a list of the specified Generic.
+     *
      * @param iterable an Iterable that wants to be converted into an ArrayList
      * @param <T> Generic of any ObjectType
      * @return Returns a List of type T
