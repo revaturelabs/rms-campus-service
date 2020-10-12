@@ -98,7 +98,7 @@ public class BuildingService {
      * @return List of buildings
      */
     @Transactional(readOnly = true)
-    public List<Building> findByBuildingOwnerId(Integer id){
+    public List<Building> findAllBuildingsByOwnerId(Integer id){
 
         if(id <= 0){
             throw new InvalidInputException("Id cannot be less than or equal to zero!");
