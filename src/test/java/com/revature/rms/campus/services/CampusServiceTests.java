@@ -6,6 +6,8 @@ import com.revature.rms.campus.entities.Campus;
 import com.revature.rms.campus.entities.ResourceMetadata;
 import com.revature.rms.campus.exceptions.InvalidInputException;
 import com.revature.rms.campus.exceptions.ResourceNotFoundException;
+import com.revature.rms.campus.exceptions.ResourcePersistenceException;
+import com.revature.rms.campus.repositories.AddressRepository;
 import com.revature.rms.campus.repositories.CampusRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,6 +45,8 @@ public class CampusServiceTests {
 
     @Mock
     CampusRepository repo;
+    @Mock
+    AddressRepository addRepo;
 
     @InjectMocks
     CampusService sut;
@@ -78,7 +82,7 @@ public class CampusServiceTests {
      * the campus object is null, a ResourceNotFoundException will be thrown since the method does not have the desired
      * object to function properly.
      */
-    @Test(expected = ResourceNotFoundException.class)
+    @Test(expected = ResourcePersistenceException.class)
     public void testSaveWithNullCampus() {
 
         Campus testCampus = new Campus("University of South Florida", "USF", new Address(),
@@ -88,6 +92,7 @@ public class CampusServiceTests {
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 
         Campus actualResults = sut.save(null);
+
     }
 
     /**
@@ -128,10 +133,10 @@ public class CampusServiceTests {
      */
     @Test
     public void findCampusByIdWithValidId() {
-        Optional<Campus> expectedResult = Optional.of(new Campus(32, "University of South Florida", "USF", new Address(),
-                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata()));
+        Campus expectedResult = new Campus(32, "University of South Florida", "USF", new Address(),
+                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 
-        when(repo.findById(Mockito.any())).thenReturn(expectedResult);
+        when(repo.findById(Mockito.any())).thenReturn(Optional.of(expectedResult));
         Campus actualResult = sut.findById(32);
         assertEquals(actualResult, expectedResult);
     }
@@ -284,8 +289,10 @@ public class CampusServiceTests {
      */
     @Test
     public void testDeleteWithValidId() {
-        Campus testCampus = new Campus(32,"University of South Florida", "USF", new Address(),
+        Campus testCampus = new Campus(1,"University of South Florida", "USF", new Address(1,"Street","City","State","Zip","Country"),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
+
+        when(repo.findById(Mockito.any())).thenReturn(Optional.of(testCampus));
         sut.delete(testCampus.getId());
         verify(repo, times(1)).deleteById(testCampus.getId());
     }
