@@ -132,7 +132,7 @@ public class CampusServiceTests {
      * This test ensures CampusService.findById() returns the object containing the same id of the one provided
      */
     @Test
-    public void findCampusByIdWithValidId() {
+    public void testFindCampusByIdWithValidId() {
         Campus expectedResult = new Campus(32, "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
 
@@ -146,7 +146,7 @@ public class CampusServiceTests {
      * correct value but there is no campus associated with it.
      */
     @Test(expected = ResourceNotFoundException.class)
-    public void findCampusWithValidIdNotFound() {
+    public void testFindCampusWithValidIdNotFound() {
         when(repo.findById(Mockito.any())).thenReturn(Optional.empty());
         sut.findById(21);
     }
@@ -156,7 +156,7 @@ public class CampusServiceTests {
      * less than or equal to 0 or if the provided field is empty.
      */
     @Test(expected = InvalidInputException.class)
-    public void findCampusWithInvalidId() {
+    public void testFindCampusWithInvalidId() {
         sut.findById(0); sut.findById(0);
         verify(repo.findById(0), times(0));
     }
@@ -173,7 +173,7 @@ public class CampusServiceTests {
      * matches the name of a saved Campus object.
      */
     @Test
-    public void findCampusWithValidName() {
+    public void testFindCampusWithValidName() {
         String name = "University of South Florida";
         Campus expectedResult = new Campus(32, "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
@@ -188,7 +188,7 @@ public class CampusServiceTests {
      * matches the abbreviated name for a campus object as well.
      */
     @Test
-    public void findCampusWithValidNameUsingAbbreviatedName() {
+    public void testFindCampusWithValidNameUsingAbbreviatedName() {
         String name = "USF";
         Campus expectedResult = new Campus(32, "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
@@ -205,7 +205,7 @@ public class CampusServiceTests {
      * handled within the Campus POJO.
      */
     @Test
-    public void findCampusByTrainingManagerId() {
+    public void testFindCampusByTrainingManagerId() {
         Campus campus = new Campus(32, "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
         List<Campus> expectedResult = new ArrayList<>();
@@ -216,7 +216,7 @@ public class CampusServiceTests {
     }
 
     @Test(expected = ResourceNotFoundException.class)
-    public void findCampusByTrainingManagerIdWithNull() {
+    public void testFindCampusByTrainingManagerIdWithNull() {
         Campus campus = new Campus(32, "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
         List<Campus> expectedResult = new ArrayList<>();
@@ -226,7 +226,7 @@ public class CampusServiceTests {
     }
 
     @Test(expected = InvalidInputException.class)
-    public void findCampusByTrainingManagerIdWithInvalidId() {
+    public void testFindCampusByTrainingManagerIdWithInvalidId() {
         Campus campus = new Campus(32, "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
         List<Campus> expectedResult = new ArrayList<>();
@@ -235,7 +235,7 @@ public class CampusServiceTests {
     }
 
     @Test
-    public void findCampusByStagingManagerId() {
+    public void testFindCampusByStagingManagerId() {
         Campus campus = new Campus(32, "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
         List<Campus> expectedResult = new ArrayList<>();
@@ -246,7 +246,7 @@ public class CampusServiceTests {
     }
 
     @Test(expected = ResourceNotFoundException.class)
-    public void findCampusByStagingManagerIdWithNull() {
+    public void testFindCampusByStagingManagerIdWithNull() {
         Campus campus = new Campus(32, "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
         List<Campus> expectedResult = new ArrayList<>();
@@ -256,12 +256,23 @@ public class CampusServiceTests {
     }
 
     @Test(expected = InvalidInputException.class)
-    public void findCampusByStagingManagerIdWithInvalidId() {
+    public void testFindCampusByStagingManagerIdWithInvalidId() {
         Campus campus = new Campus(32, "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3), new ResourceMetadata());
         List<Campus> expectedResult = new ArrayList<>();
         expectedResult.add(campus);
         List<Campus> actualResult = sut.findByStagingManagerId(0);
+    }
+
+    @Test(expected = InvalidInputException.class)
+    public void testFindCampusByInvalidResourceOwnerId() {
+        sut.findByResourceOwnerId(-1);
+    }
+
+    @Test(expected = ResourceNotFoundException.class)
+    public void testFindEmptyCampusListByResourceOwnerId() {
+
+        sut.findByResourceOwnerId(1);
     }
 
     @Test
