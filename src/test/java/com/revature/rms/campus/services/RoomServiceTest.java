@@ -34,22 +34,6 @@ public class RoomServiceTest {
     RoomService sut;
 
     /**
-     * IMPORTANT NOTE: For some unknown reason, when the test suite is ran,
-     * an error which states: "Failed to Load ApplicationContext" may appear.
-     * We do not know what caused it but, sometimes it appears and sometimes
-     * the test suite runs perfectly well.
-     *
-     * In this test suite, we have 12 tests and all passed green. The only exception
-     * is the soft delete test method, as that have some issues.
-     */
-
-    /**
-     * RoomService.save() tests
-     * This method should call roomMongoRepository.save() and persist the data taken from the user to the database.
-     * Field value checks for a room object, are handled inside the Room POJO.
-     */
-
-    /**
      * testSaveWithValidRoom() ensures RoonService.save() is functioning properly with the valid or correct input.
      * A non-null room object should be returned.
      */
@@ -89,11 +73,6 @@ public class RoomServiceTest {
     }
 
     /**
-     * RoomService.findAll() tests
-     * The method should call roomMongoRepository.findAll() to retrieve all Room objects from the database.
-     */
-
-    /**
      * testFindAll() ensures RoomService().findAll() returns a list of all the existing Room objects.
      */
     @Test
@@ -130,6 +109,10 @@ public class RoomServiceTest {
         assertEquals(actualResult, expectedResult);
     }
 
+    /**
+     * testFindByInvalidRoomNumber ensures that findByRoomNumber throws an
+     * InvalidInputException when an invalid ID is entered.
+     */
     @Test (expected = InvalidInputException.class)
     public void testFindByInvalidRoomNumber() {
         Optional<Room> expectedResult = Optional.of(new Room(23,"2304", 25,  new ArrayList<RoomStatus>(5),
@@ -147,33 +130,6 @@ public class RoomServiceTest {
         when(repo.findByRoomNumber(Mockito.any())).thenReturn(Optional.empty());
         sut.findByRoomNumber("5");
     }
-
-    /**
-     * testFindAllActiveRooms() returns a list of all active or available rooms.
-     */
-//    @Test
-//    public void testFindAllActiveRooms(){
-//        Room testRoom = new Room("23","2301", 25, true, new ArrayList<RoomStatus>(5),
-//                "1612", new ArrayList<String>(3), new ResourceMetadata());
-//
-//        List<Room> activeRoomList = new ArrayList<>();
-//        when(repo.findByActiveRooms(Mockito.anyBoolean())).thenReturn(activeRoomList);
-//        assertEquals(activeRoomList, sut.findAllActiveRooms(true));
-//    }
-//
-
-    /**
-     * testFindAllInActiveRooms() returns a list of all inactive rooms.
-     */
-//    @Test
-//    public void testFindAllInActiveRooms(){
-//        Room testRoom = new Room("2319", 35, false, new ArrayList<RoomStatus>(5),
-//                "2319", new ArrayList<String>(3), new ResourceMetadata());
-//
-//        List<Room> activeRoomList = new ArrayList<>();
-//        when(repo.findByActiveRooms(Mockito.anyBoolean())).thenReturn(activeRoomList);
-//        assertEquals(activeRoomList, sut.findAllActiveRooms(false));
-//    }
 
     /**
      * testFindByResourceOwner returns a list of Room objects where the resourceOwner's ID
@@ -198,8 +154,6 @@ public class RoomServiceTest {
     public void testFindByResourceOwnerInvalidId() {
         sut.findByResourceOwner(-10);
     }
-
-
 
     /**
      * testFindByIdWithValidId() ensures RoomService.findById() returns the object containing the same id as the one provided.
@@ -273,8 +227,6 @@ public class RoomServiceTest {
      *
      * testDeleteWithValidId() returns an updated room object. This method retrieves the specific room object byt its id,
      * then it sets the active field to false. The changed room object is saved or updated and returned to us.
-     *
-     * Currently, this test is a work in progress as it fails every time it is ran. Therefore we ignored it due to time constraint.
      */
     @Test
     @Ignore
@@ -321,6 +273,10 @@ public class RoomServiceTest {
         assertEquals(roomStatuses, sut.findAllStatusByDate(date));
     }
 
+    /**
+     * testFindStatusById ensures that findStatusById returns an Optional of
+     * a RoomStatus object.
+     */
     @Test
     public void testFindStatusById() {
 
@@ -329,6 +285,10 @@ public class RoomServiceTest {
         assertEquals(_roomStatus, sut.findStatusById(1));
     }
 
+    /**
+     * testFindAllStatus ensures that findAllStatus returns a list of
+     * RoomStatus objects.
+     */
     @Test
     public void testFindAllStatus() {
         List<RoomStatus> roomStatuses = new ArrayList<>();
