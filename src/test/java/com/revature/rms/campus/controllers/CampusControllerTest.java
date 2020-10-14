@@ -4,6 +4,7 @@ import com.revature.rms.campus.entities.*;
 import com.revature.rms.campus.exceptions.InvalidInputException;
 import com.revature.rms.campus.exceptions.ResourceNotFoundException;
 import com.revature.rms.campus.services.CampusService;
+import com.revature.rms.core.metadata.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
