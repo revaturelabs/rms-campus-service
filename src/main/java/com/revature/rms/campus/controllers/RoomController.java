@@ -89,11 +89,13 @@ public class RoomController {
      */
     @DeleteMapping(value = "/id/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void deleteRoomById(@PathVariable int id) {
+    public boolean deleteRoomById(@PathVariable int id) {
         if(id <= 0){
             throw new InvalidInputException();
         }
-        roomService.delete(id);}
+        roomService.delete(id);
+        return true;
+    }
 
     /**
      * handleInvalidRequestException method: Exception handler method that provides the correct
