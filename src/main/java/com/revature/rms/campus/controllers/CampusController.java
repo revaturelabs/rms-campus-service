@@ -56,7 +56,7 @@ public class CampusController {
         }
         Campus campus = campusService.findById(id);
 
-        return campusService.findById(id);
+        return campus;
     }
 
     /**
@@ -100,7 +100,6 @@ public class CampusController {
      * @param id ID of the app user
      * @return List of campuses
      */
-
     @GetMapping(value = "/owners/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE) // owners is plural by convention; not sure if it makes more sense to make it owners
     public List<Campus> getByResourceOwnerId(@PathVariable int id){
         return campusService.findByResourceOwnerId(id);
@@ -112,7 +111,6 @@ public class CampusController {
      * @param campus newly updated campus object
      * @return updated/modified campus object
      */
-
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Campus updateCampus(@RequestBody Campus campus) { return campusService.update(campus); }
 
