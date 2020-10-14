@@ -1,31 +1,14 @@
 package com.revature.rms.campus.repositories;
 
-//import com.revature.rms.campus.CampusServiceApplication;
-//import com.revature.rms.campus.config.H2TestProfileJPAConfig;
-import com.revature.rms.campus.entities.Building;
-import com.revature.rms.campus.entities.ResourceMetadata;
-import com.revature.rms.campus.entities.Room;
-//import org.junit.jupiter.api.*;
-import com.revature.rms.campus.entities.RoomStatus;
-import com.revature.rms.campus.services.BuildingService;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import com.revature.rms.core.metadata.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 //TODO: Attempt to implement data into the testing database, needs ActiveProfile to run second DB
 //@SpringBootTest(classes = {CampusServiceApplication.class, H2TestProfileJPAConfig.class})

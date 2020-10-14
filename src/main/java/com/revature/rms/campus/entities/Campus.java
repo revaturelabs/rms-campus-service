@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 //import org.springframework.data.mongodb.core.mapping.Document;
+import com.revature.rms.core.metadata.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;

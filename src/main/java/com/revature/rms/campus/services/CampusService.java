@@ -3,7 +3,7 @@ package com.revature.rms.campus.services;
 
 import com.revature.rms.campus.entities.Address;
 import com.revature.rms.campus.entities.Campus;
-import com.revature.rms.campus.entities.ResourceMetadata;
+import com.revature.rms.core.metadata.*;
 import com.revature.rms.campus.exceptions.InvalidInputException;
 import com.revature.rms.campus.exceptions.ResourceNotFoundException;
 import com.revature.rms.campus.exceptions.ResourcePersistenceException;

@@ -3,6 +3,7 @@ import com.revature.rms.campus.entities.*;
 import com.revature.rms.campus.exceptions.InvalidInputException;
 import com.revature.rms.campus.exceptions.ResourceNotFoundException;
 import com.revature.rms.campus.services.BuildingService;
+import com.revature.rms.core.metadata.ResourceMetadata;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -143,7 +144,7 @@ public class BuildingControllerTest {
     public void testFindAllBuildingsByOwnerId() {
         int id = 1;
         Building expectedResult = new Building(1, "Muma School of Business", "MSB", new Address(),
-                2, new ArrayList<Amenity>(), new ArrayList<Room>(), new ResourceMetadata(1,1,"",1,"",1,true));
+                2, new ArrayList<Amenity>(), new ArrayList<Room>(), new ResourceMetadata());
         List<Building> result = new ArrayList<>();
         result.add(expectedResult);
         when(buildingService.findAllBuildingsByOwnerId(Mockito.anyInt())).thenReturn(result);
@@ -154,7 +155,7 @@ public class BuildingControllerTest {
     public void testFindBuildingByInvalidOwnerId() {
         int id = -1;
         Building expectedResult = new Building(1, "Muma School of Business", "MSB", new Address(),
-                2, new ArrayList<Amenity>(), new ArrayList<Room>(), new ResourceMetadata(1,1,"",1,"",1,true));
+                2, new ArrayList<Amenity>(), new ArrayList<Room>(), new ResourceMetadata());
         List<Building> result = new ArrayList<>();
         result.add(expectedResult);
         when(buildingService.findAllBuildingsByOwnerId(Mockito.anyInt())).thenThrow(new InvalidInputException());

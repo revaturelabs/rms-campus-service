@@ -1,5 +1,6 @@
 package com.revature.rms.campus.services;
 import com.revature.rms.campus.entities.*;
+import com.revature.rms.core.metadata.*;
 import com.revature.rms.campus.exceptions.InvalidInputException;
 import com.revature.rms.campus.exceptions.ResourceNotFoundException;
 import com.revature.rms.campus.exceptions.ResourcePersistenceException;
@@ -151,7 +152,7 @@ public class BuildingServiceTest {
 
         List<Building> expectedResult = new ArrayList<>();
         expectedResult.add(new Building(1, "Muma School of Business", "MSB", new Address(),
-                2, new ArrayList<Amenity>(1), new ArrayList<Room>(3), new ResourceMetadata("1/1/2020", 1,"1/2/2020",1, true)));
+                2, new ArrayList<Amenity>(1), new ArrayList<Room>(3), new ResourceMetadata()));
 
         when(repo.findAll()).thenReturn(expectedResult);
         List<Building> actualResult = sut.findAllBuildingsByOwnerId(1);
@@ -186,10 +187,10 @@ public class BuildingServiceTest {
     @Test
     public void testUpdateBuilding() {
         Building building = new Building(1, "Muma School of Business", "MSB", new Address(),
-                2, new ArrayList<Amenity>(1), new ArrayList<Room>(3), new ResourceMetadata("1/1/2020", 1,"1/2/2020",1, true));
+                2, new ArrayList<Amenity>(1), new ArrayList<Room>(3), new ResourceMetadata());
         sut.save(building);
         Building updatedBuilding = new Building("Muma School of Business", "MSB", new Address(),
-                2, new ArrayList<Amenity>(1), new ArrayList<Room>(3), new ResourceMetadata("1/1/2020", 1,"1/2/2020",1, true));
+                2, new ArrayList<Amenity>(1), new ArrayList<Room>(3), new ResourceMetadata());
         when(repo.save(updatedBuilding)).thenReturn(updatedBuilding);
         assertEquals(sut.update(updatedBuilding), updatedBuilding);
     }

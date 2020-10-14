@@ -1,12 +1,12 @@
 package com.revature.rms.campus.services;
 
-import com.revature.rms.campus.entities.ResourceMetadata;
 import com.revature.rms.campus.entities.Room;
 import com.revature.rms.campus.entities.RoomStatus;
 import com.revature.rms.campus.exceptions.InvalidInputException;
 import com.revature.rms.campus.exceptions.ResourceNotFoundException;
 import com.revature.rms.campus.repositories.RoomRepository;
 import com.revature.rms.campus.repositories.RoomStatusRepository;
+import com.revature.rms.core.metadata.*;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -139,7 +139,7 @@ public class RoomServiceTest {
     public void testFindByResourceOwner() {
         List<Room> rooms = new ArrayList<>();
         rooms.add(new Room(23,"2304", 25,  new ArrayList<RoomStatus>(5),
-                1612, new ArrayList<Integer>(3), new ResourceMetadata(3, 4, "1/3/2020", 4, "1/5/2020", 1, true)));
+                1612, new ArrayList<Integer>(3), new ResourceMetadata()));
 
         when(repo.findAll()).thenReturn(rooms);
         assertEquals(rooms, sut.findByResourceOwner(1));

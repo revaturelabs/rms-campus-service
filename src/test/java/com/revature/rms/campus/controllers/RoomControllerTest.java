@@ -1,19 +1,18 @@
 package com.revature.rms.campus.controllers;
 
-import com.revature.rms.campus.entities.ResourceMetadata;
 import com.revature.rms.campus.entities.Room;
 import com.revature.rms.campus.entities.RoomStatus;
 import com.revature.rms.campus.entities.User;
 import com.revature.rms.campus.exceptions.InvalidInputException;
 import com.revature.rms.campus.exceptions.ResourceNotFoundException;
 import com.revature.rms.campus.services.RoomService;
+import com.revature.rms.core.metadata.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.*;
@@ -42,9 +41,9 @@ public class RoomControllerTest {
     @Before
     public void setup() {
         //Rooms
-        Room r1 = new Room(1,"9000", 25,  new ArrayList<RoomStatus>(5),9000, new ArrayList<Integer>(3), new ResourceMetadata(1,1,"",1,"",1,true));
-        Room r2 = new Room(2,"401", 30,  new ArrayList<RoomStatus>(5),123, new ArrayList<Integer>(2), new ResourceMetadata(1,1,"",1,"",9000,true));
-        Room r3 = new Room(3,"409", 1,  new ArrayList<RoomStatus>(5),9, new ArrayList<Integer>(1), new ResourceMetadata(1,1,"",1,"",3750,true));
+        Room r1 = new Room(1,"9000", 25,  new ArrayList<RoomStatus>(5),9000, new ArrayList<Integer>(3), new ResourceMetadata());
+        Room r2 = new Room(2,"401", 30,  new ArrayList<RoomStatus>(5),123, new ArrayList<Integer>(2), new ResourceMetadata());
+        Room r3 = new Room(3,"409", 1,  new ArrayList<RoomStatus>(5),9, new ArrayList<Integer>(1), new ResourceMetadata());
         testRooms = new ArrayList<>();
         testRooms.add(r1);
         testRooms.add(r2);
@@ -138,7 +137,7 @@ public class RoomControllerTest {
      */
     @Test
     public void testUpdateRoom() {
-        Room r4 = new Room(2,"418", 30,  new ArrayList<RoomStatus>(5),123, new ArrayList<Integer>(2), new ResourceMetadata(1,1,"",1,"",9000,true));
+        Room r4 = new Room(2,"418", 30,  new ArrayList<RoomStatus>(5),123, new ArrayList<Integer>(2), new ResourceMetadata());
         when(roomService.update(testRooms.get(1))).thenReturn(r4);
         assertEquals(r4, roomController.updateRoom(testRooms.get(1)));
     }

@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.revature.rms.core.metadata.*;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -74,7 +75,7 @@ public class BuildingRepositoryTest {
     @Test
     public void testFindByName() {
         Amenity amenity = new Amenity(1,AmenityType.COFFEE, AmenityStatus.OK);
-        ResourceMetadata rmd = new ResourceMetadata(1,1,"",1,"",1,true);
+        ResourceMetadata rmd = new ResourceMetadata();
         List<Amenity> amenities = new ArrayList<>();
         amenities.add(amenity);
         Room room = new Room(1,"200",10,new ArrayList<>(),1,new ArrayList<>(),rmd);
