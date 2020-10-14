@@ -69,6 +69,13 @@ public class BuildingControllerTest {
     }
 
     @Test(expected = ResourceNotFoundException.class)
+    public void testFindNullBuildingById() {
+        Building building = null;
+        when(buildingService.findById(1)).thenReturn(Optional.empty());
+        buildingController.getBuildingById(1);
+    }
+
+    @Test(expected = ResourceNotFoundException.class)
     public void testFindBuildingByTrainingLeadIdWithNullResult() {
         int id=2;
         when(buildingService.findByTrainingLeadId(Mockito.anyInt())).thenThrow(new ResourceNotFoundException());
