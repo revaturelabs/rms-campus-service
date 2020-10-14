@@ -88,7 +88,8 @@ public class RoomController {
      * @param id roomId int value
      */
     @DeleteMapping(value = "/id/{id}")
-    public @ResponseStatus(code = HttpStatus.NO_CONTENT) void deleteRoomById(@PathVariable int id) {
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void deleteRoomById(@PathVariable int id) {
         if(id <= 0){
             throw new InvalidInputException();
         }
