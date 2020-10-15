@@ -2,6 +2,7 @@ package com.revature.rms.campus.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.cloud.netflix.eureka.EurekaInstanceConfigBean;
 import org.springframework.context.annotation.Profile;
@@ -15,6 +16,12 @@ import java.net.UnknownHostException;
 public class EurekaInstanceConfigBeanPostProcessor implements BeanPostProcessor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EurekaInstanceConfigBeanPostProcessor.class);
+
+    @Value("${spring.application.name}")
+    private String serviceName;
+
+    @Value("${server.port}")
+    private int port;
 
     private String fargateIp;
 
@@ -32,11 +39,11 @@ public class EurekaInstanceConfigBeanPostProcessor implements BeanPostProcessor 
         if (bean instanceof EurekaInstanceConfigBean) {
             LOGGER.info("EurekaInstanceConfigBean detected. Setting IP address to {}", fargateIp);
             EurekaInstanceConfigBean instanceConfigBean = ((EurekaInstanceConfigBean) bean);
-            instanceConfigBean.setInstanceId(fargateIp + ":campus-service:10001");
+            instanceConfigBean.setInstanceId(fargateIp + ":" + serviceName + ":" + port);
             instanceConfigBean.setIpAddress(fargateIp);
             instanceConfigBean.setHostname(fargateIp);
-            instanceConfigBean.setStatusPageUrl("http://" + fargateIp + ":10001/actuator/info");
-            instanceConfigBean.setHealthCheckUrl("http://" + fargateIp + ":10001/actuator/info");
+            instanceConfigBean.setStatusPageUrl("http://" + fargateIp + ":" + port + "/actuator/info");
+            instanceConfigBean.setHealthCheckUrl("http://" + fargateIp + ":" + port + "/actuator/info");
         }
 
         return bean;
