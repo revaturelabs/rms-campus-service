@@ -25,7 +25,7 @@ public class EurekaInstanceConfigBeanPostProcessor implements BeanPostProcessor 
 
     private String fargateIp;
 
-    {
+    public EurekaInstanceConfigBeanPostProcessor() {
         try {
             fargateIp = InetAddress.getLocalHost().getHostAddress();
         } catch (UnknownHostException e) {
