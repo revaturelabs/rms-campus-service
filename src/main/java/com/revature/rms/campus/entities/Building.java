@@ -3,6 +3,7 @@ package com.revature.rms.campus.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import com.revature.rms.core.metadata.*;
 
 import javax.persistence.*;
 import java.util.List;
