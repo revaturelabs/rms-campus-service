@@ -2,28 +2,15 @@ package com.revature.rms.campus.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-//import org.springframework.data.mongodb.core.mapping.Document;
 import com.revature.rms.core.metadata.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
-//@Document
-
-//commentted out bc mangodb
-//@NoArgsConstructor
-//@AllArgsConstructor
 @Entity
 @Data
-public class Room {
-    /**
-     * May need to add @NotNull annotations to some fields to prevent null values.
-     */
-    @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id;
+public class Room extends Resource{
 
     @Column(nullable=false)
     private String roomNumber;
@@ -40,9 +27,6 @@ public class Room {
     @ElementCollection
     private List<Integer> workOrders;
 
-    @Embedded
-    private ResourceMetadata resourceMetadata;
-
     @ManyToOne
     @JsonIgnore
     private Building building;
@@ -50,35 +34,16 @@ public class Room {
     public Room() {
     }
 
-    public Room(int id, String roomNumber, Integer maxOccupancy, ArrayList<RoomStatus> currentStatus, int batchId, ArrayList<Integer> workOrders, ResourceMetadata resourceMetadata) {
-        this.id = id;
+    public Room(String roomNumber, Integer maxOccupancy, ArrayList<RoomStatus> currentStatus, int batchId, ArrayList<Integer> workOrders) {
         this.roomNumber = roomNumber;
         this.maxOccupancy = maxOccupancy;
         this.currentStatus = currentStatus;
         this.batchId = batchId;
         this.workOrders = workOrders;
-        this.resourceMetadata = resourceMetadata;
-    }
-
-    public Room(String roomNumber, Integer maxOccupancy, ArrayList<RoomStatus> currentStatus, int batchId, ArrayList<Integer> workOrders, ResourceMetadata resourceMetadata) {
-        this.roomNumber = roomNumber;
-        this.maxOccupancy = maxOccupancy;
-        this.currentStatus = currentStatus;
-        this.batchId = batchId;
-        this.workOrders = workOrders;
-        this.resourceMetadata = resourceMetadata;
     }
 
     public void addRoomStatus(RoomStatus status) {
         currentStatus.add(status);
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getRoomNumber() {
@@ -119,14 +84,6 @@ public class Room {
 
     public void setWorkOrders(List<Integer> workOrders) {
         this.workOrders = workOrders;
-    }
-
-    public ResourceMetadata getResourceMetadata() {
-        return resourceMetadata;
-    }
-
-    public void setResourceMetadata(ResourceMetadata resourceMetadata) {
-        this.resourceMetadata = resourceMetadata;
     }
 
     public Building getBuilding() {
