@@ -94,7 +94,7 @@ public class CampusControllerTest {
     /**
      * Tests that a Campus is not null before communicating with our database.
      */
-    @Test (expected = ResourceNotFoundException.class)
+    @Test (expected = InvalidRequestException.class)
     public void testSaveCampusFailed() {
         campusController.saveCampus(nullCampus);
     }
