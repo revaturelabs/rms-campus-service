@@ -47,7 +47,8 @@ public class Campus extends Resource{
     public Campus() {
     }
 
-    public Campus(String name, String abbrName, Address shippingAddress, int trainingManagerId, int stagingManagerId, int hrLead, ArrayList<Building> buildings, ArrayList<Integer> corporateEmployees) {
+    public Campus(int id, String name, String abbrName, Address shippingAddress, int trainingManagerId, int stagingManagerId, int hrLead, ArrayList<Building> buildings, ArrayList<Integer> corporateEmployees) {
+        this.id = id;
         this.name = name;
         this.abbrName = abbrName;
         this.shippingAddress = shippingAddress;
@@ -58,7 +59,8 @@ public class Campus extends Resource{
         this.corporateEmployees = corporateEmployees;
     }
 
-    public Campus(String name, String abbrName, Address shippingAddress, int trainingManagerId, int stagingManagerId, int hrLead, List<Integer> corporateEmployees) {
+    public Campus(int id, String name, String abbrName, Address shippingAddress, int trainingManagerId, int stagingManagerId, int hrLead, List<Integer> corporateEmployees) {
+        this.id = id;
         this.name = name;
         this.abbrName = abbrName;
         this.shippingAddress = shippingAddress;
@@ -90,5 +92,18 @@ public class Campus extends Resource{
 
     public void setShippingAddress(Address shippingAddress) {
         this.shippingAddress = shippingAddress;
+    }
+
+    @Override
+    public String toString() {
+        return "Campus{" +
+                "name='" + name + '\'' +
+                ", abbrName='" + abbrName + '\'' +
+                ", shippingAddress=" + shippingAddress +
+                ", trainingManagerId=" + trainingManagerId +
+                ", stagingManagerId=" + stagingManagerId +
+                ", hrLead=" + hrLead +
+                ", corporateEmployees=" + corporateEmployees +
+                '}';
     }
 }

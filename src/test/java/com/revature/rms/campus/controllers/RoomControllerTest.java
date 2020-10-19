@@ -41,9 +41,9 @@ public class RoomControllerTest {
     @Before
     public void setup() {
         //Rooms
-        Room r1 = new Room("9000", 25,  new ArrayList<RoomStatus>(5),9000, new ArrayList<Integer>(3));
-        Room r2 = new Room("401", 30,  new ArrayList<RoomStatus>(5),123, new ArrayList<Integer>(2));
-        Room r3 = new Room("409", 1,  new ArrayList<RoomStatus>(5),9, new ArrayList<Integer>(1));
+        Room r1 = new Room(1, "9000", 25,  new ArrayList<RoomStatus>(5),9000, new ArrayList<Integer>(3));
+        Room r2 = new Room(2, "401", 30,  new ArrayList<RoomStatus>(5),123, new ArrayList<Integer>(2));
+        Room r3 = new Room(3, "409", 1,  new ArrayList<RoomStatus>(5),9, new ArrayList<Integer>(1));
         testRooms = new ArrayList<>();
         testRooms.add(r1);
         testRooms.add(r2);
@@ -138,7 +138,7 @@ public class RoomControllerTest {
      */
     @Test
     public void testUpdateRoom() {
-        Room r4 = new Room("418", 30,  new ArrayList<RoomStatus>(5),123, new ArrayList<Integer>(2));
+        Room r4 = new Room(4, "418", 30,  new ArrayList<RoomStatus>(5),123, new ArrayList<Integer>(2));
         when(roomService.update(testRooms.get(1))).thenReturn(r4);
         assertEquals(r4, roomController.updateRoom(testRooms.get(1)));
     }

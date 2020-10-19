@@ -32,9 +32,9 @@ public class BuildingServiceTest {
     @Ignore
     public void testSaveWithValidBuilding() {
 
-        Building testBuilding = new Building("Muma School of Business", "MSB", new Address(),
+        Building testBuilding = new Building(1, "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3));
-        Building testBuilding2 = new Building("Muma School of Business", "MSB", new Address(),
+        Building testBuilding2 = new Building(2, "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3));
 
         when(repo.save(Mockito.any())).thenReturn(testBuilding2);
@@ -52,10 +52,10 @@ public class BuildingServiceTest {
     @Test(expected = ResourcePersistenceException.class)
     public void testSaveWithNullBuilding(){
 
-        Building testBuilding = new Building("Muma School of Business", "MSB", new Address(),
+        Building testBuilding = new Building(1, "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3));
 
-        Building testBuilding2 = new Building("Muma School of Business", "MSB", new Address(),
+        Building testBuilding2 = new Building(2, "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3));
 
         Building actualResults = sut.save(null);
@@ -67,7 +67,7 @@ public class BuildingServiceTest {
      */
     @Test
     public void testFindAll() {
-        Building testBuilding = new Building("Muma School of Business", "MSB", new Address(),
+        Building testBuilding = new Building(1, "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3));
         List<Building> mockBuildingList = Arrays.asList(testBuilding);
         when(repo.findAll()).thenReturn(mockBuildingList);
@@ -91,7 +91,7 @@ public class BuildingServiceTest {
     @Test
     @Ignore
     public void testFindBuildingByIdWithValidId() {
-        Building testBuilding = new Building("Muma School of Business", "MSB", new Address(),
+        Building testBuilding = new Building(1, "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3));
 
         when(repo.findById(Mockito.any())).thenReturn(Optional.of(testBuilding));
@@ -125,7 +125,7 @@ public class BuildingServiceTest {
     @Test
     public void testFindBuildingWithValidName() {
         String name = "Muma School of Business";
-        Building testBuilding = new Building("Muma School of Business", "MSB", new Address(),
+        Building testBuilding = new Building(1, "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3));
 
         when(repo.findByName(Mockito.any())).thenReturn(testBuilding);
@@ -151,7 +151,7 @@ public class BuildingServiceTest {
     public void testFindAllBuildingsByOwnerId() {
 
         List<Building> expectedResult = new ArrayList<>();
-        Building testBuilding = new Building("Muma School of Business", "MSB", new Address(),
+        Building testBuilding = new Building(1, "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3));
 
         when(repo.findAll()).thenReturn(expectedResult);
@@ -186,10 +186,10 @@ public class BuildingServiceTest {
 
     @Test
     public void testUpdateBuilding() {
-        Building testBuilding = new Building("Muma School of Business", "MSB", new Address(),
+        Building testBuilding = new Building(1, "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3));
         sut.save(testBuilding);
-        Building testBuilding2 = new Building("Muma School of Business", "MSB", new Address(),
+        Building testBuilding2 = new Building(2, "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3));
         when(repo.save(testBuilding2)).thenReturn(testBuilding2);
         assertEquals(sut.update(testBuilding2), testBuilding2);
@@ -205,7 +205,7 @@ public class BuildingServiceTest {
      */
     @Test
     public void testFindBuildingByTrainingLead() {
-        Building testBuilding = new Building("Muma School of Business", "MSB", new Address(),
+        Building testBuilding = new Building(1, "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3));
 
         when(repo.findByTrainingLead(Mockito.any())).thenReturn(testBuilding);
@@ -239,7 +239,7 @@ public class BuildingServiceTest {
     @Test
     public void testFindBuildingWithValidNameUsingAbbreviatedName() {
         String name = "MSB";
-        Building testBuilding = new Building("Muma School of Business", "MSB", new Address(),
+        Building testBuilding = new Building(1, "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3));
 
         when(repo.findByName(Mockito.any())).thenReturn(testBuilding);
@@ -254,10 +254,10 @@ public class BuildingServiceTest {
      */
     @Test
     public void testUpdateWithValidBuilding() {
-        Building testBuilding = new Building("Muma School of Business", "MSB", new Address(),
+        Building testBuilding = new Building(1, "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3));
 
-        Building testBuilding2 = new Building("Muma School of Business", "MSB", new Address(),
+        Building testBuilding2 = new Building(2, "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3));
 
         when(repo.save(Mockito.any())).thenReturn((testBuilding));
@@ -272,7 +272,7 @@ public class BuildingServiceTest {
     @Test
     @Ignore
     public void testDeleteWithValidId() {
-        Building testBuilding = new Building("Muma School of Business", "MSB", new Address(),
+        Building testBuilding = new Building(1, "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3));
 
         sut.delete(testBuilding.getId());
@@ -285,7 +285,7 @@ public class BuildingServiceTest {
      */
     @Test(expected = InvalidRequestException.class)
     public void testDeleteWithInvalidId() {
-        Building testBuilding = new Building("Muma School of Business", "MSB", new Address(),
+        Building testBuilding = new Building(1, "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3));
         sut.delete(-24);
         verify(repo, times(0)).deleteById(-24);

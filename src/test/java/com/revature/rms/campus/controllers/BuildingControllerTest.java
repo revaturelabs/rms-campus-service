@@ -2,7 +2,7 @@ package com.revature.rms.campus.controllers;
 import com.revature.rms.campus.entities.*;
 import com.revature.rms.core.exceptions.*;
 import com.revature.rms.campus.services.BuildingService;
-import com.revature.rms.core.metadata.ResourceMetadata;
+import com.revature.rms.core.metadata.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -30,7 +30,7 @@ public class BuildingControllerTest {
 
     @Test
     public void testFindAllBuildingWithValidBuilding() {
-        Building testBuilding = new Building("Muma School of Business", "MSB", new Address(),
+        Building testBuilding = new Building(1, "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3));
 
         List<Building> testBuildingList = Arrays.asList(testBuilding);
@@ -53,7 +53,7 @@ public class BuildingControllerTest {
     @Test
     public void testFindBuildingByTrainingLeadId() {
         int id=2;
-        Building testBuilding = new Building("Muma School of Business", "MSB", new Address(),
+        Building testBuilding = new Building(1, "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3));
 
         when(buildingService.findByTrainingLeadId(Mockito.anyInt())).thenReturn(testBuilding);
@@ -85,10 +85,10 @@ public class BuildingControllerTest {
     @Test
     public void testSaveBuildingWithValidBuilding() {
 
-        Building testBuilding = new Building("Muma School of Business", "MSB", new Address(),
+        Building testBuilding = new Building(1, "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3));
 
-        Building testBuilding2 = new Building("Muma School of Business", "MSB", new Address(),
+        Building testBuilding2 = new Building(1, "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3));
 
         when(buildingService.save(testBuilding)).thenReturn(testBuilding2);
@@ -102,7 +102,7 @@ public class BuildingControllerTest {
 
         String id = "1";
 
-        Building testBuilding = new Building("Muma School of Business", "MSB", new Address(),
+        Building testBuilding = new Building(1, "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3));
 
         when(buildingService.save(Mockito.any())).thenReturn(testBuilding);
@@ -114,7 +114,7 @@ public class BuildingControllerTest {
     public void testGetBuildingByValidId() {
         int id = 1;
 
-        Building testBuilding = new Building("Muma School of Business", "MSB", new Address(),
+        Building testBuilding = new Building(1, "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3));
 
         when(buildingService.findById(1)).thenReturn(Optional.of(testBuilding));
@@ -142,7 +142,7 @@ public class BuildingControllerTest {
     @Test
     public void testFindAllBuildingsByOwnerId() {
         int id = 1;
-        Building testBuilding = new Building("Muma School of Business", "MSB", new Address(),
+        Building testBuilding = new Building(1, "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3));
         List<Building> result = new ArrayList<>();
         result.add(testBuilding);
@@ -153,7 +153,7 @@ public class BuildingControllerTest {
     @Test(expected = InvalidRequestException.class)
     public void testFindBuildingByInvalidOwnerId() {
         int id = -1;
-        Building testBuilding = new Building("Muma School of Business", "MSB", new Address(),
+        Building testBuilding = new Building(1, "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3));
         List<Building> result = new ArrayList<>();
         result.add(testBuilding);
@@ -163,10 +163,10 @@ public class BuildingControllerTest {
 
     @Test
     public void testUpdateBuildingWithValidBuilding() {
-        Building testBuilding = new Building("Muma School of Business", "MSB", new Address(),
+        Building testBuilding = new Building(1, "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3));
 
-        Building testBuilding2 = new Building("Muma School of Business", "MSB", new Address(),
+        Building testBuilding2 = new Building(1, "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3));
 
         when(buildingService.update(Mockito.any())).thenReturn(testBuilding2);
@@ -184,7 +184,7 @@ public class BuildingControllerTest {
 
     @Test(expected = InvalidRequestException.class)
     public void testDeleteBuildingWithInvalidId() {
-        Building testBuilding = new Building("Muma School of Business", "MSB", new Address(),
+        Building testBuilding = new Building(1, "Muma School of Business", "MSB", new Address(),
                 2, new ArrayList<Amenity>(1), new ArrayList<Room>(3));
 
                 int testId = -1;

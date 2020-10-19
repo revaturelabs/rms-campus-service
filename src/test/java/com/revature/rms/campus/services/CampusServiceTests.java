@@ -63,10 +63,10 @@ public class CampusServiceTests {
     @Test
     public void testSaveWithValidCampus() {
 
-        Campus testCampus = new Campus("University of South Florida", "USF", new Address(),
+        Campus testCampus = new Campus(1, "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3));
 
-        Campus expectedResult = new Campus("University of South Florida", "USF", new Address(),
+        Campus expectedResult = new Campus(2, "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3));
 
         when(repo.save(Mockito.any())).thenReturn(expectedResult);
@@ -85,10 +85,10 @@ public class CampusServiceTests {
     @Ignore
     public void testSaveWithNullCampus() {
 
-        Campus testCampus = new Campus("University of South Florida", "USF", new Address(),
+        Campus testCampus = new Campus(1, "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3));
 
-        Campus expectedResult = new Campus("University of South Florida", "USF", new Address(),
+        Campus expectedResult = new Campus(2, "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3));
 
         Campus actualResults = sut.save(null);
@@ -105,7 +105,7 @@ public class CampusServiceTests {
      */
     @Test
     public void testFindAll() {
-        Campus testCampus = new Campus("University of South Florida", "USF", new Address(),
+        Campus testCampus = new Campus(1, "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3));
         List<Campus> mockCampusList = Arrays.asList(testCampus);
         when(repo.findAll()).thenReturn(mockCampusList);
@@ -133,7 +133,7 @@ public class CampusServiceTests {
      */
     @Test
     public void testFindCampusByIdWithValidId() {
-        Campus expectedResult = new Campus("University of South Florida", "USF", new Address(),
+        Campus expectedResult = new Campus(2, "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3));
 
         when(repo.findById(Mockito.any())).thenReturn(Optional.of(expectedResult));
@@ -175,7 +175,7 @@ public class CampusServiceTests {
     @Test
     public void testFindCampusWithValidName() {
         String name = "University of South Florida";
-        Campus expectedResult = new Campus("University of South Florida", "USF", new Address(),
+        Campus expectedResult = new Campus(2, "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3));
 
         when(repo.findByName(Mockito.any())).thenReturn(expectedResult);
@@ -190,7 +190,7 @@ public class CampusServiceTests {
     @Test
     public void testFindCampusWithValidNameUsingAbbreviatedName() {
         String name = "USF";
-        Campus expectedResult = new Campus("University of South Florida", "USF", new Address(),
+        Campus expectedResult = new Campus(2, "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3));
 
         when(repo.findByName(Mockito.any())).thenReturn(expectedResult);
@@ -206,7 +206,7 @@ public class CampusServiceTests {
      */
     @Test
     public void testFindCampusByTrainingManagerId() {
-        Campus campus = new Campus("University of South Florida", "USF", new Address(),
+        Campus campus = new Campus(3, "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3));
         List<Campus> expectedResult = new ArrayList<>();
         expectedResult.add(campus);
@@ -217,7 +217,7 @@ public class CampusServiceTests {
 
     @Test(expected = ResourceNotFoundException.class)
     public void testFindCampusByTrainingManagerIdWithNull() {
-        Campus campus = new Campus("University of South Florida", "USF", new Address(),
+        Campus campus = new Campus(3, "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3));
         List<Campus> expectedResult = new ArrayList<>();
         expectedResult.add(campus);
@@ -227,7 +227,7 @@ public class CampusServiceTests {
 
     @Test(expected = InvalidRequestException.class)
     public void testFindCampusByTrainingManagerIdWithInvalidId() {
-        Campus campus = new Campus("University of South Florida", "USF", new Address(),
+        Campus campus = new Campus(3, "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3));
         List<Campus> expectedResult = new ArrayList<>();
         expectedResult.add(campus);
@@ -236,7 +236,7 @@ public class CampusServiceTests {
 
     @Test
     public void testFindCampusByStagingManagerId() {
-        Campus campus = new Campus("University of South Florida", "USF", new Address(),
+        Campus campus = new Campus(3, "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3));
         List<Campus> expectedResult = new ArrayList<>();
         expectedResult.add(campus);
@@ -247,7 +247,7 @@ public class CampusServiceTests {
 
     @Test(expected = ResourceNotFoundException.class)
     public void testFindCampusByStagingManagerIdWithNull() {
-        Campus campus = new Campus("University of South Florida", "USF", new Address(),
+        Campus campus = new Campus(3, "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3));
         List<Campus> expectedResult = new ArrayList<>();
         expectedResult.add(campus);
@@ -257,7 +257,7 @@ public class CampusServiceTests {
 
     @Test(expected = InvalidRequestException.class)
     public void testFindCampusByStagingManagerIdWithInvalidId() {
-        Campus campus = new Campus("University of South Florida", "USF", new Address(),
+        Campus campus = new Campus(3, "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3));
         List<Campus> expectedResult = new ArrayList<>();
         expectedResult.add(campus);
@@ -277,10 +277,10 @@ public class CampusServiceTests {
 
     @Test
     public void testUpdateWithValidCampus() {
-        Campus testCampus = new Campus("mocked", "m", new Address(),
+        Campus testCampus = new Campus(4, "mocked", "m", new Address(),
                 3, 4, 5, new ArrayList<Building>(1), new ArrayList<Integer>(3));
 
-        Campus expectedResult = new Campus("mocked", "m", new Address(),
+        Campus expectedResult = new Campus(5, "mocked", "m", new Address(),
                 3, 4, 5, new ArrayList<Building>(2), new ArrayList<Integer>(4));
 
         when(repo.save(Mockito.any())).thenReturn((expectedResult));
@@ -301,7 +301,7 @@ public class CampusServiceTests {
     @Test
     @Ignore
     public void testDeleteWithValidId() {
-        Campus testCampus = new Campus("University of South Florida", "USF", new Address(1,"Street","City","State","Zip","Country"),
+        Campus testCampus = new Campus(5, "University of South Florida", "USF", new Address(1,"Street","City","State","Zip","Country"),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3));
 
         when(repo.findById(Mockito.any())).thenReturn(Optional.of(testCampus));
@@ -315,7 +315,7 @@ public class CampusServiceTests {
      */
     @Test(expected = InvalidRequestException.class)
     public void testDeleteWithInvalidId() {
-        Campus testCampus = new Campus("University of South Florida", "USF", new Address(),
+        Campus testCampus = new Campus(1, "University of South Florida", "USF", new Address(),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3));
         sut.delete(-1);
         verify(repo, times(0)).deleteById(-1);

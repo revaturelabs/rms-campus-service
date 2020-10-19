@@ -34,7 +34,8 @@ public class Room extends Resource{
     public Room() {
     }
 
-    public Room(String roomNumber, Integer maxOccupancy, ArrayList<RoomStatus> currentStatus, int batchId, ArrayList<Integer> workOrders) {
+    public Room(int id, String roomNumber, Integer maxOccupancy, ArrayList<RoomStatus> currentStatus, int batchId, ArrayList<Integer> workOrders) {
+        this.id = id;
         this.roomNumber = roomNumber;
         this.maxOccupancy = maxOccupancy;
         this.currentStatus = currentStatus;
@@ -92,5 +93,15 @@ public class Room extends Resource{
 
     public void setBuilding(Building building) {
         this.building = building;
+    }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "roomNumber='" + roomNumber + '\'' +
+                ", maxOccupancy=" + maxOccupancy +
+                ", currentStatus=" + currentStatus +
+                ", batchId=" + batchId +
+                '}';
     }
 }

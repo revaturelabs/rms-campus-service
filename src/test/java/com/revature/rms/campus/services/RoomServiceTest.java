@@ -66,9 +66,9 @@ public class RoomServiceTest {
         workorders.add(3);
 
         //Rooms
-        Room r1 = new Room("404", 1, testStatuses, 1, workorders);
-        Room r2 = new Room("606", 25, testStatuses, 2, workorders);
-        Room r3 = new Room("808", 300, testStatuses, 3, workorders);
+        Room r1 = new Room(1, "404", 1, testStatuses, 1, workorders);
+        Room r2 = new Room(2, "606", 25, testStatuses, 2, workorders);
+        Room r3 = new Room(3, "808", 300, testStatuses, 3, workorders);
         testRooms = new ArrayList<>();
         testRooms.add(r1);
         testRooms.add(r2);

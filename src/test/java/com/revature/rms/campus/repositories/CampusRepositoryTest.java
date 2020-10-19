@@ -2,6 +2,7 @@ package com.revature.rms.campus.repositories;
 
 import com.revature.rms.campus.entities.Address;
 import com.revature.rms.campus.entities.Campus;
+import com.revature.rms.campus.entities.User;
 import com.revature.rms.core.metadata.*;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -33,7 +34,7 @@ public class CampusRepositoryTest {
     @Test
     @Ignore
     public void testFindByName() {
-        Campus campus = new Campus("University of Central Florida", "UCF",
+        Campus campus = new Campus(1, "University of Central Florida", "UCF",
                 new Address(1,"","","","",""),1,1,1,
                 new ArrayList<>(),new ArrayList<>());
         sut.save(campus);
@@ -44,7 +45,7 @@ public class CampusRepositoryTest {
     @Test
     @Ignore
     public void testFindByStagingManagerId() {
-        Campus campus = new Campus("University", "USFT",
+        Campus campus = new Campus(1, "University", "USFT",
                 new Address(1,"","","","",""),1,7,1,
                 new ArrayList<>(),new ArrayList<>());
 
@@ -58,7 +59,7 @@ public class CampusRepositoryTest {
     @Test
     @Ignore
     public void testFindByTrainingManagerId() {
-        Campus campus = new Campus("University of Test", "USFTEST",
+        Campus campus = new Campus(1, "University of Test", "USFTEST",
                 new Address(1,"","","","",""),4,7,1,
                 new ArrayList<>(),new ArrayList<>());
 

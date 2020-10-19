@@ -79,10 +79,10 @@ public class BuildingRepositoryTest {
         ResourceMetadata rmd = new ResourceMetadata();
         List<Amenity> amenities = new ArrayList<>();
         amenities.add(amenity);
-        Room room = new Room("200",10,new ArrayList<>(),1,new ArrayList<>());
+        Room room = new Room(1, "200",10,new ArrayList<>(),1,new ArrayList<>());
         List<Room> rooms = new ArrayList<>();
         rooms.add(room);
-        Building building = new Building("Test3", "TEST3", new Address(1,"asd","asd","asd","asd","asd"), 12, amenities, rooms);
+        Building building = new Building(1, "Test3", "TEST3", new Address(1,"asd","asd","asd","asd","asd"), 12, amenities, rooms);
         sut.save(building);
         Building building1 = sut.findByName("Test3");
         assertNotNull(building1);

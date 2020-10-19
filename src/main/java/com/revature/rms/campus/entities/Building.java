@@ -55,7 +55,8 @@ public class Building extends Resource{
     public Building() {
     }
 
-    public Building(String name, String abbrName, Address physicalAddress, int trainingLead, List<Amenity> amenities, List<Room> rooms) {
+    public Building(int id, String name, String abbrName, Address physicalAddress, int trainingLead, List<Amenity> amenities, List<Room> rooms) {
+        this.id = id;
         this.name = name;
         this.abbrName = abbrName;
         this.physicalAddress = physicalAddress;
@@ -81,4 +82,13 @@ public class Building extends Resource{
         this.abbrName = abbrName;
     }
 
+    @Override
+    public String toString() {
+        return "Building{" +
+                "name='" + name + '\'' +
+                ", abbrName='" + abbrName + '\'' +
+                ", physicalAddress=" + physicalAddress +
+                ", trainingLead=" + trainingLead +
+                '}';
+    }
 }
