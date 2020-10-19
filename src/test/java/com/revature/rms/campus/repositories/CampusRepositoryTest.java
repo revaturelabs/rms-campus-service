@@ -26,47 +26,36 @@ public class CampusRepositoryTest {
     @Autowired
     private CampusRepository sut;
 
-    @AfterEach
-    public void tearDown() throws Exception {
-        this.sut.deleteAll();
-    }
-
     @Test
-    @Ignore
     public void testFindByName() {
-        Campus campus = new Campus(1, "University of Central Florida", "UCF",
-                new Address(1,"","","","",""),1,1,1,
-                new ArrayList<>(),new ArrayList<>());
-        sut.save(campus);
-        Campus campus1 = sut.findByName("University of Central Florida");
-        assertThat(campus1.getAbbrName()).isEqualTo(campus.getAbbrName());
-    }
 
-    @Test
-    @Ignore
-    public void testFindByStagingManagerId() {
-        Campus campus = new Campus(1, "University", "USFT",
-                new Address(1,"","","","",""),1,7,1,
-                new ArrayList<>(),new ArrayList<>());
+        Campus result = sut.findByName("University of South Florida");
+        String actualName = result.getName();
 
-        sut.save(campus);
-        List<Campus> campusList = sut.findByStagingManagerId(7);
-
-        assertThat(campusList.size()).isEqualTo(1);
+        assertEquals("University of South Florida", actualName);
 
     }
 
     @Test
-    @Ignore
     public void testFindByTrainingManagerId() {
-        Campus campus = new Campus(1, "University of Test", "USFTEST",
-                new Address(1,"","","","",""),4,7,1,
-                new ArrayList<>(),new ArrayList<>());
 
-        sut.save(campus);
-        List<Campus> campusList = sut.findByTrainingManagerId(4);
+        List<Campus> resultList = sut.findByTrainingManagerId(3);
+        Campus result = resultList.get(0);
+        int actualId = result.getTrainingManagerId();
 
-        assertThat(campusList.size()).isEqualTo(1);
+        assertEquals(3, actualId);
 
     }
+
+    @Test
+    public void testFindByStagingManagerId() {
+
+        List<Campus> resultList = sut.findByStagingManagerId(2);
+        Campus result = resultList.get(0);
+        int actualId = result.getStagingManagerId();
+
+        assertEquals(2, actualId);
+    }
+
+
 }
