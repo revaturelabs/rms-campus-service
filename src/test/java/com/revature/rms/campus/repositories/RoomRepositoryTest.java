@@ -1,6 +1,7 @@
 package com.revature.rms.campus.repositories;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.runner.RunWith;
@@ -36,6 +37,7 @@ public class RoomRepositoryTest {
     }
 
     @Test
+    @Ignore
     public void testFindByRoomNumberH2() {
 //        Room room1 = new Room(1,"105A", 100, new ArrayList<>(), 1, new ArrayList<>(), new ResourceMetadata());
 //        room1.setBuilding(Mockito.mock(Building.class));

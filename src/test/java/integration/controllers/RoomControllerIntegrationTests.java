@@ -72,8 +72,8 @@ public class RoomControllerIntegrationTests {
     @Test
     @Ignore
     public void testSaveRoomWithValidRoomExpecting200() throws Exception {
-        Room testRoom = new Room("2301", 30, new ArrayList<RoomStatus>(1),
-                1, new ArrayList<Integer>(1), new ResourceMetadata());
+        Room testRoom = new Room(3, "2301", 30, new ArrayList<RoomStatus>(1),
+                1, new ArrayList<Integer>(1));
         this.mvc.perform(post("/v2/room").content(asJSON(testRoom)).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
     }
@@ -88,8 +88,8 @@ public class RoomControllerIntegrationTests {
     @Ignore
     @Test
     public void testGetRoomWithValidIdExpecting200() throws Exception {
-        Room testRoom = new Room("2301", 30,
-                new ArrayList<RoomStatus>(5), 1, new ArrayList<Integer>(3), new ResourceMetadata());
+        Room testRoom = new Room(1, "2301", 30,
+                new ArrayList<RoomStatus>(5), 1, new ArrayList<Integer>(3));
         this.mvc.perform(post("/v2/room").content(asJSON(testRoom)).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
         this.mvc.perform(get("/v2/room/{id}", "2301").accept(MediaType.APPLICATION_JSON))
@@ -105,8 +105,8 @@ public class RoomControllerIntegrationTests {
     @Test
     @Ignore
     public void testUpdateRoomWithValidRoomExpecting200() throws Exception{
-        Room testRoom = new Room(1,"2301", 30,
-                new ArrayList<RoomStatus>(5), 1, new ArrayList<Integer>(3), new ResourceMetadata());
+        Room testRoom = new Room(2, "2301", 30,
+                new ArrayList<RoomStatus>(5), 1, new ArrayList<Integer>(3));
         this.mvc.perform(put("/v2/room").content(asJSON(testRoom)).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()).andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
     }
