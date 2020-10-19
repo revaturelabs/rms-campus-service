@@ -8,7 +8,6 @@ import com.revature.rms.core.metadata.*;
 import com.revature.rms.core.exceptions.*;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -115,7 +114,6 @@ public class RoomServiceTest {
      * its Room Id
      */
     @Test
-    @Ignore
     public void testGetById() {
         when(repo.findById(testRooms.get(0).getId())).thenReturn(Optional.ofNullable(testRooms.get(0)));
         assertEquals(Optional.ofNullable(testRooms.get(0)), sut.findById(testRooms.get(0).getId()));
@@ -187,18 +185,6 @@ public class RoomServiceTest {
     }
 
     /**
-     * Tests that all Rooms with resources belonging to a specific
-     * resource owner can be retrieved.
-     */
-    @Test
-    @Ignore
-    public void testGetByResourceOwner() {
-        int id = 1;
-        when(repo.findAll()).thenReturn(testRooms);
-        assertEquals(testRooms, sut.findByResourceOwner(id));
-    }
-
-    /**
      * Tests that an InvalidRequestException is thrown if an
      * invalid id is entered as a value.
      */
@@ -232,7 +218,6 @@ public class RoomServiceTest {
      * Tests that a room can be soft-deleted (deactivated) by it's given id.
      */
     @Test
-    @Ignore
     public void testDeactivateRoom() {
         when(repo.save(testRooms.get(0))).thenReturn(testRooms.get(0));
         when(repo.findById(testRooms.get(0).getId())).thenReturn(Optional.ofNullable(testRooms.get(0)));
