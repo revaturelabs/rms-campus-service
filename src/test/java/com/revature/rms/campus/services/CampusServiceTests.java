@@ -215,14 +215,11 @@ public class CampusServiceTests {
         assertEquals(expectedResult, actualResult);
     }
 
-<<<<<<< HEAD
     @Ignore // This needs to be refactored. The method this tests was refactored
-=======
     /**
      * Tests that a ResourceNotFoundException is thrown when trying to find
      * a campus by an a trainer id that does not belong a campus.
      */
->>>>>>> pre-dev
     @Test(expected = ResourceNotFoundException.class)
     public void testFindCampusByTrainingManagerIdWithNull() {
         Campus campus = new Campus(3, "University of South Florida", "USF", new Address(),
