@@ -40,6 +40,10 @@ public class CampusService {
             throw new InvalidRequestException("Cannot save null campus!");
         }
 
+        if(campusRepository.findByName(campus.getName()) != null) {
+            throw new ResourcePersistenceException("Campus with that name already exists");
+        }
+
         Address address = addressRepository.save(campus.getShippingAddress());
         campus.setShippingAddress(address);
         Campus persisted = campusRepository.save(campus);
