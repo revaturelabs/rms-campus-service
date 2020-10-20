@@ -115,7 +115,7 @@ public class CampusService {
 
         List<Campus> campus = campusRepository.findByStagingManagerId(id);
 
-        if (campus == null) throw new ResourceNotFoundException("No campus found by that ID!");
+        if (campus.size() == 0) throw new ResourceNotFoundException("No campus found with staging-manager id " + id);
         else return campus;
     }
 
@@ -190,8 +190,17 @@ public class CampusService {
         if (id <= 0) {
             throw new InvalidRequestException("ID cannot be less than or equal to zero!");
         }
-        Campus campus = campusRepository.findById(id).get();
-        campusRepository.deleteById(campus.getId());
+
+        Optional<Campus> campus = campusRepository.findById(id);
+
+        if (!campus.isPresent()) {
+            throw new ResourceNotFoundException("No campus with id " + id + " was found!");
+        }
+
+        campus.get().getResourceMetadata().setCurrentlyActive(false);
+
+        campusRepository.save(campus.get());
+        //campusRepository.deleteById(id);
         return true;
     }
 
