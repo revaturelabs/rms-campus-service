@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -157,6 +158,8 @@ public class RoomService {
         room.setBuilding(oldRoom.getBuilding());
         room.setCurrentStatus(oldRoom.getCurrentStatus()); // TODO append list of RoomStatuses by updated room's roomstatus
         room.setWorkOrders(oldRoom.getWorkOrders());
+        room.setResourceMetadata(oldRoom.getResourceMetadata());
+        room.getResourceMetadata().setLastModifiedDateTime(LocalDateTime.now().toString());
         return roomRepository.save(room);
     }
 
