@@ -153,7 +153,10 @@ public class RoomService {
         Room oldRoom;
         oldRoom = roomRepository.findById(room.getId()).get();
 
+
         room.setBuilding(oldRoom.getBuilding());
+        room.setCurrentStatus(oldRoom.getCurrentStatus()); // TODO append list of RoomStatuses by updated room's roomstatus
+        room.setWorkOrders(oldRoom.getWorkOrders());
         return roomRepository.save(room);
     }
 
