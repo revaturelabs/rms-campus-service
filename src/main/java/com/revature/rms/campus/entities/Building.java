@@ -65,6 +65,14 @@ public class Building extends Resource{
         this.rooms = rooms;
     }
 
+    public Building(int id, String name, String abbrName, Address physicalAddress, int trainingLead) {
+        this.id = id;
+        this.name = name;
+        this.abbrName = abbrName;
+        this.physicalAddress = physicalAddress;
+        this.trainingLead = trainingLead;
+    }
+
     public Building(String name, String abbrName, Address physicalAddress, int trainingLead, List<Amenity> amenities, Campus campus) {
         this.name = name;
         this.abbrName = abbrName;
