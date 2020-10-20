@@ -159,7 +159,14 @@ public class RoomService {
         room.setCurrentStatus(oldRoom.getCurrentStatus()); // TODO append list of RoomStatuses by updated room's roomstatus
         room.setWorkOrders(oldRoom.getWorkOrders());
         room.setResourceMetadata(oldRoom.getResourceMetadata());
+
         room.getResourceMetadata().setLastModifiedDateTime(LocalDateTime.now().toString());
+        room.getResourceMetadata().setResourceCreator(oldRoom.getResourceMetadata().getResourceCreator());
+        room.getResourceMetadata().setResourceCreationDateTime(oldRoom.getResourceMetadata().getResourceCreationDateTime());
+        room.getResourceMetadata().setLastModifier(oldRoom.getResourceMetadata().getLastModifier());
+        room.getResourceMetadata().setResourceOwner(oldRoom.getResourceMetadata().getResourceOwner());
+        room.getResourceMetadata().setCurrentlyActive(oldRoom.getResourceMetadata().isCurrentlyActive());
+
         return roomRepository.save(room);
     }
 
