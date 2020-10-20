@@ -47,6 +47,14 @@ public class Room extends Resource{
         this.batchId = batchId;
     }
 
+    public Room(int id, String roomNumber, Integer maxOccupancy, int batchId, ResourceMetadata resourceMetadata) {
+        this.id = id;
+        this.roomNumber = roomNumber;
+        this.maxOccupancy = maxOccupancy;
+        this.batchId = batchId;
+        this.resourceMetadata = resourceMetadata;
+    }
+
     public void addRoomStatus(RoomStatus status) {
         currentStatus.add(status);
     }
