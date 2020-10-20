@@ -138,6 +138,13 @@ public class RoomControllerTest {
         assertEquals(r4, roomController.updateRoom(testRooms.get(1)));
     }
 
+    @Test
+    public void testUpdateRoomNumber() {
+        Room r4 = new Room(4, "418", 30,  new ArrayList<RoomStatus>(5),123, new ArrayList<Integer>(2));
+        when(roomService.updateRoomNumber(testRooms.get(1))).thenReturn(r4);
+        assertEquals(r4, roomController.updateRoomNumber(testRooms.get(1)));
+    }
+
     /**
      * Tests that a Room can be deleted by its ID.
      */
