@@ -74,6 +74,16 @@ public class Building extends Resource{
         this.campus = campus;
     }
 
+    public Building(String name, String abbrName, Address physicalAddress, int trainingLead, List<Amenity> amenities, Campus campus, ResourceMetadata resourceMetadata) {
+        this.name = name;
+        this.abbrName = abbrName;
+        this.physicalAddress = physicalAddress;
+        this.trainingLead = trainingLead;
+        this.amenities = amenities;
+        this.campus = campus;
+        this.resourceMetadata = resourceMetadata;
+    }
+
     public String getAbbrName() {
         return abbrName;
     }
