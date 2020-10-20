@@ -159,6 +159,7 @@ public class RoomService {
         room.setCurrentStatus(oldRoom.getCurrentStatus()); // TODO append list of RoomStatuses by updated room's roomstatus
         room.setWorkOrders(oldRoom.getWorkOrders());
         room.setResourceMetadata(oldRoom.getResourceMetadata());
+        room.setBatchId(oldRoom.getBatchId());
 
         room.getResourceMetadata().setLastModifiedDateTime(LocalDateTime.now().toString());
         room.getResourceMetadata().setResourceCreator(oldRoom.getResourceMetadata().getResourceCreator());
@@ -168,6 +169,29 @@ public class RoomService {
         room.getResourceMetadata().setCurrentlyActive(oldRoom.getResourceMetadata().isCurrentlyActive());
 
         return roomRepository.save(room);
+    }
+
+    @Transactional
+    public Room updateRoomNumber(Room room) {
+
+        Room oldRoom;
+        oldRoom = roomRepository.findById(room.getId()).get();
+
+        room.setMaxOccupancy(oldRoom.getMaxOccupancy());
+        room.setCurrentStatus(oldRoom.getCurrentStatus()); // TODO append list of RoomStatuses by updated room's roomstatus
+        room.setBatchId(oldRoom.getBatchId());
+        room.setWorkOrders(oldRoom.getWorkOrders());
+        room.setBuilding(oldRoom.getBuilding());
+
+        room.setResourceMetadata(oldRoom.getResourceMetadata());
+        ResourceMetadata resourceMetadata = oldRoom.getResourceMetadata();
+
+        room.setResourceMetadata(resourceMetadata);
+        room.getResourceMetadata().setLastModifiedDateTime(LocalDateTime.now().toString());
+        // this should change every time an update is made
+
+        return roomRepository.save(room);
+
     }
 
     /**
