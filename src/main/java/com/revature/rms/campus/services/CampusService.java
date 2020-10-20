@@ -93,7 +93,7 @@ public class CampusService {
       
         List<Campus> campus = campusRepository.findByTrainingManagerId(id);
 
-        if (campus == null) throw new ResourceNotFoundException("No campus found by that ID!");
+        if (campus.size() == 0) throw new ResourceNotFoundException("No campus found with training-manager id " + id);
         else return campus;
     }
 
