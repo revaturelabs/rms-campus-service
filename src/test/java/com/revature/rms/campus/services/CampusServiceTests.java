@@ -81,18 +81,9 @@ public class CampusServiceTests {
      * the campus object is null, a ResourceNotFoundException will be thrown since the method does not have the desired
      * object to function properly.
      */
-    @Test(expected = ResourcePersistenceException.class)
-    @Ignore
+    @Test(expected = InvalidRequestException.class)
     public void testSaveWithNullCampus() {
-
-        Campus testCampus = new Campus(1, "University of South Florida", "USF", new Address(),
-                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3));
-
-        Campus expectedResult = new Campus(2, "University of South Florida", "USF", new Address(),
-                2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3));
-
-        Campus actualResults = sut.save(null);
-
+        sut.save(null);
     }
 
     /**
@@ -199,6 +190,15 @@ public class CampusServiceTests {
     }
 
     /**
+     * Tests to verify an InvalidRequestException is thrown when trying to find a campus
+     * by an invalid name.
+     */
+    @Test(expected = InvalidRequestException.class)
+    public void testFindCampusByInvalidName() {
+        sut.findByName(null);
+    }
+
+    /**
      * The test below is for CampusService.update(). This method functions by passing in a campus object with changed
      * fields and calling campusMongoRepository.save to persist the changes and returns the updated saved campus object.
      * There is no null campus check since the campus will already be existing in order to update. Field value checks are
@@ -215,7 +215,14 @@ public class CampusServiceTests {
         assertEquals(expectedResult, actualResult);
     }
 
+<<<<<<< HEAD
     @Ignore // This needs to be refactored. The method this tests was refactored
+=======
+    /**
+     * Tests that a ResourceNotFoundException is thrown when trying to find
+     * a campus by an a trainer id that does not belong a campus.
+     */
+>>>>>>> pre-dev
     @Test(expected = ResourceNotFoundException.class)
     public void testFindCampusByTrainingManagerIdWithNull() {
         Campus campus = new Campus(3, "University of South Florida", "USF", new Address(),
@@ -226,6 +233,10 @@ public class CampusServiceTests {
         List<Campus> actualResult = sut.findByTrainingManagerId(2);
     }
 
+    /**
+     * Tests that an InvalidRequestException is thrown when trying to find a campus
+     * by an invalid trainer id.
+     */
     @Test(expected = InvalidRequestException.class)
     public void testFindCampusByTrainingManagerIdWithInvalidId() {
         Campus campus = new Campus(3, "University of South Florida", "USF", new Address(),
@@ -235,6 +246,9 @@ public class CampusServiceTests {
         List<Campus> actualResult = sut.findByTrainingManagerId(0);
     }
 
+    /**
+     * Tests that a campus can be found by the staging manager Id.
+     */
     @Test
     public void testFindCampusByStagingManagerId() {
         Campus campus = new Campus(3, "University of South Florida", "USF", new Address(),
@@ -247,6 +261,10 @@ public class CampusServiceTests {
     }
 
     @Ignore // This needs to be refactored. The method this tests was refactored
+    /**
+     * Tests that a ResourceNotFoundException is thrown when a staging manager id
+     * does not return a campus
+     */
     @Test(expected = ResourceNotFoundException.class)
     public void testFindCampusByStagingManagerIdWithNull() {
         Campus campus = new Campus(3, "University of South Florida", "USF", new Address(),
@@ -257,6 +275,10 @@ public class CampusServiceTests {
         List<Campus> actualResult = sut.findByStagingManagerId(2);
     }
 
+    /**
+     * Tests that an InvalidRequestException is thrown when an invalid staging
+     * manager id is passed.
+     */
     @Test(expected = InvalidRequestException.class)
     public void testFindCampusByStagingManagerIdWithInvalidId() {
         Campus campus = new Campus(3, "University of South Florida", "USF", new Address(),
@@ -266,17 +288,27 @@ public class CampusServiceTests {
         List<Campus> actualResult = sut.findByStagingManagerId(0);
     }
 
+    /**
+     * Tests that an InvalidRequestException is thrown when an invalid resource
+     * owner id is passed.
+     */
     @Test(expected = InvalidRequestException.class)
     public void testFindCampusByInvalidResourceOwnerId() {
         sut.findByResourceOwnerId(-1);
     }
 
+    /**
+     * Tests that a ResourceNotFoundException is thrown when a resource
+     * could not be found by the owner id.
+     */
     @Test(expected = ResourceNotFoundException.class)
     public void testFindEmptyCampusListByResourceOwnerId() {
-
         sut.findByResourceOwnerId(1);
     }
 
+    /**
+     * Tests that a campus can be updated successfully with new information.
+     */
     @Test
     public void testUpdateWithValidCampus() {
         Campus testCampus = new Campus(4, "mocked", "m", new Address(),
@@ -286,8 +318,17 @@ public class CampusServiceTests {
                 3, 4, 5, new ArrayList<Building>(2), new ArrayList<Integer>(4));
 
         when(repo.save(Mockito.any())).thenReturn((expectedResult));
-        Campus actualResult = sut.save(testCampus);
+        Campus actualResult = sut.update(testCampus);
         assertEquals(expectedResult, actualResult);
+    }
+
+    /**
+     * Tests that an InvalidRequestException is thrown when trying to update
+     * a null campus.
+     */
+    @Test(expected = InvalidRequestException.class)
+    public void testUpdateWithNullCampus() {
+        sut.update(null);
     }
 
     /**
@@ -301,7 +342,6 @@ public class CampusServiceTests {
      * successfully one time when provided with a valid id.
      */
     @Test
-    @Ignore
     public void testDeleteWithValidId() {
         Campus testCampus = new Campus(5, "University of South Florida", "USF", new Address(1,"Street","City","State","Zip","Country"),
                 2, 3, 4, new ArrayList<Building>(1), new ArrayList<Integer>(3));
